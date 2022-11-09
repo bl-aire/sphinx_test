@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Technical Overview &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/technical-overview';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JupyterHub URL scheme" href="urls.html" />
+    <link rel="prev" title="Technical Reference" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="technical-overview">
+<h1>Technical Overview<a class="headerlink" href="#technical-overview" title="Permalink to this heading">#</a></h1>
+<p>The <strong>Technical Overview</strong> section gives you a high-level view of:</p>
+<ul class="simple">
+<li><p>JupyterHub’s Subsystems: Hub, Proxy, Single-User Notebook Server</p></li>
+<li><p>how the subsystems interact</p></li>
+<li><p>the process from JupyterHub access to user login</p></li>
+<li><p>JupyterHub’s default behavior</p></li>
+<li><p>customizing JupyterHub</p></li>
+</ul>
+<p>The goal of this section is to share a deeper technical understanding of
+JupyterHub and how it works.</p>
+<section id="the-subsystems-hub-proxy-single-user-notebook-server">
+<h2>The Subsystems: Hub, Proxy, Single-User Notebook Server<a class="headerlink" href="#the-subsystems-hub-proxy-single-user-notebook-server" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub is a set of processes that together provide a single user Jupyter
+Notebook server for each person in a group. Three major subsystems are started
+by the <code class="docutils literal notranslate"><span class="pre">jupyterhub</span></code> command line program:</p>
+<ul class="simple">
+<li><p><strong>Hub</strong> (Python/Tornado): manages user accounts, authentication, and
+coordinates Single User Notebook Servers using a Spawner.</p></li>
+<li><p><strong>Proxy</strong>: the public facing part of JupyterHub that uses a dynamic proxy
+to route HTTP requests to the Hub and Single User Notebook Servers.
+<a class="reference external" href="https://github.com/jupyterhub/configurable-http-proxy">configurable http proxy</a>
+(node-http-proxy) is the default proxy.</p></li>
+<li><p><strong>Single-User Notebook Server</strong> (Python/Tornado): a dedicated,
+single-user, Jupyter Notebook server is started for each user on the system
+when the user logs in. The object that starts the single-user notebook
+servers is called a <strong>Spawner</strong>.</p></li>
+</ul>
+<p><img alt="JupyterHub subsystems" src="../_images/jhub-parts.png" /></p>
+</section>
+<section id="how-the-subsystems-interact">
+<h2>How the Subsystems Interact<a class="headerlink" href="#how-the-subsystems-interact" title="Permalink to this heading">#</a></h2>
+<p>Users access JupyterHub through a web browser, by going to the IP address or
+the domain name of the server.</p>
+<p>The basic principles of operation are:</p>
+<ul class="simple">
+<li><p>The Hub spawns the proxy (in the default JupyterHub configuration)</p></li>
+<li><p>The proxy forwards all requests to the Hub by default</p></li>
+<li><p>The Hub handles login, and spawns single-user notebook servers on demand</p></li>
+<li><p>The Hub configures the proxy to forward url prefixes to single-user notebook
+servers</p></li>
+</ul>
+<p>The proxy is the only process that listens on a public interface. The Hub sits
+behind the proxy at <code class="docutils literal notranslate"><span class="pre">/hub</span></code>. Single-user servers sit behind the proxy at
+<code class="docutils literal notranslate"><span class="pre">/user/[username]</span></code>.</p>
+<p>Different <strong><a class="reference internal" href="authenticators.html"><span class="doc std std-doc">authenticators</span></a></strong> control access
+to JupyterHub. The default one (PAM) uses the user accounts on the server where
+JupyterHub is running. If you use this, you will need to create a user account
+on the system for each user on your team. Using other authenticators, you can
+allow users to sign in with e.g. a GitHub account, or with any single-sign-on
+system your organization has.</p>
+<p>Next, <strong><a class="reference internal" href="spawners.html"><span class="doc std std-doc">spawners</span></a></strong> control how JupyterHub starts
+the individual notebook server for each user. The default spawner will
+start a notebook server on the same machine running under their system username.
+The other main option is to start each server in a separate container, often
+using Docker.</p>
+</section>
+<section id="the-process-from-jupyterhub-access-to-user-login">
+<h2>The Process from JupyterHub Access to User Login<a class="headerlink" href="#the-process-from-jupyterhub-access-to-user-login" title="Permalink to this heading">#</a></h2>
+<p>When a user accesses JupyterHub, the following events take place:</p>
+<ul class="simple">
+<li><p>Login data is handed to the <a class="reference internal" href="authenticators.html"><span class="doc std std-doc">Authenticator</span></a> instance for
+validation</p></li>
+<li><p>The Authenticator returns the username if the login information is valid</p></li>
+<li><p>A single-user notebook server instance is <a class="reference internal" href="spawners.html"><span class="doc std std-doc">spawned</span></a> for the
+logged-in user</p></li>
+<li><p>When the single-user notebook server starts, the proxy is notified to forward
+requests to <code class="docutils literal notranslate"><span class="pre">/user/[username]/*</span></code> to the single-user notebook server.</p></li>
+<li><p>A cookie is set on <code class="docutils literal notranslate"><span class="pre">/hub/</span></code>, containing an encrypted token. (Prior to version
+0.8, a cookie for <code class="docutils literal notranslate"><span class="pre">/user/[username]</span></code> was used too.)</p></li>
+<li><p>The browser is redirected to <code class="docutils literal notranslate"><span class="pre">/user/[username]</span></code>, and the request is handled by
+the single-user notebook server.</p></li>
+</ul>
+<p>The single-user server identifies the user with the Hub via OAuth:</p>
+<ul class="simple">
+<li><p>on request, the single-user server checks a cookie</p></li>
+<li><p>if no cookie is set, redirect to the Hub for verification via OAuth</p></li>
+<li><p>after verification at the Hub, the browser is redirected back to the
+single-user server</p></li>
+<li><p>the token is verified and stored in a cookie</p></li>
+<li><p>if no user is identified, the browser is redirected back to <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code></p></li>
+</ul>
+</section>
+<section id="default-behavior">
+<h2>Default Behavior<a class="headerlink" href="#default-behavior" title="Permalink to this heading">#</a></h2>
+<p>By default, the <strong>Proxy</strong> listens on all public interfaces on port 8000.
+Thus you can reach JupyterHub through either:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">http://localhost:8000</span></code></p></li>
+<li><p>or any other public IP or domain pointing to your system.</p></li>
+</ul>
+<p>In their default configuration, the other services, the <strong>Hub</strong> and
+<strong>Single-User Notebook Servers</strong>, all communicate with each other on localhost
+only.</p>
+<p>By default, starting JupyterHub will write two files to disk in the current
+working directory:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jupyterhub.sqlite</span></code> is the SQLite database containing all of the state of the
+<strong>Hub</strong>. This file allows the <strong>Hub</strong> to remember which users are running and
+where, as well as storing other information enabling you to restart parts of
+JupyterHub separately. It is important to note that this database contains
+<strong>no</strong> sensitive information other than <strong>Hub</strong> usernames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jupyterhub_cookie_secret</span></code> is the encryption key used for securing cookies.
+This file needs to persist so that a <strong>Hub</strong> server restart will avoid
+invalidating cookies. Conversely, deleting this file and restarting the server
+effectively invalidates all login cookies. The cookie secret file is discussed
+in the <a class="reference internal" href="../getting-started/security-basics.html"><span class="doc std std-doc">Cookie Secret section of the Security Settings document</span></a>.</p></li>
+</ul>
+<p>The location of these files can be specified via configuration settings. It is
+recommended that these files be stored in standard UNIX filesystem locations,
+such as <code class="docutils literal notranslate"><span class="pre">/etc/jupyterhub</span></code> for all configuration files and <code class="docutils literal notranslate"><span class="pre">/srv/jupyterhub</span></code> for
+all security and runtime files.</p>
+</section>
+<section id="customizing-jupyterhub">
+<h2>Customizing JupyterHub<a class="headerlink" href="#customizing-jupyterhub" title="Permalink to this heading">#</a></h2>
+<p>There are two basic extension points for JupyterHub:</p>
+<ul class="simple">
+<li><p>How users are authenticated by <a class="reference internal" href="authenticators.html"><span class="doc std std-doc">Authenticators</span></a></p></li>
+<li><p>How user’s single-user notebook server processes are started by
+<a class="reference internal" href="spawners.html"><span class="doc std std-doc">Spawners</span></a></p></li>
+</ul>
+<p>Each is governed by a customizable class, and JupyterHub ships with basic
+defaults for each.</p>
+<p>To enable custom authentication and/or spawning, subclass <code class="docutils literal notranslate"><span class="pre">Authenticator</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Spawner</span></code>, and override the relevant methods.</p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Technical Reference</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="urls.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">JupyterHub URL scheme</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-subsystems-hub-proxy-single-user-notebook-server">
+   The Subsystems: Hub, Proxy, Single-User Notebook Server
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-the-subsystems-interact">
+   How the Subsystems Interact
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-process-from-jupyterhub-access-to-user-login">
+   The Process from JupyterHub Access to User Login
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#default-behavior">
+   Default Behavior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#customizing-jupyterhub">
+   Customizing JupyterHub
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/technical-overview.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/technical-overview.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

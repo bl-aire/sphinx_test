@@ -1,0 +1,2374 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Application configuration &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/app';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Authenticators" href="auth.html" />
+    <link rel="prev" title="JupyterHub API" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Application configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawner.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.auth.html">Services Authentication</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="application-configuration">
+<h1>Application configuration<a class="headerlink" href="#application-configuration" title="Permalink to this heading">#</a></h1>
+<section id="module-jupyterhub.app">
+<span id="module-jupyterhub-app"></span><h2>Module: <a class="reference internal" href="#module-jupyterhub.app" title="jupyterhub.app"><code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.app</span></code></a><a class="headerlink" href="#module-jupyterhub.app" title="Permalink to this heading">#</a></h2>
+<p>The multi-user notebook application</p>
+<section id="jupyterhub">
+<h3><a class="reference internal" href="#jupyterhub.app.JupyterHub" title="jupyterhub.app.JupyterHub"><code class="xref py py-class docutils literal notranslate"><span class="pre">JupyterHub</span></code></a><a class="headerlink" href="#jupyterhub" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.app.</span></span><span class="sig-name descname"><span class="pre">JupyterHub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.app.JupyterHub" title="Permalink to this definition">#</a></dt>
+<dd><p>An Application for starting a Multi-User Jupyter Notebook server.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.active_server_limit">
+<span class="sig-name descname"><span class="pre">active_server_limit</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.active_server_limit</span> <span class="pre">=</span> <span class="pre">Int(0)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.active_server_limit" title="Permalink to this definition">#</a></dt>
+<dd><p>Maximum number of concurrent servers that can be active at a time.</p>
+<p>Setting this can limit the total resources your users can consume.</p>
+<p>An active server is any server that’s not fully stopped.
+It is considered active from the time it has been requested
+until the time that it has completely stopped.</p>
+<p>If this many user servers are active, users will not be able to
+launch new servers until a server is shutdown.
+Spawn requests will be rejected with a 429 error asking them to try again.</p>
+<p>If set to 0, no limit is enforced.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.active_user_window">
+<span class="sig-name descname"><span class="pre">active_user_window</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.active_user_window</span> <span class="pre">=</span> <span class="pre">Int(1800)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.active_user_window" title="Permalink to this definition">#</a></dt>
+<dd><p>Duration (in seconds) to determine the number of active users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.activity_resolution">
+<span class="sig-name descname"><span class="pre">activity_resolution</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.activity_resolution</span> <span class="pre">=</span> <span class="pre">Int(30)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.activity_resolution" title="Permalink to this definition">#</a></dt>
+<dd><p>Resolution (in seconds) for updating activity</p>
+<p>If activity is registered that is less than activity_resolution seconds
+more recent than the current value,
+the new value will be ignored.</p>
+<p>This avoids too many writes to the Hub database.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.admin_access">
+<span class="sig-name descname"><span class="pre">admin_access</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.admin_access</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.admin_access" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 2.0.0.</p>
+<p>The default admin role has full permissions, use custom RBAC scopes instead to
+create restricted administrator roles.
+<a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/rbac/index.html">https://jupyterhub.readthedocs.io/en/stable/rbac/index.html</a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.admin_users">
+<span class="sig-name descname"><span class="pre">admin_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.admin_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.admin_users" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.7.2, use Authenticator.admin_users instead.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.allow_named_servers">
+<span class="sig-name descname"><span class="pre">allow_named_servers</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.allow_named_servers</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.allow_named_servers" title="Permalink to this definition">#</a></dt>
+<dd><p>Allow named single-user servers per user</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.answer_yes">
+<span class="sig-name descname"><span class="pre">answer_yes</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.answer_yes</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.answer_yes" title="Permalink to this definition">#</a></dt>
+<dd><p>Answer yes to any questions (e.g. confirm overwrite)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.api_page_default_limit">
+<span class="sig-name descname"><span class="pre">api_page_default_limit</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.api_page_default_limit</span> <span class="pre">=</span> <span class="pre">Int(50)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.api_page_default_limit" title="Permalink to this definition">#</a></dt>
+<dd><p>The default amount of records returned by a paginated endpoint</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.api_page_max_limit">
+<span class="sig-name descname"><span class="pre">api_page_max_limit</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.api_page_max_limit</span> <span class="pre">=</span> <span class="pre">Int(200)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.api_page_max_limit" title="Permalink to this definition">#</a></dt>
+<dd><p>The maximum amount of records that can be returned at once</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.api_tokens">
+<span class="sig-name descname"><span class="pre">api_tokens</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.api_tokens</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.api_tokens" title="Permalink to this definition">#</a></dt>
+<dd><p>PENDING DEPRECATION: consider using services</p>
+<p>Dict of token:username to be loaded into the database.</p>
+<p>Allows ahead-of-time generation of API tokens for use by externally managed services,
+which authenticate as JupyterHub users.</p>
+<p>Consider using services for general services that talk to the JupyterHub API.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.authenticate_prometheus">
+<span class="sig-name descname"><span class="pre">authenticate_prometheus</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.authenticate_prometheus</span> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.authenticate_prometheus" title="Permalink to this definition">#</a></dt>
+<dd><p>Authentication for prometheus metrics</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.authenticator_class">
+<span class="sig-name descname"><span class="pre">authenticator_class</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.authenticator_class</span> <span class="pre">=</span> <span class="pre">EntryPointType(&lt;class</span> <span class="pre">'jupyterhub.auth.PAMAuthenticator'&gt;)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.authenticator_class" title="Permalink to this definition">#</a></dt>
+<dd><p>Class for authenticating users.</p>
+<blockquote>
+<div><p>This should be a subclass of <a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator" title="jupyterhub.auth.Authenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">jupyterhub.auth.Authenticator</span></code></a></p>
+<p>with an <code class="xref py py-meth docutils literal notranslate"><span class="pre">authenticate()</span></code> method that:</p>
+<ul class="simple">
+<li><p>is a coroutine (asyncio or tornado)</p></li>
+<li><p>returns username on success, None on failure</p></li>
+<li><p>takes two arguments: (handler, data),
+where <code class="docutils literal notranslate"><span class="pre">handler</span></code> is the calling web.RequestHandler,
+and <code class="docutils literal notranslate"><span class="pre">data</span></code> is the POST form data from the login page.</p></li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0: </span>authenticators may be registered via entry points,
+e.g. <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.authenticator_class</span> <span class="pre">=</span> <span class="pre">'pam'</span></code></p>
+</div>
+</div></blockquote>
+<dl class="simple">
+<dt>Currently installed:</dt><dd><ul class="simple">
+<li><p>default: jupyterhub.auth.PAMAuthenticator</p></li>
+<li><p>dummy: jupyterhub.auth.DummyAuthenticator</p></li>
+<li><p>null: jupyterhub.auth.NullAuthenticator</p></li>
+<li><p>pam: jupyterhub.auth.PAMAuthenticator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.base_url</span> <span class="pre">=</span> <span class="pre">URLPrefix('/')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.base_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The base URL of the entire application.</p>
+<p>Add this to the beginning of all JupyterHub URLs.
+Use base_url to run JupyterHub within an existing website.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.bind_url">
+<span class="sig-name descname"><span class="pre">bind_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.bind_url</span> <span class="pre">=</span> <span class="pre">Unicode('http://:8000')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.bind_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The public facing URL of the whole JupyterHub application.</p>
+<p>This is the address on which the proxy will bind.
+Sets protocol, ip, base_url</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.cleanup_proxy">
+<span class="sig-name descname"><span class="pre">cleanup_proxy</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.cleanup_proxy</span> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.cleanup_proxy" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether to shutdown the proxy when the Hub shuts down.</p>
+<p>Disable if you want to be able to teardown the Hub while leaving the proxy running.</p>
+<p>Only valid if the proxy was starting by the Hub process.</p>
+<p>If both this and cleanup_servers are False, sending SIGINT to the Hub will
+only shutdown the Hub, leaving everything else running.</p>
+<p>The Hub should be able to resume from database state.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.cleanup_servers">
+<span class="sig-name descname"><span class="pre">cleanup_servers</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.cleanup_servers</span> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.cleanup_servers" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether to shutdown single-user servers when the Hub shuts down.</p>
+<p>Disable if you want to be able to teardown the Hub while leaving the single-user servers running.</p>
+<p>If both this and cleanup_proxy are False, sending SIGINT to the Hub will
+only shutdown the Hub, leaving everything else running.</p>
+<p>The Hub should be able to resume from database state.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.concurrent_spawn_limit">
+<span class="sig-name descname"><span class="pre">concurrent_spawn_limit</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.concurrent_spawn_limit</span> <span class="pre">=</span> <span class="pre">Int(100)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.concurrent_spawn_limit" title="Permalink to this definition">#</a></dt>
+<dd><p>Maximum number of concurrent users that can be spawning at a time.</p>
+<p>Spawning lots of servers at the same time can cause performance
+problems for the Hub or the underlying spawning system.
+Set this limit to prevent bursts of logins from attempting
+to spawn too many servers at the same time.</p>
+<p>This does not limit the number of total running servers.
+See active_server_limit for that.</p>
+<p>If more than this many users attempt to spawn at a time, their
+requests will be rejected with a 429 error asking them to try again.
+Users will have to wait for some of the spawning services
+to finish starting before they can start their own.</p>
+<p>If set to 0, no limit is enforced.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.config_file">
+<span class="sig-name descname"><span class="pre">config_file</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.config_file</span> <span class="pre">=</span> <span class="pre">Unicode('jupyterhub_config.py')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.config_file" title="Permalink to this definition">#</a></dt>
+<dd><p>The config file to load</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.confirm_no_ssl">
+<span class="sig-name descname"><span class="pre">confirm_no_ssl</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.confirm_no_ssl</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.confirm_no_ssl" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED: does nothing</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.cookie_max_age_days">
+<span class="sig-name descname"><span class="pre">cookie_max_age_days</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.cookie_max_age_days</span> <span class="pre">=</span> <span class="pre">Float(14)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.cookie_max_age_days" title="Permalink to this definition">#</a></dt>
+<dd><p>Number of days for a login cookie to be valid.
+Default is two weeks.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.cookie_secret">
+<span class="sig-name descname"><span class="pre">cookie_secret</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.cookie_secret</span> <span class="pre">=</span> <span class="pre">Union()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.cookie_secret" title="Permalink to this definition">#</a></dt>
+<dd><p>The cookie secret to use to encrypt cookies.</p>
+<p>Loaded from the JPY_COOKIE_SECRET env variable by default.</p>
+<p>Should be exactly 256 bits (32 bytes).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.cookie_secret_file">
+<span class="sig-name descname"><span class="pre">cookie_secret_file</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.cookie_secret_file</span> <span class="pre">=</span> <span class="pre">Unicode('jupyterhub_cookie_secret')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.cookie_secret_file" title="Permalink to this definition">#</a></dt>
+<dd><p>File in which to store the cookie secret.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.custom_scopes">
+<span class="sig-name descname"><span class="pre">custom_scopes</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.custom_scopes</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.custom_scopes" title="Permalink to this definition">#</a></dt>
+<dd><p>Custom scopes to define.</p>
+<p>For use when defining custom roles,
+to grant users granular permissions</p>
+<p>All custom scopes must have a description,
+and must start with the prefix <code class="docutils literal notranslate"><span class="pre">custom:</span></code>.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">custom_scopes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;custom:jupyter_server:read&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;read-only access to a single-user server&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.data_files_path">
+<span class="sig-name descname"><span class="pre">data_files_path</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.data_files_path</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.data_files_path" title="Permalink to this definition">#</a></dt>
+<dd><p>The location of jupyterhub data files (e.g. /usr/local/share/jupyterhub)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.db_kwargs">
+<span class="sig-name descname"><span class="pre">db_kwargs</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.db_kwargs</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.db_kwargs" title="Permalink to this definition">#</a></dt>
+<dd><p>Include any kwargs to pass to the database connection.
+See sqlalchemy.create_engine for details.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.db_url">
+<span class="sig-name descname"><span class="pre">db_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.db_url</span> <span class="pre">=</span> <span class="pre">Unicode('sqlite:///jupyterhub.sqlite')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.db_url" title="Permalink to this definition">#</a></dt>
+<dd><p>url for the database. e.g. <code class="docutils literal notranslate"><span class="pre">sqlite:///jupyterhub.sqlite</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.debug_db">
+<span class="sig-name descname"><span class="pre">debug_db</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.debug_db</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.debug_db" title="Permalink to this definition">#</a></dt>
+<dd><p>log all database transactions. This has A LOT of output</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.debug_proxy">
+<span class="sig-name descname"><span class="pre">debug_proxy</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.debug_proxy</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.debug_proxy" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.8: Use ConfigurableHTTPProxy.debug</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.default_server_name">
+<span class="sig-name descname"><span class="pre">default_server_name</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.default_server_name</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.default_server_name" title="Permalink to this definition">#</a></dt>
+<dd><p>If named servers are enabled, default name of server to spawn or open, e.g. by user-redirect.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.default_url">
+<span class="sig-name descname"><span class="pre">default_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.default_url</span> <span class="pre">=</span> <span class="pre">Union()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.default_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The default URL for users when they arrive (e.g. when user directs to “/”)</p>
+<p>By default, redirects users to their own server.</p>
+<p>Can be a Unicode string (e.g. ‘/hub/home’) or a callable based on the handler object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">default_url_fn</span><span class="p">(</span><span class="n">handler</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">current_user</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">admin</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;/hub/admin&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;/hub/home&#39;</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">default_url</span> <span class="o">=</span> <span class="n">default_url_fn</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.external_ssl_authorities">
+<span class="sig-name descname"><span class="pre">external_ssl_authorities</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.external_ssl_authorities</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.external_ssl_authorities" title="Permalink to this definition">#</a></dt>
+<dd><p>Dict authority:dict(files). Specify the key, cert, and/or
+ca file for an authority. This is useful for externally managed
+proxies that wish to use internal_ssl.</p>
+<p>The files dict has this format (you must specify at least a cert):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/to/key.key&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cert&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/to/cert.crt&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ca&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/to/ca.crt&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The authorities you can override: ‘hub-ca’, ‘notebooks-ca’,
+‘proxy-api-ca’, ‘proxy-client-ca’, and ‘services-ca’.</p>
+<p>Use with internal_ssl</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.extra_handlers">
+<span class="sig-name descname"><span class="pre">extra_handlers</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.extra_handlers</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.extra_handlers" title="Permalink to this definition">#</a></dt>
+<dd><p>Register extra tornado Handlers for jupyterhub.</p>
+<p>Should be of the form <code class="docutils literal notranslate"><span class="pre">(&quot;&lt;regex&gt;&quot;,</span> <span class="pre">Handler)</span></code></p>
+<p>The Hub prefix will be added, so <code class="docutils literal notranslate"><span class="pre">/my-page</span></code> will be served at <code class="docutils literal notranslate"><span class="pre">/hub/my-page</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.extra_log_file">
+<span class="sig-name descname"><span class="pre">extra_log_file</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.extra_log_file</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.extra_log_file" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED: use output redirection instead, e.g.</p>
+<p>jupyterhub &amp;&gt;&gt; /var/log/jupyterhub.log</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.extra_log_handlers">
+<span class="sig-name descname"><span class="pre">extra_log_handlers</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.extra_log_handlers</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.extra_log_handlers" title="Permalink to this definition">#</a></dt>
+<dd><p>Extra log handlers to set on JupyterHub logger</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.forwarded_host_header">
+<span class="sig-name descname"><span class="pre">forwarded_host_header</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.forwarded_host_header</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.forwarded_host_header" title="Permalink to this definition">#</a></dt>
+<dd><p>Alternate header to use as the Host (e.g., X-Forwarded-Host)
+when determining whether a request is cross-origin</p>
+<p>This may be useful when JupyterHub is running behind a proxy that rewrites
+the Host header.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.generate_certs">
+<span class="sig-name descname"><span class="pre">generate_certs</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.generate_certs</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.generate_certs" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate certs used for internal ssl</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.generate_config">
+<span class="sig-name descname"><span class="pre">generate_config</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.generate_config</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.generate_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate default config file</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_bind_url">
+<span class="sig-name descname"><span class="pre">hub_bind_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_bind_url</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_bind_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The URL on which the Hub will listen.
+This is a private URL for internal communication.
+Typically set in combination with hub_connect_url.
+If a unix socket, hub_connect_url <strong>must</strong> also be set.</p>
+<p>For example:</p>
+<blockquote>
+<div><p>“<a class="reference external" href="http://127.0.0.1:8081">http://127.0.0.1:8081</a>”
+“unix+http://%2Fsrv%2Fjupyterhub%2Fjupyterhub.sock”</p>
+</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_connect_ip">
+<span class="sig-name descname"><span class="pre">hub_connect_ip</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_connect_ip</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_connect_ip" title="Permalink to this definition">#</a></dt>
+<dd><p>The ip or hostname for proxies and spawners to use
+for connecting to the Hub.</p>
+<p>Use when the bind address (<code class="docutils literal notranslate"><span class="pre">hub_ip</span></code>) is 0.0.0.0, :: or otherwise different
+from the connect address.</p>
+<p>Default: when <code class="docutils literal notranslate"><span class="pre">hub_ip</span></code> is 0.0.0.0 or ::, use <code class="docutils literal notranslate"><span class="pre">socket.gethostname()</span></code>, otherwise use <code class="docutils literal notranslate"><span class="pre">hub_ip</span></code>.</p>
+<p>Note: Some spawners or proxy implementations might not support hostnames. Check your
+spawner or proxy documentation to see if they have extra requirements.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_connect_port">
+<span class="sig-name descname"><span class="pre">hub_connect_port</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_connect_port</span> <span class="pre">=</span> <span class="pre">Int(0)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_connect_port" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED</p>
+<p>Use hub_connect_url</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.</span></p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 0.9: </span>Use hub_connect_url</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_connect_url">
+<span class="sig-name descname"><span class="pre">hub_connect_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_connect_url</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_connect_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The URL for connecting to the Hub.
+Spawners, services, and the proxy will use this URL
+to talk to the Hub.</p>
+<p>Only needs to be specified if the default hub URL is not
+connectable (e.g. using a unix+http:// bind url).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>JupyterHub.hub_connect_ip
+JupyterHub.hub_bind_url</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_ip">
+<span class="sig-name descname"><span class="pre">hub_ip</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_ip</span> <span class="pre">=</span> <span class="pre">Unicode('127.0.0.1')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_ip" title="Permalink to this definition">#</a></dt>
+<dd><p>The ip address for the Hub process to <em>bind</em> to.</p>
+<p>By default, the hub listens on localhost only. This address must be accessible from
+the proxy and user servers. You may need to set this to a public ip or ‘’ for all
+interfaces if the proxy or user servers are in containers or on a different host.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">hub_connect_ip</span></code> for cases where the bind and connect address should differ,
+or <code class="docutils literal notranslate"><span class="pre">hub_bind_url</span></code> for setting the full bind URL.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_port">
+<span class="sig-name descname"><span class="pre">hub_port</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_port</span> <span class="pre">=</span> <span class="pre">Int(8081)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_port" title="Permalink to this definition">#</a></dt>
+<dd><p>The internal port for the Hub process.</p>
+<p>This is the internal port of the hub itself. It should never be accessed directly.
+See JupyterHub.port for the public port to use when accessing jupyterhub.
+It is rare that this port should be set except in cases of port conflict.</p>
+<p>See also <code class="docutils literal notranslate"><span class="pre">hub_ip</span></code> for the ip and <code class="docutils literal notranslate"><span class="pre">hub_bind_url</span></code> for setting the full bind URL.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.hub_routespec">
+<span class="sig-name descname"><span class="pre">hub_routespec</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.hub_routespec</span> <span class="pre">=</span> <span class="pre">Unicode('/')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.hub_routespec" title="Permalink to this definition">#</a></dt>
+<dd><p>The routing prefix for the Hub itself.</p>
+<p>Override to send only a subset of traffic to the Hub.
+Default is to use the Hub as the default route for all requests.</p>
+<p>This is necessary for normal jupyterhub operation,
+as the Hub must receive requests for e.g. <code class="docutils literal notranslate"><span class="pre">/user/:name</span></code>
+when the user’s server is not running.</p>
+<p>However, some deployments using only the JupyterHub API
+may want to handle these events themselves,
+in which case they can register their own default target with the proxy
+and set e.g. <code class="docutils literal notranslate"><span class="pre">hub_routespec</span> <span class="pre">=</span> <span class="pre">/hub/</span></code> to serve only the hub’s own pages, or even <code class="docutils literal notranslate"><span class="pre">/hub/api/</span></code> for api-only operation.</p>
+<p>Note: hub_routespec must include the base_url, if any.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.implicit_spawn_seconds">
+<span class="sig-name descname"><span class="pre">implicit_spawn_seconds</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.implicit_spawn_seconds</span> <span class="pre">=</span> <span class="pre">Float(0)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.implicit_spawn_seconds" title="Permalink to this definition">#</a></dt>
+<dd><p>Trigger implicit spawns after this many seconds.</p>
+<p>When a user visits a URL for a server that’s not running,
+they are shown a page indicating that the requested server
+is not running with a button to spawn the server.</p>
+<p>Setting this to a positive value will redirect the user
+after this many seconds, effectively clicking this button
+automatically for the users,
+automatically beginning the spawn process.</p>
+<p>Warning: this can result in errors and surprising behavior
+when sharing access URLs to actual servers,
+since the wrong server is likely to be started.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.init_spawners_timeout">
+<span class="sig-name descname"><span class="pre">init_spawners_timeout</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.init_spawners_timeout</span> <span class="pre">=</span> <span class="pre">Int(10)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.init_spawners_timeout" title="Permalink to this definition">#</a></dt>
+<dd><p>Timeout (in seconds) to wait for spawners to initialize</p>
+<p>Checking if spawners are healthy can take a long time
+if many spawners are active at hub start time.</p>
+<p>If it takes longer than this timeout to check,
+init_spawner will be left to complete in the background
+and the http server is allowed to start.</p>
+<p>A timeout of -1 means wait forever,
+which can mean a slow startup of the Hub
+but ensures that the Hub is fully consistent by the time it starts responding to requests.
+This matches the behavior of jupyterhub 1.0.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.internal_certs_location">
+<span class="sig-name descname"><span class="pre">internal_certs_location</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.internal_certs_location</span> <span class="pre">=</span> <span class="pre">Unicode('internal-ssl')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.internal_certs_location" title="Permalink to this definition">#</a></dt>
+<dd><p>The location to store certificates automatically created by
+JupyterHub.</p>
+<p>Use with internal_ssl</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.internal_ssl">
+<span class="sig-name descname"><span class="pre">internal_ssl</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.internal_ssl</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.internal_ssl" title="Permalink to this definition">#</a></dt>
+<dd><p>Enable SSL for all internal communication</p>
+<p>This enables end-to-end encryption between all JupyterHub components.
+JupyterHub will automatically create the necessary certificate
+authority and sign notebook certificates as they’re created.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.ip">
+<span class="sig-name descname"><span class="pre">ip</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.ip</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.ip" title="Permalink to this definition">#</a></dt>
+<dd><p>The public facing ip of the whole JupyterHub application
+(specifically referred to as the proxy).</p>
+<p>This is the address on which the proxy will listen. The default is to
+listen on all interfaces. This is the only address through which JupyterHub
+should be accessed by users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.jinja_environment_options">
+<span class="sig-name descname"><span class="pre">jinja_environment_options</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.jinja_environment_options</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.jinja_environment_options" title="Permalink to this definition">#</a></dt>
+<dd><p>Supply extra arguments that will be passed to Jinja environment.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.last_activity_interval">
+<span class="sig-name descname"><span class="pre">last_activity_interval</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.last_activity_interval</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.last_activity_interval" title="Permalink to this definition">#</a></dt>
+<dd><p>Interval (in seconds) at which to update last-activity timestamps.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.load_groups">
+<span class="sig-name descname"><span class="pre">load_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.load_groups</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.load_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Dict of ‘group’: [‘usernames’] to load at startup.</p>
+<p>This strictly <em>adds</em> groups and users to groups.</p>
+<p>Loading one set of groups, then starting JupyterHub again with a different
+set will not remove users or groups from previous launches.
+That must be done through the API.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.load_roles">
+<span class="sig-name descname"><span class="pre">load_roles</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.load_roles</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.load_roles" title="Permalink to this definition">#</a></dt>
+<dd><p>List of predefined role dictionaries to load at startup.</p>
+<p>For instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;teacher&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Access to users&#39;</span> <span class="n">information</span> <span class="ow">and</span> <span class="n">group</span> <span class="n">membership</span><span class="s1">&#39;,</span>
+                    <span class="s1">&#39;scopes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cyclops&#39;</span><span class="p">,</span> <span class="s1">&#39;gandalf&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;services&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                    <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+</pre></div>
+</div>
+<p>All keys apart from ‘name’ are optional.
+See all the available scopes in the JupyterHub REST API documentation.</p>
+<p>Default roles are defined in roles.py.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.log_datefmt">
+<span class="sig-name descname"><span class="pre">log_datefmt</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.log_datefmt</span> <span class="pre">=</span> <span class="pre">Unicode('%Y-%m-%d</span> <span class="pre">%H:%M:%S')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.log_datefmt" title="Permalink to this definition">#</a></dt>
+<dd><p>The date format used by logging formatters for %(asctime)s</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.log_format">
+<span class="sig-name descname"><span class="pre">log_format</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.log_format</span> <span class="pre">=</span> <span class="pre">Unicode('[%(name)s]%(highlevel)s</span> <span class="pre">%(message)s')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.log_format" title="Permalink to this definition">#</a></dt>
+<dd><p>The Logging format template</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.log_level">
+<span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.log_level</span> <span class="pre">=</span> <span class="pre">Enum(30)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.log_level" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the log level by value or name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.logging_config">
+<span class="sig-name descname"><span class="pre">logging_config</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.logging_config</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.logging_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Configure additional log handlers.</p>
+<p>The default stderr logs handler is configured by the
+log_level, log_datefmt and log_format settings.</p>
+<p>This configuration can be used to configure additional handlers
+(e.g. to output the log to a file) or for finer control over the
+default handlers.</p>
+<p>If provided this should be a logging configuration dictionary, for
+more information see:
+<a class="reference external" href="https://docs.python.org/3/library/logging.config.html#logging-config-dictschema">https://docs.python.org/3/library/logging.config.html#logging-config-dictschema</a></p>
+<p>This dictionary is merged with the base logging configuration which
+defines the following:</p>
+<ul class="simple">
+<li><p>A logging formatter intended for interactive use called
+<code class="docutils literal notranslate"><span class="pre">console</span></code>.</p></li>
+<li><p>A logging handler that writes to stderr called
+<code class="docutils literal notranslate"><span class="pre">console</span></code> which uses the formatter <code class="docutils literal notranslate"><span class="pre">console</span></code>.</p></li>
+<li><p>A logger with the name of this application set to <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>
+level.</p></li>
+</ul>
+<p>This example adds a new handler that writes to a file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">Application</span><span class="o">.</span><span class="n">logging_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.FileHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;&lt;path/to/file&gt;&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;loggers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;&lt;application-name&gt;&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="c1"># NOTE: if you don&#39;t list the default &quot;console&quot;</span>
+            <span class="c1"># handler here then it will be disabled</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.logo_file">
+<span class="sig-name descname"><span class="pre">logo_file</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.logo_file</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.logo_file" title="Permalink to this definition">#</a></dt>
+<dd><p>Specify path to a logo image to override the Jupyter logo in the banner.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.named_server_limit_per_user">
+<span class="sig-name descname"><span class="pre">named_server_limit_per_user</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.named_server_limit_per_user</span> <span class="pre">=</span> <span class="pre">Union(0)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.named_server_limit_per_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Maximum number of concurrent named servers that can be created by a user at a time.</p>
+<p>Setting this can limit the total resources a user can consume.</p>
+<p>If set to 0, no limit is enforced.</p>
+<p>Can be an integer or a callable/awaitable based on the handler object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">named_server_limit_per_user_fn</span><span class="p">(</span><span class="n">handler</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">current_user</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">admin</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="mi">5</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">named_server_limit_per_user</span> <span class="o">=</span> <span class="n">named_server_limit_per_user_fn</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.oauth_token_expires_in">
+<span class="sig-name descname"><span class="pre">oauth_token_expires_in</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.oauth_token_expires_in</span> <span class="pre">=</span> <span class="pre">Int(0)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.oauth_token_expires_in" title="Permalink to this definition">#</a></dt>
+<dd><p>Expiry (in seconds) of OAuth access tokens.</p>
+<p>The default is to expire when the cookie storing them expires,
+according to <code class="docutils literal notranslate"><span class="pre">cookie_max_age_days</span></code> config.</p>
+<p>These are the tokens stored in cookies when you visit
+a single-user server or service.
+When they expire, you must re-authenticate with the Hub,
+even if your Hub authentication is still valid.
+If your Hub authentication is valid,
+logging in may be a transparent redirect as you refresh the page.</p>
+<p>This does not affect JupyterHub API tokens in general,
+which do not expire by default.
+Only tokens issued during the oauth flow
+accessing services and single-user servers are affected.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4: </span>OAuth token expires_in was not previously configurable.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>Default now uses cookie_max_age_days so that oauth tokens
+which are generally stored in cookies,
+expire when the cookies storing them expire.
+Previously, it was one hour.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.pid_file">
+<span class="sig-name descname"><span class="pre">pid_file</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.pid_file</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.pid_file" title="Permalink to this definition">#</a></dt>
+<dd><p>File to write PID
+Useful for daemonizing JupyterHub.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.port">
+<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.port</span> <span class="pre">=</span> <span class="pre">Int(8000)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.port" title="Permalink to this definition">#</a></dt>
+<dd><p>The public facing port of the proxy.</p>
+<p>This is the port on which the proxy will listen.
+This is the only port through which JupyterHub
+should be accessed by users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.proxy_api_ip">
+<span class="sig-name descname"><span class="pre">proxy_api_ip</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.proxy_api_ip</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.proxy_api_ip" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.8 : Use ConfigurableHTTPProxy.api_url</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.proxy_api_port">
+<span class="sig-name descname"><span class="pre">proxy_api_port</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.proxy_api_port</span> <span class="pre">=</span> <span class="pre">Int(0)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.proxy_api_port" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.8 : Use ConfigurableHTTPProxy.api_url</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.proxy_auth_token">
+<span class="sig-name descname"><span class="pre">proxy_auth_token</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.proxy_auth_token</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.proxy_auth_token" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.8: Use ConfigurableHTTPProxy.auth_token</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.proxy_check_interval">
+<span class="sig-name descname"><span class="pre">proxy_check_interval</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.proxy_check_interval</span> <span class="pre">=</span> <span class="pre">Int(5)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.proxy_check_interval" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.8: Use ConfigurableHTTPProxy.check_running_interval</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.proxy_class">
+<span class="sig-name descname"><span class="pre">proxy_class</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.proxy_class</span> <span class="pre">=</span> <span class="pre">EntryPointType(&lt;class</span> <span class="pre">'jupyterhub.proxy.ConfigurableHTTPProxy'&gt;)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.proxy_class" title="Permalink to this definition">#</a></dt>
+<dd><p>The class to use for configuring the JupyterHub proxy.</p>
+<blockquote>
+<div><p>Should be a subclass of <a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy" title="jupyterhub.proxy.Proxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">jupyterhub.proxy.Proxy</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0: </span>proxies may be registered via entry points,
+e.g. <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.proxy_class</span> <span class="pre">=</span> <span class="pre">'traefik'</span></code></p>
+</div>
+</div></blockquote>
+<dl class="simple">
+<dt>Currently installed:</dt><dd><ul class="simple">
+<li><p>configurable-http-proxy: jupyterhub.proxy.ConfigurableHTTPProxy</p></li>
+<li><p>default: jupyterhub.proxy.ConfigurableHTTPProxy</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.proxy_cmd">
+<span class="sig-name descname"><span class="pre">proxy_cmd</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.proxy_cmd</span> <span class="pre">=</span> <span class="pre">Command()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.proxy_cmd" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED since version 0.8. Use ConfigurableHTTPProxy.command</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.recreate_internal_certs">
+<span class="sig-name descname"><span class="pre">recreate_internal_certs</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.recreate_internal_certs</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.recreate_internal_certs" title="Permalink to this definition">#</a></dt>
+<dd><p>Recreate all certificates used within JupyterHub on restart.</p>
+<p>Note: enabling this feature requires restarting all notebook servers.</p>
+<p>Use with internal_ssl</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.redirect_to_server">
+<span class="sig-name descname"><span class="pre">redirect_to_server</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.redirect_to_server</span> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.redirect_to_server" title="Permalink to this definition">#</a></dt>
+<dd><p>Redirect user to server (if running), instead of control panel.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.reset_db">
+<span class="sig-name descname"><span class="pre">reset_db</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.reset_db</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.reset_db" title="Permalink to this definition">#</a></dt>
+<dd><p>Purge and reset the database.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.service_check_interval">
+<span class="sig-name descname"><span class="pre">service_check_interval</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.service_check_interval</span> <span class="pre">=</span> <span class="pre">Int(60)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.service_check_interval" title="Permalink to this definition">#</a></dt>
+<dd><p>Interval (in seconds) at which to check connectivity of services with web endpoints.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.service_tokens">
+<span class="sig-name descname"><span class="pre">service_tokens</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.service_tokens</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.service_tokens" title="Permalink to this definition">#</a></dt>
+<dd><p>Dict of token:servicename to be loaded into the database.</p>
+<p>Allows ahead-of-time generation of API tokens for use by externally managed services.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.services">
+<span class="sig-name descname"><span class="pre">services</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.services</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.services" title="Permalink to this definition">#</a></dt>
+<dd><p>List of service specification dictionaries.</p>
+<p>A service</p>
+<p>For instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cull_idle&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;/path/to/cull_idle_servers.py&#39;</span><span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;formgrader&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;http://127.0.0.1:1234&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;api_token&#39;</span><span class="p">:</span> <span class="s1">&#39;super-secret&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;environment&#39;</span><span class="p">:</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.show_config">
+<span class="sig-name descname"><span class="pre">show_config</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.show_config</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.show_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Instead of starting the Application, dump configuration to stdout</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.show_config_json">
+<span class="sig-name descname"><span class="pre">show_config_json</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.show_config_json</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.show_config_json" title="Permalink to this definition">#</a></dt>
+<dd><p>Instead of starting the Application, dump configuration to stdout (as JSON)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.shutdown_on_logout">
+<span class="sig-name descname"><span class="pre">shutdown_on_logout</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.shutdown_on_logout</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.shutdown_on_logout" title="Permalink to this definition">#</a></dt>
+<dd><p>Shuts down all user servers on logout</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.spawner_class">
+<span class="sig-name descname"><span class="pre">spawner_class</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.spawner_class</span> <span class="pre">=</span> <span class="pre">EntryPointType(&lt;class</span> <span class="pre">'jupyterhub.spawner.LocalProcessSpawner'&gt;)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.spawner_class" title="Permalink to this definition">#</a></dt>
+<dd><p>The class to use for spawning single-user servers.</p>
+<blockquote>
+<div><p>Should be a subclass of <a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner" title="jupyterhub.spawner.Spawner"><code class="xref py py-class docutils literal notranslate"><span class="pre">jupyterhub.spawner.Spawner</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0: </span>spawners may be registered via entry points,
+e.g. <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.spawner_class</span> <span class="pre">=</span> <span class="pre">'localprocess'</span></code></p>
+</div>
+</div></blockquote>
+<dl class="simple">
+<dt>Currently installed:</dt><dd><ul class="simple">
+<li><p>default: jupyterhub.spawner.LocalProcessSpawner</p></li>
+<li><p>localprocess: jupyterhub.spawner.LocalProcessSpawner</p></li>
+<li><p>simple: jupyterhub.spawner.SimpleLocalProcessSpawner</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.ssl_cert">
+<span class="sig-name descname"><span class="pre">ssl_cert</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.ssl_cert</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.ssl_cert" title="Permalink to this definition">#</a></dt>
+<dd><p>Path to SSL certificate file for the public facing interface of the proxy</p>
+<p>When setting this, you should also set ssl_key</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.ssl_key">
+<span class="sig-name descname"><span class="pre">ssl_key</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.ssl_key</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.ssl_key" title="Permalink to this definition">#</a></dt>
+<dd><p>Path to SSL key file for the public facing interface of the proxy</p>
+<p>When setting this, you should also set ssl_cert</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.statsd_host">
+<span class="sig-name descname"><span class="pre">statsd_host</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.statsd_host</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.statsd_host" title="Permalink to this definition">#</a></dt>
+<dd><p>Host to send statsd metrics to. An empty string (the default) disables sending metrics.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.statsd_port">
+<span class="sig-name descname"><span class="pre">statsd_port</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.statsd_port</span> <span class="pre">=</span> <span class="pre">Int(8125)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.statsd_port" title="Permalink to this definition">#</a></dt>
+<dd><p>Port on which to send statsd metrics about the hub</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.statsd_prefix">
+<span class="sig-name descname"><span class="pre">statsd_prefix</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.statsd_prefix</span> <span class="pre">=</span> <span class="pre">Unicode('jupyterhub')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.statsd_prefix" title="Permalink to this definition">#</a></dt>
+<dd><p>Prefix to use for all metrics sent by jupyterhub to statsd</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.subdomain_host">
+<span class="sig-name descname"><span class="pre">subdomain_host</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.subdomain_host</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.subdomain_host" title="Permalink to this definition">#</a></dt>
+<dd><p>Run single-user servers on subdomains of this host.</p>
+<p>This should be the full <code class="docutils literal notranslate"><span class="pre">https://hub.domain.tld[:port]</span></code>.</p>
+<p>Provides additional cross-site protections for javascript served by single-user servers.</p>
+<p>Requires <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;.hub.domain.tld</span></code> to resolve to the same host as <code class="docutils literal notranslate"><span class="pre">hub.domain.tld</span></code>.</p>
+<p>In general, this is most easily achieved with wildcard DNS.</p>
+<p>When using SSL (i.e. always) this also requires a wildcard SSL certificate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.template_paths">
+<span class="sig-name descname"><span class="pre">template_paths</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.template_paths</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.template_paths" title="Permalink to this definition">#</a></dt>
+<dd><p>Paths to search for jinja templates, before using the default templates.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.template_vars">
+<span class="sig-name descname"><span class="pre">template_vars</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.template_vars</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.template_vars" title="Permalink to this definition">#</a></dt>
+<dd><p>Extra variables to be passed into jinja templates</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.tornado_settings">
+<span class="sig-name descname"><span class="pre">tornado_settings</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.tornado_settings</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.tornado_settings" title="Permalink to this definition">#</a></dt>
+<dd><p>Extra settings overrides to pass to the tornado application.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.trust_user_provided_tokens">
+<span class="sig-name descname"><span class="pre">trust_user_provided_tokens</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.trust_user_provided_tokens</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.trust_user_provided_tokens" title="Permalink to this definition">#</a></dt>
+<dd><p>Trust user-provided tokens (via JupyterHub.service_tokens)
+to have good entropy.</p>
+<p>If you are not inserting additional tokens via configuration file,
+this flag has no effect.</p>
+<p>In JupyterHub 0.8, internally generated tokens do not
+pass through additional hashing because the hashing is costly
+and does not increase the entropy of already-good UUIDs.</p>
+<p>User-provided tokens, on the other hand, are not trusted to have good entropy by default,
+and are passed through many rounds of hashing to stretch the entropy of the key
+(i.e. user-provided tokens are treated as passwords instead of random keys).
+These keys are more costly to check.</p>
+<p>If your inserted tokens are generated by a good-quality mechanism,
+e.g. <code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">rand</span> <span class="pre">-hex</span> <span class="pre">32</span></code>, then you can set this flag to True
+to reduce the cost of checking authentication tokens.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.trusted_alt_names">
+<span class="sig-name descname"><span class="pre">trusted_alt_names</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.trusted_alt_names</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.trusted_alt_names" title="Permalink to this definition">#</a></dt>
+<dd><p>Names to include in the subject alternative name.</p>
+<p>These names will be used for server name verification. This is useful
+if JupyterHub is being run behind a reverse proxy or services using ssl
+are on different hosts.</p>
+<p>Use with internal_ssl</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.trusted_downstream_ips">
+<span class="sig-name descname"><span class="pre">trusted_downstream_ips</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.trusted_downstream_ips</span> <span class="pre">=</span> <span class="pre">List()</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.trusted_downstream_ips" title="Permalink to this definition">#</a></dt>
+<dd><p>Downstream proxy IP addresses to trust.</p>
+<p>This sets the list of IP addresses that are trusted and skipped when processing
+the <code class="docutils literal notranslate"><span class="pre">X-Forwarded-For</span></code> header. For example, if an external proxy is used for TLS
+termination, its IP address should be added to this list to ensure the correct
+client IP addresses are recorded in the logs instead of the proxy server’s IP
+address.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.upgrade_db">
+<span class="sig-name descname"><span class="pre">upgrade_db</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.upgrade_db</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.upgrade_db" title="Permalink to this definition">#</a></dt>
+<dd><p>Upgrade the database automatically on start.</p>
+<p>Only safe if database is regularly backed up.
+Only SQLite databases will be backed up to a local file automatically.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.use_legacy_stopped_server_status_code">
+<span class="sig-name descname"><span class="pre">use_legacy_stopped_server_status_code</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.use_legacy_stopped_server_status_code</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.use_legacy_stopped_server_status_code" title="Permalink to this definition">#</a></dt>
+<dd><p>Return 503 rather than 424 when request comes in for a non-running server.</p>
+<p>Prior to JupyterHub 2.0, we returned a 503 when any request came in for
+a user server that was currently not running. By default, JupyterHub 2.0
+will return a 424 - this makes operational metric dashboards more useful.</p>
+<p>JupyterLab &lt; 3.2 expected the 503 to know if the user server is no longer
+running, and prompted the user to start their server. Set this config to
+true to retain the old behavior, so JupyterLab &lt; 3.2 can continue to show
+the appropriate UI when the user server is stopped.</p>
+<p>This option will be removed in a future release.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.app.JupyterHub.user_redirect_hook">
+<span class="sig-name descname"><span class="pre">user_redirect_hook</span></span><em class="property"><span class="w"> </span><span class="pre">c.JupyterHub.user_redirect_hook</span> <span class="pre">=</span> <span class="pre">Callable(None)</span></em><a class="headerlink" href="#jupyterhub.app.JupyterHub.user_redirect_hook" title="Permalink to this definition">#</a></dt>
+<dd><p>Callable to affect behavior of /user-redirect/</p>
+<p>Receives 4 parameters:
+1. path - URL path that was provided after /user-redirect/
+2. request - A Tornado HTTPServerRequest representing the current request.
+3. user - The currently authenticated user.
+4. base_url - The base_url of the current hub, for relative redirects</p>
+<p>It should return the new URL to redirect to, or None to preserve
+current behavior.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">JupyterHub API</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="auth.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Authenticators</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-jupyterhub.app">
+   Module:
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     jupyterhub.app
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jupyterhub">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       JupyterHub
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         JupyterHub
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.active_server_limit">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.active_server_limit
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.active_user_window">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.active_user_window
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.activity_resolution">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.activity_resolution
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.admin_access">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.admin_access
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.admin_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.admin_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.allow_named_servers">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.allow_named_servers
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.answer_yes">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.answer_yes
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.api_page_default_limit">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.api_page_default_limit
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.api_page_max_limit">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.api_page_max_limit
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.api_tokens">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.api_tokens
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.authenticate_prometheus">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.authenticate_prometheus
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.authenticator_class">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.authenticator_class
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.base_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.base_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.bind_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.bind_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.cleanup_proxy">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.cleanup_proxy
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.cleanup_servers">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.cleanup_servers
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.concurrent_spawn_limit">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.concurrent_spawn_limit
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.config_file">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.config_file
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.confirm_no_ssl">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.confirm_no_ssl
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.cookie_max_age_days">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.cookie_max_age_days
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.cookie_secret">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.cookie_secret
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.cookie_secret_file">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.cookie_secret_file
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.custom_scopes">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.custom_scopes
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.data_files_path">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.data_files_path
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.db_kwargs">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.db_kwargs
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.db_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.db_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.debug_db">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.debug_db
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.debug_proxy">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.debug_proxy
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.default_server_name">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.default_server_name
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.default_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.default_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.external_ssl_authorities">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.external_ssl_authorities
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.extra_handlers">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.extra_handlers
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.extra_log_file">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.extra_log_file
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.extra_log_handlers">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.extra_log_handlers
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.forwarded_host_header">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.forwarded_host_header
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.generate_certs">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.generate_certs
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.generate_config">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.generate_config
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_bind_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_bind_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_connect_ip">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_connect_ip
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_connect_port">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_connect_port
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_connect_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_connect_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_ip">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_ip
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_port">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_port
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.hub_routespec">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.hub_routespec
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.implicit_spawn_seconds">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.implicit_spawn_seconds
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.init_spawners_timeout">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.init_spawners_timeout
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.internal_certs_location">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.internal_certs_location
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.internal_ssl">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.internal_ssl
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.ip">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.ip
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.jinja_environment_options">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.jinja_environment_options
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.last_activity_interval">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.last_activity_interval
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.load_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.load_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.load_roles">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.load_roles
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.log_datefmt">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.log_datefmt
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.log_format">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.log_format
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.log_level">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.log_level
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.logging_config">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.logging_config
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.logo_file">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.logo_file
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.named_server_limit_per_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.named_server_limit_per_user
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.oauth_token_expires_in">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.oauth_token_expires_in
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.pid_file">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.pid_file
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.port">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.port
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.proxy_api_ip">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.proxy_api_ip
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.proxy_api_port">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.proxy_api_port
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.proxy_auth_token">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.proxy_auth_token
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.proxy_check_interval">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.proxy_check_interval
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.proxy_class">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.proxy_class
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.proxy_cmd">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.proxy_cmd
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.recreate_internal_certs">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.recreate_internal_certs
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.redirect_to_server">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.redirect_to_server
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.reset_db">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.reset_db
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.service_check_interval">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.service_check_interval
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.service_tokens">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.service_tokens
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.services">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.services
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.show_config">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.show_config
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.show_config_json">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.show_config_json
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.shutdown_on_logout">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.shutdown_on_logout
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.spawner_class">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.spawner_class
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.ssl_cert">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.ssl_cert
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.ssl_key">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.ssl_key
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.statsd_host">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.statsd_host
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.statsd_port">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.statsd_port
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.statsd_prefix">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.statsd_prefix
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.subdomain_host">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.subdomain_host
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.template_paths">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.template_paths
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.template_vars">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.template_vars
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.tornado_settings">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.tornado_settings
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.trust_user_provided_tokens">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.trust_user_provided_tokens
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.trusted_alt_names">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.trusted_alt_names
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.trusted_downstream_ips">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.trusted_downstream_ips
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.upgrade_db">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.upgrade_db
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.use_legacy_stopped_server_status_code">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.use_legacy_stopped_server_status_code
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.app.JupyterHub.user_redirect_hook">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           JupyterHub.user_redirect_hook
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/api/app.rst">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/api/app.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

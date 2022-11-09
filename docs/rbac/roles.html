@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Roles &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'rbac/roles';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Scopes in JupyterHub" href="scopes.html" />
+    <link rel="prev" title="JupyterHub RBAC" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scopes.html">Scopes in JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use-cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tech-implementation.html">Technical Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrading JupyterHub with RBAC framework</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="roles">
+<span id="id1"></span><h1>Roles<a class="headerlink" href="#roles" title="Permalink to this heading">#</a></h1>
+<p>JupyterHub provides four roles that are available by default:</p>
+<div class="admonition-default-roles admonition">
+<p class="admonition-title"><strong>Default roles</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">user</span></code> role provides a <a class="reference internal" href="scopes.html#default-user-scope-target"><span class="std std-ref">default user scope</span></a> <code class="docutils literal notranslate"><span class="pre">self</span></code> that grants access to the user’s own resources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin</span></code> role contains all available scopes and grants full rights to all actions. This role <strong>cannot be edited</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code> role provides a <a class="reference internal" href="scopes.html#default-token-scope-target"><span class="std std-ref">default token scope</span></a> <code class="docutils literal notranslate"><span class="pre">inherit</span></code> that resolves to the same permissions as the owner of the token has.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">server</span></code> role allows for posting activity of “itself” only.</p></li>
+</ul>
+<p><strong>These roles cannot be deleted.</strong></p>
+</div>
+<p>These default roles have a default collection of scopes,
+but you can define the scopes associated with each role (excluding admin) to suit your needs,
+as seen <a class="reference internal" href="#overriding-default-roles"><span class="std std-ref">below</span></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">admin</span></code>, and <code class="docutils literal notranslate"><span class="pre">token</span></code> roles by default all preserve the permissions prior to RBAC.
+Only the <code class="docutils literal notranslate"><span class="pre">server</span></code> role is changed from pre-2.0, to reduce its permissions to activity-only
+instead of the default of a full access token.</p>
+<p>Additional custom roles can also be defined (see <a class="reference internal" href="#define-role-target"><span class="std std-ref">Defining Roles</span></a>).
+Roles can be assigned to the following entities:</p>
+<ul class="simple">
+<li><p>Users</p></li>
+<li><p>Services</p></li>
+<li><p>Groups</p></li>
+</ul>
+<p>An entity can have zero, one, or multiple roles, and there are no restrictions on which roles can be assigned to which entity. Roles can be added to or removed from entities at any time.</p>
+<p><strong>Users</strong> <br />
+When a new user gets created, they are assigned their default role <code class="docutils literal notranslate"><span class="pre">user</span></code>. Additionaly, if the user is created with admin privileges (via <code class="docutils literal notranslate"><span class="pre">c.Authenticator.admin_users</span></code> in <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> or <code class="docutils literal notranslate"><span class="pre">admin:</span> <span class="pre">true</span></code> via API), they will be also granted <code class="docutils literal notranslate"><span class="pre">admin</span></code> role. If existing user’s admin status changes via API or <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>, their default role will be updated accordingly (after next startup for the latter).</p>
+<p><strong>Services</strong> <br />
+Services do not have a default role. Services without roles have no access to the guarded API end-points, so most services will require assignment of a role in order to function.</p>
+<p><strong>Groups</strong> <br />
+A group does not require any role, and has no roles by default. If a user is a member of a group, they automatically inherit any of the group’s permissions (see <a class="reference internal" href="tech-implementation.html#resolving-roles-scopes-target"><span class="std std-ref">Resolving roles and scopes</span></a> for more details). This is useful for assigning a set of common permissions to several users.</p>
+<p><strong>Tokens</strong> <br />
+A token’s permissions are evaluated based on their owning entity. Since a token is always issued for a user or service, it can never have more permissions than its owner. If no specific scopes are requested for a new token, the token is assigned the scopes of the <code class="docutils literal notranslate"><span class="pre">token</span></code> role.</p>
+<section id="defining-roles">
+<span id="define-role-target"></span><h2>Defining Roles<a class="headerlink" href="#defining-roles" title="Permalink to this heading">#</a></h2>
+<p>Roles can be defined or modified in the configuration file as a list of dictionaries. An example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># in jupyterhub_config.py</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="p">{</span>
+   <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;server-rights&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Allows parties to start and stop user servers&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;scopes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">],</span>
+   <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;alice&#39;</span><span class="p">,</span> <span class="s1">&#39;bob&#39;</span><span class="p">],</span>
+   <span class="s1">&#39;services&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;idle-culler&#39;</span><span class="p">],</span>
+   <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;admin-group&#39;</span><span class="p">],</span>
+ <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The role <code class="docutils literal notranslate"><span class="pre">server-rights</span></code> now allows the starting and stopping of servers by any of the following:</p>
+<ul class="simple">
+<li><p>users <code class="docutils literal notranslate"><span class="pre">alice</span></code> and <code class="docutils literal notranslate"><span class="pre">bob</span></code></p></li>
+<li><p>the service <code class="docutils literal notranslate"><span class="pre">idle-culler</span></code></p></li>
+<li><p>any member of the <code class="docutils literal notranslate"><span class="pre">admin-group</span></code>.</p></li>
+</ul>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Tokens cannot be assigned roles through role definition but may be assigned specific roles when requested via API (see <a class="reference internal" href="tech-implementation.html#requesting-api-token-target"><span class="std std-ref">Requesting API token with specific scopes</span></a>).</p>
+</div>
+<p>Another example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># in jupyterhub_config.py</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="p">{</span>
+   <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Read-only user models&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;reader&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;scopes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;read:users&#39;</span><span class="p">],</span>
+   <span class="s1">&#39;services&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;external&#39;</span><span class="p">],</span>
+   <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;maria&#39;</span><span class="p">,</span> <span class="s1">&#39;joe&#39;</span><span class="p">]</span>
+ <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The role <code class="docutils literal notranslate"><span class="pre">reader</span></code> allows users <code class="docutils literal notranslate"><span class="pre">maria</span></code> and <code class="docutils literal notranslate"><span class="pre">joe</span></code> and service <code class="docutils literal notranslate"><span class="pre">external</span></code> to read (but not modify) any user’s model.</p>
+<div class="warning admonition">
+<p class="admonition-title">Requirements</p>
+<p>In a role definition, the <code class="docutils literal notranslate"><span class="pre">name</span></code> field is required, while all other fields are optional.<br />
+<strong>Role names must:</strong></p>
+<ul class="simple">
+<li><p>be 3 - 255 characters</p></li>
+<li><p>use ascii lowercase, numbers, ‘unreserved’ URL punctuation <code class="docutils literal notranslate"><span class="pre">-_.~</span></code></p></li>
+<li><p>start with a letter</p></li>
+<li><p>end with letter or number.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">users</span></code>, <code class="docutils literal notranslate"><span class="pre">services</span></code>, and <code class="docutils literal notranslate"><span class="pre">groups</span></code> only accept objects that already exist in the database or are defined previously in the file.
+It is not possible to implicitly add a new user to the database by defining a new role.</p>
+</div>
+<p>If no scopes are defined for <em>new role</em>, JupyterHub will raise a warning. Providing non-existing scopes will result in an error.</p>
+<p>In case the role with a certain name already exists in the database, its definition and scopes will be overwritten. This holds true for all roles except the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role, which cannot be overwritten; an error will be raised if trying to do so. All the role bearers permissions present in the definition will change accordingly.</p>
+<section id="overriding-default-roles">
+<span id="id2"></span><h3>Overriding default roles<a class="headerlink" href="#overriding-default-roles" title="Permalink to this heading">#</a></h3>
+<p>Role definitions can include those of the “default” roles listed above (admin excluded),
+if the default scopes associated with those roles do not suit your deployment.
+For example, to specify what permissions the $JUPYTERHUB_API_TOKEN issued to all single-user servers
+has,
+define the <code class="docutils literal notranslate"><span class="pre">server</span></code> role.</p>
+<p>To restore the JupyterHub 1.x behavior of servers being able to do anything their owners can do,
+use the scope <code class="docutils literal notranslate"><span class="pre">inherit</span></code> (for ‘inheriting’ the owner’s permissions):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="p">{</span>
+   <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;server&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;scopes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;inherit&#39;</span><span class="p">],</span>
+ <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>or, better yet, identify the specific <a class="reference internal" href="scopes.html#available-scopes-target"><span class="std std-ref">scopes</span></a> you want server environments to have access to.</p>
+<p>If you don’t want to get too detailed,
+one option is the <code class="docutils literal notranslate"><span class="pre">self</span></code> scope,
+which will have no effect on non-admin users,
+but will restrict the token issued to admin user servers to only have access to their own resources,
+instead of being able to take actions on behalf of all other users.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="p">{</span>
+   <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;server&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;scopes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;self&#39;</span><span class="p">],</span>
+ <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="removing-roles">
+<span id="removing-roles-target"></span><h2>Removing roles<a class="headerlink" href="#removing-roles" title="Permalink to this heading">#</a></h2>
+<p>Only the entities present in the role definition in the <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> remain the role bearers. If a user, service or group is removed from the role definition, they will lose the role on the next startup.</p>
+<p>Once a role is loaded, it remains in the database until removing it from the <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> and restarting the Hub. All previously defined role bearers will lose the role and associated permissions. Default roles, even if previously redefined through the config file and removed, will not be deleted from the database.</p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">JupyterHub RBAC</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="scopes.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Scopes in JupyterHub</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-roles">
+   Defining Roles
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#overriding-default-roles">
+     Overriding default roles
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#removing-roles">
+   Removing roles
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/rbac/roles.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/rbac/roles.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

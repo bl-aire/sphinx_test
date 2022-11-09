@@ -1,0 +1,1027 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Spawners &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/spawners';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Services" href="services.html" />
+    <link rel="prev" title="Authenticators" href="authenticators.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="spawners">
+<h1>Spawners<a class="headerlink" href="#spawners" title="Permalink to this heading">#</a></h1>
+<p>A <a class="reference external" href="https://github.com/jupyterhub/jupyterhub/blob/HEAD/jupyterhub/spawner.py">Spawner</a> starts each single-user notebook server.
+The Spawner represents an abstract interface to a process,
+and a custom Spawner needs to be able to take three actions:</p>
+<ul class="simple">
+<li><p>start the process</p></li>
+<li><p>poll whether the process is still running</p></li>
+<li><p>stop the process</p></li>
+</ul>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
+<p>Custom Spawners for JupyterHub can be found on the <a class="reference external" href="https://github.com/jupyterhub/jupyterhub/wiki/Spawners">JupyterHub wiki</a>.
+Some examples include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jupyterhub/dockerspawner">DockerSpawner</a> for spawning user servers in Docker containers</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">dockerspawner.DockerSpawner</span></code> for spawning identical Docker containers for
+each users</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dockerspawner.SystemUserSpawner</span></code> for spawning Docker containers with an
+environment and home directory for each users</p></li>
+<li><p>both <code class="docutils literal notranslate"><span class="pre">DockerSpawner</span></code> and <code class="docutils literal notranslate"><span class="pre">SystemUserSpawner</span></code> also work with Docker Swarm for
+launching containers on remote machines</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/jupyterhub/sudospawner">SudoSpawner</a> enables JupyterHub to
+run without being root, by spawning an intermediate process via <code class="docutils literal notranslate"><span class="pre">sudo</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/jupyterhub/batchspawner">BatchSpawner</a> for spawning remote
+servers using batch systems</p></li>
+<li><p><a class="reference external" href="https://github.com/jupyterhub/yarnspawner">YarnSpawner</a> for spawning notebook
+servers in YARN containers on a Hadoop cluster</p></li>
+<li><p><a class="reference external" href="https://github.com/NERSC/sshspawner">SSHSpawner</a> to spawn notebooks
+on a remote server using SSH</p></li>
+<li><p><a class="reference external" href="https://github.com/jupyterhub/kubespawner">KubeSpawner</a> to spawn notebook servers on kubernetes cluster.</p></li>
+</ul>
+</section>
+<section id="spawner-control-methods">
+<h2>Spawner control methods<a class="headerlink" href="#spawner-control-methods" title="Permalink to this heading">#</a></h2>
+<section id="spawner-start">
+<h3>Spawner.start<a class="headerlink" href="#spawner-start" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> should start the single-user server for a single user.
+Information about the user can be retrieved from <code class="docutils literal notranslate"><span class="pre">self.user</span></code>,
+an object encapsulating the user’s name, authentication, and server info.</p>
+<p>The return value of <code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> should be the <code class="docutils literal notranslate"><span class="pre">(ip,</span> <span class="pre">port)</span></code> of the running server,
+or a full URL as a string.</p>
+<p>Most <code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> functions will look similar to this example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">random_port</span><span class="p">()</span>
+    <span class="c1"># get environment variables,</span>
+    <span class="c1"># several of which are required for configuring the single-user server</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_env</span><span class="p">()</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># get jupyterhub command to run,</span>
+    <span class="c1"># typically [&#39;jupyterhub-singleuser&#39;]</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_args</span><span class="p">())</span>
+
+    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actually_start_server_somehow</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+    <span class="c1"># url may not match self.ip:self.port, but it could!</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_connectable_url</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">url</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> returns, the single-user server process should actually be running,
+not just requested. JupyterHub can handle <code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> being very slow
+(such as PBS-style batch queues, or instantiating whole AWS instances)
+via relaxing the <code class="docutils literal notranslate"><span class="pre">Spawner.start_timeout</span></code> config value.</p>
+<section id="note-on-ips-and-ports">
+<h4>Note on IPs and ports<a class="headerlink" href="#note-on-ips-and-ports" title="Permalink to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Spawner.ip</span></code> and <code class="docutils literal notranslate"><span class="pre">Spawner.port</span></code> attributes set the <em>bind</em> url,
+which the single-user server should listen on
+(passed to the single-user process via the <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_URL</span></code> environment variable).
+The <em>return</em> value is the ip and port (or full url) the Hub should <em>connect to</em>.
+These are not necessarily the same, and usually won’t be in any Spawner that works with remote resources or containers.</p>
+<p>The default for Spawner.ip, and Spawner.port is <code class="docutils literal notranslate"><span class="pre">127.0.0.1:{random}</span></code>,
+which is appropriate for Spawners that launch local processes,
+where everything is on localhost and each server needs its own port.
+For remote or container Spawners, it will often make sense to use a different value,
+such as <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">=</span> <span class="pre">'0.0.0.0'</span></code> and a fixed port, e.g. <code class="docutils literal notranslate"><span class="pre">8888</span></code>.
+The defaults can be changed in the class,
+preserving configuration with traitlets:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traitlets</span> <span class="kn">import</span> <span class="n">default</span>
+<span class="kn">from</span> <span class="nn">jupyterhub.spawner</span> <span class="kn">import</span> <span class="n">Spawner</span>
+
+<span class="k">class</span> <span class="nc">MySpawner</span><span class="p">(</span><span class="n">Spawner</span><span class="p">):</span>
+    <span class="nd">@default</span><span class="p">(</span><span class="s2">&quot;ip&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_default_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;0.0.0.0&#39;</span>
+
+    <span class="nd">@default</span><span class="p">(</span><span class="s2">&quot;port&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_default_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">8888</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_env</span><span class="p">()</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># get jupyterhub command to run,</span>
+        <span class="c1"># typically [&#39;jupyterhub-singleuser&#39;]</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_args</span><span class="p">())</span>
+
+        <span class="n">remote_server_info</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actually_start_server_somehow</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_public_url_from</span><span class="p">(</span><span class="n">remote_server_info</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">url</span>
+</pre></div>
+</div>
+</section>
+<section id="exception-handling">
+<h4>Exception handling<a class="headerlink" href="#exception-handling" title="Permalink to this heading">#</a></h4>
+<p>When <code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> raises an Exception, a message can be passed on to the user via the exception via a <code class="docutils literal notranslate"><span class="pre">.jupyterhub_html_message</span></code> or <code class="docutils literal notranslate"><span class="pre">.jupyterhub_message</span></code> attribute.</p>
+<p>When the Exception has a <code class="docutils literal notranslate"><span class="pre">.jupyterhub_html_message</span></code> attribute, it will be rendered as HTML to the user.</p>
+<p>Alternatively <code class="docutils literal notranslate"><span class="pre">.jupyterhub_message</span></code> is rendered as unformatted text.</p>
+<p>If both attributes are not present, the Exception will be shown to the user as unformatted text.</p>
+</section>
+</section>
+<section id="spawner-poll">
+<h3>Spawner.poll<a class="headerlink" href="#spawner-poll" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Spawner.poll</span></code> should check if the spawner is still running.
+It should return <code class="docutils literal notranslate"><span class="pre">None</span></code> if it is still running,
+and an integer exit status, otherwise.</p>
+<p>For the local process case, <code class="docutils literal notranslate"><span class="pre">Spawner.poll</span></code> uses <code class="docutils literal notranslate"><span class="pre">os.kill(PID,</span> <span class="pre">0)</span></code>
+to check if the local process is still running. On Windows, it uses <code class="docutils literal notranslate"><span class="pre">psutil.pid_exists</span></code>.</p>
+</section>
+<section id="spawner-stop">
+<h3>Spawner.stop<a class="headerlink" href="#spawner-stop" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Spawner.stop</span></code> should stop the process. It must be a tornado coroutine, which should return when the process has finished exiting.</p>
+</section>
+</section>
+<section id="spawner-state">
+<h2>Spawner state<a class="headerlink" href="#spawner-state" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub should be able to stop and restart without tearing down
+single-user notebook servers. To do this task, a Spawner may need to persist
+some information that can be restored later.
+A JSON-able dictionary of state can be used to store persisted information.</p>
+<p>Unlike start, stop, and poll methods, the state methods must not be coroutines.</p>
+<p>For the single-process case, the Spawner state is only the process ID of the server:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;get the current state&quot;&quot;&quot;</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">:</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span>
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">load_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;load state from the database&quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;pid&#39;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">clear_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;clear any state (called after shutdown)&quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clear_state</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="spawner-options-form">
+<h2>Spawner options form<a class="headerlink" href="#spawner-options-form" title="Permalink to this heading">#</a></h2>
+<p>(new in 0.4)</p>
+<p>Some deployments may want to offer options to users to influence how their servers are started.
+This may include cluster-based deployments, where users specify what resources should be available,
+or docker-based deployments where users can select from a list of base images.</p>
+<p>This feature is enabled by setting <code class="docutils literal notranslate"><span class="pre">Spawner.options_form</span></code>, which is an HTML form snippet
+inserted unmodified into the spawn form.
+If the <code class="docutils literal notranslate"><span class="pre">Spawner.options_form</span></code> is defined, when a user tries to start their server, they will be directed to a form page, like this:</p>
+<p><img alt="spawn-form" src="../_images/spawn-form.png" /></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">Spawner.options_form</span></code> is undefined, the user’s server is spawned directly, and no spawn page is rendered.</p>
+<p>See <a class="reference external" href="https://github.com/jupyterhub/jupyterhub/blob/HEAD/examples/spawn-form/jupyterhub_config.py">this example</a> for a form that allows custom CLI args for the local spawner.</p>
+<section id="spawner-options-from-form">
+<h3><code class="docutils literal notranslate"><span class="pre">Spawner.options_from_form</span></code><a class="headerlink" href="#spawner-options-from-form" title="Permalink to this heading">#</a></h3>
+<p>Options from this form will always be a dictionary of lists of strings, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s1">&#39;integer&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;5&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;some text&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;select&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">formdata</span></code> arrives, it is passed through <code class="docutils literal notranslate"><span class="pre">Spawner.options_from_form(formdata)</span></code>,
+which is a method to turn the form data into the correct structure.
+This method must return a dictionary, and is meant to interpret the lists-of-strings into the correct types. For example, the <code class="docutils literal notranslate"><span class="pre">options_from_form</span></code> for the above form would look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">options_from_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formdata</span><span class="p">):</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;integer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">formdata</span><span class="p">[</span><span class="s1">&#39;integer&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># single integer value</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formdata</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># single string value</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;select&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formdata</span><span class="p">[</span><span class="s1">&#39;select&#39;</span><span class="p">]</span> <span class="c1"># list already correct</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;notinform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;extra info&#39;</span> <span class="c1"># not in the form at all</span>
+    <span class="k">return</span> <span class="n">options</span>
+</pre></div>
+</div>
+<p>which would return:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s1">&#39;integer&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;some text&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;select&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;notinform&#39;</span><span class="p">:</span> <span class="s1">&#39;extra info&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">Spawner.start</span></code> is called, this dictionary is accessible as <code class="docutils literal notranslate"><span class="pre">self.user_options</span></code>.</p>
+</section>
+</section>
+<section id="writing-a-custom-spawner">
+<h2>Writing a custom spawner<a class="headerlink" href="#writing-a-custom-spawner" title="Permalink to this heading">#</a></h2>
+<p>If you are interested in building a custom spawner, you can read <a class="reference external" href="http://jupyterhub-tutorial.readthedocs.io/en/latest/spawners.html">this tutorial</a>.</p>
+<section id="registering-custom-spawners-via-entry-points">
+<h3>Registering custom Spawners via entry points<a class="headerlink" href="#registering-custom-spawners-via-entry-points" title="Permalink to this heading">#</a></h3>
+<p>As of JupyterHub 1.0, custom Spawners can register themselves via
+the <code class="docutils literal notranslate"><span class="pre">jupyterhub.spawners</span></code> entry point metadata.
+To do this, in your <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
+  <span class="o">...</span>
+  <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;jupyterhub.spawners&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;myservice = mypackage:MySpawner&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+  <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have added this metadata to your package,
+users can select your spawner with the configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">spawner_class</span> <span class="o">=</span> <span class="s1">&#39;myservice&#39;</span>
+</pre></div>
+</div>
+<p>instead of the full</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">spawner_class</span> <span class="o">=</span> <span class="s1">&#39;mypackage:MySpawner&#39;</span>
+</pre></div>
+</div>
+<p>previously required.
+Additionally, configurable attributes for your spawner will
+appear in jupyterhub help output and auto-generated configuration files
+via <code class="docutils literal notranslate"><span class="pre">jupyterhub</span> <span class="pre">--generate-config</span></code>.</p>
+</section>
+</section>
+<section id="environment-variables-and-command-line-arguments">
+<h2>Environment variables and command-line arguments<a class="headerlink" href="#environment-variables-and-command-line-arguments" title="Permalink to this heading">#</a></h2>
+<p>Spawners mainly do one thing: launch a command in an environment.</p>
+<p>The command-line is constructed from user configuration:</p>
+<ul class="simple">
+<li><p>Spawner.cmd (default: <code class="docutils literal notranslate"><span class="pre">['jupterhub-singleuser']</span></code>)</p></li>
+<li><p>Spawner.args (cli args to pass to the cmd, default: empty)</p></li>
+</ul>
+<p>where the configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">Spawner</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;my-singleuser-wrapper&quot;</span><span class="p">]</span>
+<span class="n">c</span><span class="o">.</span><span class="n">Spawner</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--debug&quot;</span><span class="p">,</span> <span class="s2">&quot;--flag&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>would result in spawning the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>my-singleuser-wrapper --debug --flag
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Spawner.get_args()</span></code> method is how Spawner.args is accessed,
+and can be used by Spawners to customize/extend user-provided arguments.</p>
+<p>Prior to 2.0, JupyterHub unconditionally added certain options <em>if specified</em> to the command-line,
+such as <code class="docutils literal notranslate"><span class="pre">--ip={Spawner.ip}</span></code> and <code class="docutils literal notranslate"><span class="pre">--port={Spawner.port}</span></code>.
+These have now all been moved to environment variables,
+and from JupyterHub 2.0,
+the command-line launched by JupyterHub is fully specified by overridable configuration <code class="docutils literal notranslate"><span class="pre">Spawner.cmd</span> <span class="pre">+</span> <span class="pre">Spawner.args</span></code>.</p>
+<p>Most process configuration is passed via environment variables.
+Additional variables can be specified via the <code class="docutils literal notranslate"><span class="pre">Spawner.environment</span></code> configuration.</p>
+<p>The process environment is returned by <code class="docutils literal notranslate"><span class="pre">Spawner.get_env</span></code>, which specifies the following environment variables:</p>
+<ul class="simple">
+<li><p>JUPYTERHUB<em>SERVICE_URL - the _bind</em> url where the server should launch its http server (<code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:12345</span></code>).
+This includes Spawner.ip and Spawner.port; <em>new in 2.0, prior to 2.0 ip,port were on the command-line and only if specified</em></p></li>
+<li><p>JUPYTERHUB_SERVICE_PREFIX - the URL prefix the service will run on (e.g. <code class="docutils literal notranslate"><span class="pre">/user/name/</span></code>)</p></li>
+<li><p>JUPYTERHUB_USER - the JupyterHub user’s username</p></li>
+<li><p>JUPYTERHUB_SERVER_NAME - the server’s name, if using named servers (default server has an empty name)</p></li>
+<li><p>JUPYTERHUB_API_URL - the full url for the JupyterHub API (http://17.0.0.1:8001/hub/api)</p></li>
+<li><p>JUPYTERHUB_BASE_URL - the base url of the whole jupyterhub deployment, i.e. the bit before <code class="docutils literal notranslate"><span class="pre">hub/</span></code> or <code class="docutils literal notranslate"><span class="pre">user/</span></code>,
+as set by c.JupyterHub.base_url (default: <code class="docutils literal notranslate"><span class="pre">/</span></code>)</p></li>
+<li><p>JUPYTERHUB_API_TOKEN - the API token the server can use to make requests to the Hub.
+This is also the OAuth client secret.</p></li>
+<li><p>JUPYTERHUB_CLIENT_ID - the OAuth client ID for authenticating visitors.</p></li>
+<li><p>JUPYTERHUB_OAUTH_CALLBACK_URL - the callback URL to use in oauth, typically <code class="docutils literal notranslate"><span class="pre">/user/:name/oauth_callback</span></code></p></li>
+<li><p>JUPYTERHUB_OAUTH_ACCESS_SCOPES - the scopes required to access the server (called JUPYTERHUB_OAUTH_SCOPES prior to 3.0)</p></li>
+<li><p>JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES - the scopes the service is allowed to request.
+If no scopes are requested explicitly, these scopes will be requested.</p></li>
+</ul>
+<p>Optional environment variables, depending on configuration:</p>
+<ul class="simple">
+<li><p>JUPYTERHUB<em>SSL</em>[KEYFILE|CERTFILE|CLIENT_CI] - SSL configuration, when internal_ssl is enabled</p></li>
+<li><p>JUPYTERHUB_ROOT_DIR - the root directory of the server (notebook directory), when Spawner.notebook_dir is defined (new in 2.0)</p></li>
+<li><p>JUPYTERHUB_DEFAULT_URL - the default URL for the server (for redirects from /user/:name/),
+if Spawner.default_url is defined
+(new in 2.0, previously passed via cli)</p></li>
+<li><p>JUPYTERHUB_DEBUG=1 - generic debug flag, sets maximum log level when Spawner.debug is True
+(new in 2.0, previously passed via cli)</p></li>
+<li><p>JUPYTERHUB_DISABLE_USER_CONFIG=1 - disable loading user config,
+sets maximum log level when Spawner.debug is True (new in 2.0,
+previously passed via cli)</p></li>
+<li><p>JUPYTERHUB*[MEM|CPU]*[LIMIT_GUARANTEE] - the values of cpu and memory limits and guarantees.
+These are not expected to be enforced by the process,
+but are made available as a hint,
+e.g. for resource monitoring extensions.</p></li>
+</ul>
+</section>
+<section id="spawners-resource-limits-and-guarantees-optional">
+<h2>Spawners, resource limits, and guarantees (Optional)<a class="headerlink" href="#spawners-resource-limits-and-guarantees-optional" title="Permalink to this heading">#</a></h2>
+<p>Some spawners of the single-user notebook servers allow setting limits or
+guarantees on resources, such as CPU and memory. To provide a consistent
+experience for sysadmins and users, we provide a standard way to set and
+discover these resource limits and guarantees, such as for memory and CPU.
+For the limits and guarantees to be useful, <strong>the spawner must implement
+support for them</strong>. For example, LocalProcessSpawner, the default
+spawner, does not support limits and guarantees. One of the spawners
+that supports limits and guarantees is the <code class="docutils literal notranslate"><span class="pre">systemdspawner</span></code>.</p>
+<section id="memory-limits-guarantees">
+<h3>Memory Limits &amp; Guarantees<a class="headerlink" href="#memory-limits-guarantees" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">c.Spawner.mem_limit</span></code>: A <strong>limit</strong> specifies the <em>maximum amount of memory</em>
+that may be allocated, though there is no promise that the maximum amount will
+be available. In supported spawners, you can set <code class="docutils literal notranslate"><span class="pre">c.Spawner.mem_limit</span></code> to
+limit the total amount of memory that a single-user notebook server can
+allocate. Attempting to use more memory than this limit will cause errors. The
+single-user notebook server can discover its own memory limit by looking at
+the environment variable <code class="docutils literal notranslate"><span class="pre">MEM_LIMIT</span></code>, which is specified in absolute bytes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">c.Spawner.mem_guarantee</span></code>: Sometimes, a <strong>guarantee</strong> of a <em>minimum amount of
+memory</em> is desirable. In this case, you can set <code class="docutils literal notranslate"><span class="pre">c.Spawner.mem_guarantee</span></code> to
+to provide a guarantee that at minimum this much memory will always be
+available for the single-user notebook server to use. The environment variable
+<code class="docutils literal notranslate"><span class="pre">MEM_GUARANTEE</span></code> will also be set in the single-user notebook server.</p>
+<p><strong>The spawner’s underlying system or cluster is responsible for enforcing these
+limits and providing these guarantees.</strong> If these values are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, no
+limits or guarantees are provided, and no environment values are set.</p>
+</section>
+<section id="cpu-limits-guarantees">
+<h3>CPU Limits &amp; Guarantees<a class="headerlink" href="#cpu-limits-guarantees" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">c.Spawner.cpu_limit</span></code>: In supported spawners, you can set
+<code class="docutils literal notranslate"><span class="pre">c.Spawner.cpu_limit</span></code> to limit the total number of cpu-cores that a
+single-user notebook server can use. These can be fractional - <code class="docutils literal notranslate"><span class="pre">0.5</span></code> means 50%
+of one CPU core, <code class="docutils literal notranslate"><span class="pre">4.0</span></code> is 4 cpu-cores, etc. This value is also set in the
+single-user notebook server’s environment variable <code class="docutils literal notranslate"><span class="pre">CPU_LIMIT</span></code>. The limit does
+not claim that you will be able to use all the CPU up to your limit as other
+higher priority applications might be taking up CPU.</p>
+<p><code class="docutils literal notranslate"><span class="pre">c.Spawner.cpu_guarantee</span></code>: You can set <code class="docutils literal notranslate"><span class="pre">c.Spawner.cpu_guarantee</span></code> to provide a
+guarantee for CPU usage. The environment variable <code class="docutils literal notranslate"><span class="pre">CPU_GUARANTEE</span></code> will be set
+in the single-user notebook server when a guarantee is being provided.</p>
+<p><strong>The spawner’s underlying system or cluster is responsible for enforcing these
+limits and providing these guarantees.</strong> If these values are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, no
+limits or guarantees are provided, and no environment values are set.</p>
+</section>
+<section id="encryption">
+<h3>Encryption<a class="headerlink" href="#encryption" title="Permalink to this heading">#</a></h3>
+<p>Communication between the <code class="docutils literal notranslate"><span class="pre">Proxy</span></code>, <code class="docutils literal notranslate"><span class="pre">Hub</span></code>, and <code class="docutils literal notranslate"><span class="pre">Notebook</span></code> can be secured by
+turning on <code class="docutils literal notranslate"><span class="pre">internal_ssl</span></code> in <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>. For a custom spawner to
+utilize these certs, there are two methods of interest on the base <code class="docutils literal notranslate"><span class="pre">Spawner</span></code>
+class: <code class="docutils literal notranslate"><span class="pre">.create_certs</span></code> and <code class="docutils literal notranslate"><span class="pre">.move_certs</span></code>.</p>
+<p>The first method, <code class="docutils literal notranslate"><span class="pre">.create_certs</span></code> will sign a key-cert pair using an internally
+trusted authority for notebooks. During this process, <code class="docutils literal notranslate"><span class="pre">.create_certs</span></code> can
+apply <code class="docutils literal notranslate"><span class="pre">ip</span></code> and <code class="docutils literal notranslate"><span class="pre">dns</span></code> name information to the cert via an <code class="docutils literal notranslate"><span class="pre">alt_names</span></code> <code class="docutils literal notranslate"><span class="pre">kwarg</span></code>.
+This is used for certificate authentication (verification). Without proper
+verification, the <code class="docutils literal notranslate"><span class="pre">Notebook</span></code> will be unable to communicate with the <code class="docutils literal notranslate"><span class="pre">Hub</span></code> and
+vice versa when <code class="docutils literal notranslate"><span class="pre">internal_ssl</span></code> is enabled. For example, given a deployment
+using the <code class="docutils literal notranslate"><span class="pre">DockerSpawner</span></code> which will start containers with <code class="docutils literal notranslate"><span class="pre">ips</span></code> from the
+<code class="docutils literal notranslate"><span class="pre">docker</span></code> subnet pool, the <code class="docutils literal notranslate"><span class="pre">DockerSpawner</span></code> would need to instead choose a
+container <code class="docutils literal notranslate"><span class="pre">ip</span></code> prior to starting and pass that to <code class="docutils literal notranslate"><span class="pre">.create_certs</span></code> (TODO: edit).</p>
+<p>In general though, this method will not need to be changed and the default
+<code class="docutils literal notranslate"><span class="pre">ip</span></code>/<code class="docutils literal notranslate"><span class="pre">dns</span></code> (localhost) info will suffice.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">.create_certs</span></code> is run, it will <code class="docutils literal notranslate"><span class="pre">.create_certs</span></code> in a default, central
+location specified by <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.internal_certs_location</span></code>. For <code class="docutils literal notranslate"><span class="pre">Spawners</span></code>
+that need access to these certs elsewhere (i.e. on another host altogether),
+the <code class="docutils literal notranslate"><span class="pre">.move_certs</span></code> method can be overridden to move the certs appropriately.
+Again, using <code class="docutils literal notranslate"><span class="pre">DockerSpawner</span></code> as an example, this would entail moving certs
+to a directory that will get mounted into the container this spawner starts.</p>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="authenticators.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Authenticators</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="services.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Services</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spawner-control-methods">
+   Spawner control methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spawner-start">
+     Spawner.start
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#note-on-ips-and-ports">
+       Note on IPs and ports
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#exception-handling">
+       Exception handling
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spawner-poll">
+     Spawner.poll
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spawner-stop">
+     Spawner.stop
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spawner-state">
+   Spawner state
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spawner-options-form">
+   Spawner options form
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spawner-options-from-form">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Spawner.options_from_form
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#writing-a-custom-spawner">
+   Writing a custom spawner
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#registering-custom-spawners-via-entry-points">
+     Registering custom Spawners via entry points
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#environment-variables-and-command-line-arguments">
+   Environment variables and command-line arguments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spawners-resource-limits-and-guarantees-optional">
+   Spawners, resource limits, and guarantees (Optional)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#memory-limits-guarantees">
+     Memory Limits &amp; Guarantees
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cpu-limits-guarantees">
+     CPU Limits &amp; Guarantees
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encryption">
+     Encryption
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/spawners.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/spawners.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

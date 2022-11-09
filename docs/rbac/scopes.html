@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Scopes in JupyterHub &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'rbac/scopes';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Use Cases" href="use-cases.html" />
+    <link rel="prev" title="Roles" href="roles.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="roles.html">Roles</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Scopes in JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use-cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tech-implementation.html">Technical Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrading JupyterHub with RBAC framework</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="scopes-in-jupyterhub">
+<h1>Scopes in JupyterHub<a class="headerlink" href="#scopes-in-jupyterhub" title="Permalink to this heading">#</a></h1>
+<p>A scope has a syntax-based design that reveals which resources it provides access to. Resources are objects with a type, associated data, relationships to other resources, and a set of methods that operate on them (see <a class="reference external" href="https://restful-api-design.readthedocs.io/en/latest/resources.html">RESTful API</a> documentation for more information).</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code> in the RBAC scope design refers to the resource name in the <a class="reference internal" href="../reference/rest-api.html"><span class="doc std std-doc">JupyterHub’s API</span></a> endpoints in most cases. For instance, <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code> equal to <code class="docutils literal notranslate"><span class="pre">users</span></code> corresponds to JupyterHub’s API endpoints beginning with <em>/users</em>.</p>
+<section id="scope-conventions">
+<span id="scope-conventions-target"></span><h2>Scope conventions<a class="headerlink" href="#scope-conventions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code> <br />
+The top-level <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code> scopes, such as <code class="docutils literal notranslate"><span class="pre">users</span></code> or <code class="docutils literal notranslate"><span class="pre">groups</span></code>, grant read, write, and list permissions to the resource itself as well as its sub-resources. For example, the scope <code class="docutils literal notranslate"><span class="pre">users:activity</span></code> is included in the scope <code class="docutils literal notranslate"><span class="pre">users</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read:&lt;resource&gt;</span></code> <br />
+Limits permissions to read-only operations on single resources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list:&lt;resource&gt;</span></code> <br />
+Read-only access to listing endpoints.
+Use <code class="docutils literal notranslate"><span class="pre">read:&lt;resource&gt;:&lt;subresource&gt;</span></code> to control what fields are returned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin:&lt;resource&gt;</span></code> <br />
+Grants additional permissions such as create/delete on the corresponding resource in addition to read and write permissions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">access:&lt;resource&gt;</span></code> <br />
+Grants access permissions to the <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code> via API or browser.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;:&lt;subresource&gt;</span></code> <br />
+The <a class="reference internal" href="#vertical-filtering-target"><span class="std std-ref">vertically filtered</span></a> scopes provide access to a subset of the information granted by the <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code> scope. E.g., the scope <code class="docutils literal notranslate"><span class="pre">users:activity</span></code> only provides permission to post user activity.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;!&lt;object&gt;=&lt;objectname&gt;</span></code> <br />
+<a class="reference internal" href="#horizontal-filtering-target"><span class="std std-ref">Horizontal filtering</span></a> is implemented by the <code class="docutils literal notranslate"><span class="pre">!&lt;object&gt;=&lt;objectname&gt;</span></code>scope structure. A resource (or sub-resource) can be filtered based on <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">server</span></code>, <code class="docutils literal notranslate"><span class="pre">group</span></code> or <code class="docutils literal notranslate"><span class="pre">service</span></code> name. For instance, <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;!user=charlie</span></code> limits access to only return resources of user <code class="docutils literal notranslate"><span class="pre">charlie</span></code>. <br />
+Only one filter per scope is allowed, but filters for the same scope have an additive effect; a larger filter can be used by supplying the scope multiple times with different filters.</p></li>
+</ul>
+<p>By adding a scope to an existing role, all role bearers will gain the associated permissions.</p>
+</section>
+<section id="metascopes">
+<h2>Metascopes<a class="headerlink" href="#metascopes" title="Permalink to this heading">#</a></h2>
+<p>Metascopes do not follow the general scope syntax. Instead, a metascope resolves to a set of scopes, which can refer to different resources, based on their owning entity. In JupyterHub, there are currently two metascopes:</p>
+<ol class="arabic simple">
+<li><p>default user scope <code class="docutils literal notranslate"><span class="pre">self</span></code>, and</p></li>
+<li><p>default token scope <code class="docutils literal notranslate"><span class="pre">inherit</span></code>.</p></li>
+</ol>
+<section id="default-user-scope">
+<span id="default-user-scope-target"></span><h3>Default user scope<a class="headerlink" href="#default-user-scope" title="Permalink to this heading">#</a></h3>
+<p>Access to the user’s own resources and subresources is covered by metascope <code class="docutils literal notranslate"><span class="pre">self</span></code>. This metascope includes the user’s model, activity, servers and tokens. For example, <code class="docutils literal notranslate"><span class="pre">self</span></code> for a user named “gerard” includes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">users!user=gerard</span></code> where the <code class="docutils literal notranslate"><span class="pre">users</span></code> scope provides access to the full user model and activity. The filter restricts this access to the user’s own resources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">servers!user=gerard</span></code> which grants the user access to their own servers without being able to create/delete any.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokens!user=gerard</span></code> which allows the user to access, request and delete their own tokens.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">access:servers!user=gerard</span></code> which allows the user to access their own servers via API or browser.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">self</span></code> scope is only valid for user entities. In other cases (e.g., for services) it resolves to an empty set of scopes.</p>
+</section>
+<section id="default-token-scope">
+<span id="default-token-scope-target"></span><h3>Default token scope<a class="headerlink" href="#default-token-scope" title="Permalink to this heading">#</a></h3>
+<p>The token metascope <code class="docutils literal notranslate"><span class="pre">inherit</span></code> causes the token to have the same permissions as the token’s owner. For example, if a token owner has roles containing the scopes <code class="docutils literal notranslate"><span class="pre">read:groups</span></code> and <code class="docutils literal notranslate"><span class="pre">read:users</span></code>, the <code class="docutils literal notranslate"><span class="pre">inherit</span></code> scope resolves to the set of scopes <code class="docutils literal notranslate"><span class="pre">{read:groups,</span> <span class="pre">read:users}</span></code>.</p>
+<p>If the token owner has default <code class="docutils literal notranslate"><span class="pre">user</span></code> role, the <code class="docutils literal notranslate"><span class="pre">inherit</span></code> scope resolves to <code class="docutils literal notranslate"><span class="pre">self</span></code>, which will subsequently be expanded to include all the user-specific scopes (or empty set in the case of services).</p>
+<p>If the token owner is a member of any group with roles, the group scopes will also be included in resolving the <code class="docutils literal notranslate"><span class="pre">inherit</span></code> scope.</p>
+</section>
+</section>
+<section id="horizontal-filtering">
+<span id="horizontal-filtering-target"></span><h2>Horizontal filtering<a class="headerlink" href="#horizontal-filtering" title="Permalink to this heading">#</a></h2>
+<p>Horizontal filtering, also called <em>resource filtering</em>, is the concept of reducing the payload of an API call to cover only the subset of the <em>resources</em> that the scopes of the client provides them access to.
+Requested resources are filtered based on the filter of the corresponding scope. For instance, if a service requests a user list (guarded with scope <code class="docutils literal notranslate"><span class="pre">read:users</span></code>) with a role that only contains scopes <code class="docutils literal notranslate"><span class="pre">read:users!user=hannah</span></code> and <code class="docutils literal notranslate"><span class="pre">read:users!user=ivan</span></code>, the returned list of user models will be an intersection of all users and the collection <code class="docutils literal notranslate"><span class="pre">{hannah,</span> <span class="pre">ivan}</span></code>. In case this intersection is empty, the API call returns an HTTP 404 error, regardless if any users exist outside of the clients scope filter collection.</p>
+<p>In case a user resource is being accessed, any scopes with <em>group</em> filters will be expanded to filters for each <em>user</em> in those groups.</p>
+<section id="self-referencing-filters">
+<span id="id1"></span><h3>Self-referencing filters<a class="headerlink" href="#self-referencing-filters" title="Permalink to this heading">#</a></h3>
+<p>There are some ‘shortcut’ filters,
+which can be applied to all scopes,
+that filter based on the entities associated with the request.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">!user</span></code> filter is a special horizontal filter that strictly refers to the <strong>“owner only”</strong> scopes, where <em>owner</em> is a user entity. The filter resolves internally into <code class="docutils literal notranslate"><span class="pre">!user=&lt;ownerusername&gt;</span></code> ensuring that only the owner’s resources may be accessed through the associated scopes.</p>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">server</span></code> role assigned by default to server tokens contains <code class="docutils literal notranslate"><span class="pre">access:servers!user</span></code> and <code class="docutils literal notranslate"><span class="pre">users:activity!user</span></code> scopes. This allows the token to access and post activity of only the servers owned by the token owner.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0: </span><code class="docutils literal notranslate"><span class="pre">!service</span></code> and <code class="docutils literal notranslate"><span class="pre">!server</span></code> filters.</p>
+</div>
+<p>In addition to <code class="docutils literal notranslate"><span class="pre">!user</span></code>, <em>tokens</em> may have filters <code class="docutils literal notranslate"><span class="pre">!service</span></code>
+or <code class="docutils literal notranslate"><span class="pre">!server</span></code>, which expand similarly to <code class="docutils literal notranslate"><span class="pre">!service=servicename</span></code>
+and <code class="docutils literal notranslate"><span class="pre">!server=servername</span></code>.
+This only applies to tokens issued via the OAuth flow.
+In these cases, the name is the <em>issuing</em> entity (a service or single-user server),
+so that access can be restricted to the issuing service,
+e.g. <code class="docutils literal notranslate"><span class="pre">access:servers!server</span></code> would grant access only to the server that requested the token.</p>
+<p>These filters can be applied to any scope.</p>
+</section>
+</section>
+<section id="vertical-filtering">
+<span id="vertical-filtering-target"></span><h2>Vertical filtering<a class="headerlink" href="#vertical-filtering" title="Permalink to this heading">#</a></h2>
+<p>Vertical filtering, also called <em>attribute filtering</em>, is the concept of reducing the payload of an API call to cover only the <em>attributes</em> of the resources that the scopes of the client provides them access to. This occurs when the client scopes are subscopes of the API endpoint that is called.
+For instance, if a client requests a user list with the only scope being <code class="docutils literal notranslate"><span class="pre">read:users:groups</span></code>, the returned list of user models will contain only a list of groups per user.
+In case the client has multiple subscopes, the call returns the union of the data the client has access to.</p>
+<p>The payload of an API call can be filtered both horizontally and vertically simultaneously. For instance, performing an API call to the endpoint <code class="docutils literal notranslate"><span class="pre">/users/</span></code> with the scope <code class="docutils literal notranslate"><span class="pre">users:name!user=juliette</span></code> returns a payload of <code class="docutils literal notranslate"><span class="pre">[{name:</span> <span class="pre">'juliette'}]</span></code> (provided that this name is present in the database).</p>
+</section>
+<section id="available-scopes">
+<span id="available-scopes-target"></span><h2>Available scopes<a class="headerlink" href="#available-scopes" title="Permalink to this heading">#</a></h2>
+<p>Table below lists all available scopes and illustrates their hierarchy. Indented scopes indicate subscopes of the scope(s) above them.</p>
+<p>There are four exceptions to the general <a class="reference internal" href="#scope-conventions-target"><span class="std std-ref">scope conventions</span></a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read:users:name</span></code> is a subscope of both <code class="docutils literal notranslate"><span class="pre">read:users</span></code> and <code class="docutils literal notranslate"><span class="pre">read:servers</span></code>. <br />
+The <code class="docutils literal notranslate"><span class="pre">read:servers</span></code> scope requires access to the user name (server owner) due to named servers distinguished internally in the form <code class="docutils literal notranslate"><span class="pre">!server=username/servername</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read:users:activity</span></code> is a subscope of both <code class="docutils literal notranslate"><span class="pre">read:users</span></code> and <code class="docutils literal notranslate"><span class="pre">users:activity</span></code>. <br />
+Posting activity via the <code class="docutils literal notranslate"><span class="pre">users:activity</span></code>, which is not included in <code class="docutils literal notranslate"><span class="pre">users</span></code> scope, needs to check the last valid activity of the user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read:roles:users</span></code> is a subscope of both <code class="docutils literal notranslate"><span class="pre">read:roles</span></code> and <code class="docutils literal notranslate"><span class="pre">admin:users</span></code>. <br />
+Admin privileges to the <em>users</em> resource include the information about user roles.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read:roles:groups</span></code> is a subscope of both <code class="docutils literal notranslate"><span class="pre">read:roles</span></code> and <code class="docutils literal notranslate"><span class="pre">admin:groups</span></code>. <br />
+Similar to the <code class="docutils literal notranslate"><span class="pre">read:roles:users</span></code> above.</p></li>
+</ul>
+<p>Table 1. Available scopes and their hierarchy</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Scope</p></th>
+<th class="head"><p>Grants permission to:</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(no_scope)</span></code></p></td>
+<td><p>Identify the owner of the requesting entity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">self</span></code></p></td>
+<td><p>The user’s own resources <em>(metascope for users, resolves to (no_scope) for services)</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">inherit</span></code></p></td>
+<td><p>Everything that the token-owning entity can access <em>(metascope for tokens)</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">admin-ui</span></code></p></td>
+<td><p>Access the admin page. Permission to take actions via the admin page granted separately.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">admin:users</span></code></p></td>
+<td><p>Read, write, create and delete users and their authentication state, not including their servers or tokens.</p></td>
+</tr>
+<tr class="row-odd"><td><p>   <code class="docutils literal notranslate"><span class="pre">admin:auth_state</span></code></p></td>
+<td><p>Read a user’s authentication state.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">users</span></code></p></td>
+<td><p>Read and write permissions to user models (excluding servers, tokens and authentication state).</p></td>
+</tr>
+<tr class="row-odd"><td><p>      <code class="docutils literal notranslate"><span class="pre">read:users</span></code></p></td>
+<td><p>Read user models (excluding including servers, tokens and authentication state).</p></td>
+</tr>
+<tr class="row-even"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:users:name</span></code></p></td>
+<td><p>Read names of users.</p></td>
+</tr>
+<tr class="row-odd"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:users:groups</span></code></p></td>
+<td><p>Read users’ group membership.</p></td>
+</tr>
+<tr class="row-even"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:users:activity</span></code></p></td>
+<td><p>Read time of last user activity.</p></td>
+</tr>
+<tr class="row-odd"><td><p>      <code class="docutils literal notranslate"><span class="pre">list:users</span></code></p></td>
+<td><p>List users, including at least their names.</p></td>
+</tr>
+<tr class="row-even"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:users:name</span></code></p></td>
+<td><p>Read names of users.</p></td>
+</tr>
+<tr class="row-odd"><td><p>      <code class="docutils literal notranslate"><span class="pre">users:activity</span></code></p></td>
+<td><p>Update time of last user activity.</p></td>
+</tr>
+<tr class="row-even"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:users:activity</span></code></p></td>
+<td><p>Read time of last user activity.</p></td>
+</tr>
+<tr class="row-odd"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:roles:users</span></code></p></td>
+<td><p>Read user role assignments.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">delete:users</span></code></p></td>
+<td><p>Delete users.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">read:roles</span></code></p></td>
+<td><p>Read role assignments.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:roles:users</span></code></p></td>
+<td><p>Read user role assignments.</p></td>
+</tr>
+<tr class="row-odd"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:roles:services</span></code></p></td>
+<td><p>Read service role assignments.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:roles:groups</span></code></p></td>
+<td><p>Read group role assignments.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">admin:servers</span></code></p></td>
+<td><p>Read, start, stop, create and delete user servers and their state.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">admin:server_state</span></code></p></td>
+<td><p>Read and write users’ server state.</p></td>
+</tr>
+<tr class="row-odd"><td><p>   <code class="docutils literal notranslate"><span class="pre">servers</span></code></p></td>
+<td><p>Start and stop user servers.</p></td>
+</tr>
+<tr class="row-even"><td><p>      <code class="docutils literal notranslate"><span class="pre">read:servers</span></code></p></td>
+<td><p>Read users’ names and their server models (excluding the server state).</p></td>
+</tr>
+<tr class="row-odd"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:users:name</span></code></p></td>
+<td><p>Read names of users.</p></td>
+</tr>
+<tr class="row-even"><td><p>      <code class="docutils literal notranslate"><span class="pre">delete:servers</span></code></p></td>
+<td><p>Stop and delete users’ servers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tokens</span></code></p></td>
+<td><p>Read, write, create and delete user tokens.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:tokens</span></code></p></td>
+<td><p>Read user tokens.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">admin:groups</span></code></p></td>
+<td><p>Read and write group information, create and delete groups.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">groups</span></code></p></td>
+<td><p>Read and write group information, including adding/removing users to/from groups.</p></td>
+</tr>
+<tr class="row-odd"><td><p>      <code class="docutils literal notranslate"><span class="pre">read:groups</span></code></p></td>
+<td><p>Read group models.</p></td>
+</tr>
+<tr class="row-even"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:groups:name</span></code></p></td>
+<td><p>Read group names.</p></td>
+</tr>
+<tr class="row-odd"><td><p>      <code class="docutils literal notranslate"><span class="pre">list:groups</span></code></p></td>
+<td><p>List groups, including at least their names.</p></td>
+</tr>
+<tr class="row-even"><td><p>         <code class="docutils literal notranslate"><span class="pre">read:groups:name</span></code></p></td>
+<td><p>Read group names.</p></td>
+</tr>
+<tr class="row-odd"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:roles:groups</span></code></p></td>
+<td><p>Read group role assignments.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">delete:groups</span></code></p></td>
+<td><p>Delete groups.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">list:services</span></code></p></td>
+<td><p>List services, including at least their names.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:services:name</span></code></p></td>
+<td><p>Read service names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">read:services</span></code></p></td>
+<td><p>Read service models.</p></td>
+</tr>
+<tr class="row-even"><td><p>   <code class="docutils literal notranslate"><span class="pre">read:services:name</span></code></p></td>
+<td><p>Read service names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">read:hub</span></code></p></td>
+<td><p>Read detailed information about the Hub.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">access:servers</span></code></p></td>
+<td><p>Access user servers via API or browser.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">access:services</span></code></p></td>
+<td><p>Access services via API or browser.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">proxy</span></code></p></td>
+<td><p>Read information about the proxy’s routing table, sync the Hub with the proxy and notify the Hub about a new proxy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">shutdown</span></code></p></td>
+<td><p>Shutdown the hub.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">read:metrics</span></code></p></td>
+<td><p>Read prometheus metrics.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0: </span>The <code class="docutils literal notranslate"><span class="pre">admin-ui</span></code> scope is added to explicitly grant access to the admin page,
+rather than combining <code class="docutils literal notranslate"><span class="pre">admin:users</span></code> and <code class="docutils literal notranslate"><span class="pre">admin:servers</span></code> permissions.
+This means a deployment can enable the admin page with only a subset of functionality enabled.</p>
+<p>Note that this means actions to take <em>via</em> the admin UI
+and access <em>to</em> the admin UI are separated.
+For example, it generally doesn’t make sense to grant
+<code class="docutils literal notranslate"><span class="pre">admin-ui</span></code> without at least <code class="docutils literal notranslate"><span class="pre">list:users</span></code> for at least some subset of users.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;instructor-data8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="c1"># access to the admin page</span>
+      <span class="s2">&quot;admin-ui&quot;</span><span class="p">,</span>
+      <span class="c1"># list users in the class group</span>
+      <span class="s2">&quot;list:users!group=students-data8&quot;</span><span class="p">,</span>
+      <span class="c1"># start/stop servers for users in the class</span>
+      <span class="s2">&quot;admin:servers!group=students-data8&quot;</span><span class="p">,</span>
+      <span class="c1"># access servers for users in the class</span>
+      <span class="s2">&quot;access:servers!group=students-data8&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instructors-data8&quot;</span><span class="p">],</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>will grant instructors in the data8 course permission to:</p>
+<ol class="arabic simple">
+<li><p>view the admin UI</p></li>
+<li><p>see students in the class (but not all users)</p></li>
+<li><p>start/stop/access servers for users in the class</p></li>
+<li><p>but <em>not</em> permission to administer the users themselves (e.g. change their permissions, etc.)</p></li>
+</ol>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Note that only the <a class="reference internal" href="#horizontal-filtering-target"><span class="std std-ref">horizontal filtering</span></a> can be added to scopes to customize them. <br />
+Metascopes <code class="docutils literal notranslate"><span class="pre">self</span></code> and <code class="docutils literal notranslate"><span class="pre">all</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;resource&gt;:&lt;subresource&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">read:&lt;resource&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">admin:&lt;resource&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">access:&lt;resource&gt;</span></code> scopes are predefined and cannot be changed otherwise.</p>
+</div>
+<section id="custom-scopes">
+<span id="id2"></span><h3>Custom scopes<a class="headerlink" href="#custom-scopes" title="Permalink to this heading">#</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.</span></p>
+</div>
+<p>JupyterHub 3.0 introduces support for custom scopes.
+Services that use JupyterHub for authentication and want to implement their own granular access may define additional <em>custom</em> scopes and assign them to users with JupyterHub roles.</p>
+<p>Custom scope names must start with <code class="docutils literal notranslate"><span class="pre">custom:</span></code>
+and contain only lowercase ascii letters, numbers, hyphen, underscore, colon, and asterisk (<code class="docutils literal notranslate"><span class="pre">-_:*</span></code>).
+The part after <code class="docutils literal notranslate"><span class="pre">custom:</span></code> must start with a letter or number.
+Scopes may not end with a hyphen or colon.</p>
+<p>The only strict requirement is that a custom scope definition must have a <code class="docutils literal notranslate"><span class="pre">description</span></code>.
+It <em>may</em> also have <code class="docutils literal notranslate"><span class="pre">subscopes</span></code> if you are defining multiple scopes that have a natural hierarchy,</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">custom_scopes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;custom:myservice:read&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;read-only access to myservice&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;custom:myservice:write&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;write access to myservice&quot;</span><span class="p">,</span>
+        <span class="c1"># write permission implies read permission</span>
+        <span class="s2">&quot;subscopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;custom:myservice:read&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># graders have read-only access to the service</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;service-user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;graders&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;custom:myservice:read&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;access:service!service=myservice&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="c1"># instructors have read and write access to the service</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;service-admin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instructors&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;custom:myservice:write&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;access:service!service=myservice&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In the above configuration, two scopes are defined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">custom:myservice:read</span></code> grants read-only access to the service, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">custom:myservice:write</span></code> grants write access to the service</p></li>
+<li><p>write access <em>implies</em> read access via the <code class="docutils literal notranslate"><span class="pre">subscope</span></code></p></li>
+</ul>
+<p>These custom scopes are assigned to two groups via <code class="docutils literal notranslate"><span class="pre">roles</span></code>:</p>
+<ul class="simple">
+<li><p>users in the group <code class="docutils literal notranslate"><span class="pre">graders</span></code> are granted read access to the service</p></li>
+<li><p>users in the group <code class="docutils literal notranslate"><span class="pre">instructors</span></code> are</p></li>
+<li><p>both are granted <em>access</em> to the service via <code class="docutils literal notranslate"><span class="pre">access:service!service=myservice</span></code></p></li>
+</ul>
+<p>When the service completes OAuth, it will retrieve the user model from <code class="docutils literal notranslate"><span class="pre">/hub/api/user</span></code>.
+This model includes a <code class="docutils literal notranslate"><span class="pre">scopes</span></code> field which is a list of authorized scope for the request,
+which can be used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">require_scope</span><span class="p">(</span><span class="n">scope</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;decorator to require a scope to perform an action&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapped_func</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">fetch_hub_api_user</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">token</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">scope</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;scopes&quot;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">HTTP403</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Requires scope </span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@require_scope</span><span class="p">(</span><span class="s2">&quot;custom:myservice:read&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">read_something</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="nd">@require_scope</span><span class="p">(</span><span class="s2">&quot;custom:myservice:write&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">write_something</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>If you use <a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubOAuthenticated" title="jupyterhub.services.auth.HubOAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthenticated</span></code></a>, this check is performed automatically
+against the <code class="docutils literal notranslate"><span class="pre">.hub_scopes</span></code> attribute of each Handler
+(the default is populated from <code class="docutils literal notranslate"><span class="pre">$JUPYTERHUB_OAUTH_ACCESS_SCOPES</span></code> and usually <code class="docutils literal notranslate"><span class="pre">access:services!service=myservice</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0: </span>The JUPYTERHUB_OAUTH_SCOPES environment variable is deprecated and renamed to JUPYTERHUB_OAUTH_ACCESS_SCOPES,
+to avoid ambiguity with JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">web</span>
+<span class="kn">from</span> <span class="nn">jupyterhub.services.auth</span> <span class="kn">import</span> <span class="n">HubOAuthenticated</span>
+
+<span class="k">class</span> <span class="nc">MyHandler</span><span class="p">(</span><span class="n">HubOAuthenticated</span><span class="p">,</span> <span class="n">BaseHandler</span><span class="p">):</span>
+    <span class="n">hub_scopes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;custom:myservice:read&quot;</span><span class="p">]</span>
+
+    <span class="nd">@web</span><span class="o">.</span><span class="n">authenticated</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Existing scope filters (<code class="docutils literal notranslate"><span class="pre">!user=</span></code>, etc.) may be applied to custom scopes.
+Custom scope <em>filters</em> are NOT supported.</p>
+</section>
+<section id="scopes-and-apis">
+<h3>Scopes and APIs<a class="headerlink" href="#scopes-and-apis" title="Permalink to this heading">#</a></h3>
+<p>The scopes are also listed in the <a class="reference internal" href="../reference/rest-api.html"><span class="doc std std-doc">JupyterHub REST API</span></a> documentation. Each API endpoint has a list of scopes which can be used to access the API; if no scopes are listed, the API is not authenticated and can be accessed without any permissions (i.e., no scopes).</p>
+<p>Listed scopes by each API endpoint reflect the “lowest” permissions required to gain any access to the corresponding API. For example, posting user’s activity (<em>POST /users/:name/activity</em>) needs <code class="docutils literal notranslate"><span class="pre">users:activity</span></code> scope. If scope <code class="docutils literal notranslate"><span class="pre">users</span></code> is passed during the request, the access will be granted as the required scope is a subscope of the <code class="docutils literal notranslate"><span class="pre">users</span></code> scope. If, on the other hand, <code class="docutils literal notranslate"><span class="pre">read:users:activity</span></code> scope is passed, the access will be denied.</p>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="roles.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Roles</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="use-cases.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Use Cases</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scope-conventions">
+   Scope conventions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metascopes">
+   Metascopes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#default-user-scope">
+     Default user scope
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#default-token-scope">
+     Default token scope
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#horizontal-filtering">
+   Horizontal filtering
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#self-referencing-filters">
+     Self-referencing filters
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vertical-filtering">
+   Vertical filtering
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#available-scopes">
+   Available scopes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#custom-scopes">
+     Custom scopes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scopes-and-apis">
+     Scopes and APIs
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/rbac/scopes.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/rbac/scopes.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

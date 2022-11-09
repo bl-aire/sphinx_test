@@ -1,0 +1,783 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>JupyterHub &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation-guide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="#">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="jupyterhub">
+<h1>JupyterHub<a class="headerlink" href="#jupyterhub" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://github.com/jupyterhub/jupyterhub">JupyterHub</a> is the best way to serve <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/latest/">Jupyter notebook</a> for multiple users.
+It can be used in a class of students, a corporate data science group or scientific
+research group. It is a multi-user <strong>Hub</strong> that spawns, manages, and proxies multiple
+instances of the single-user <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/latest/">Jupyter notebook</a> server.</p>
+<p>To make life easier, JupyterHub has distributions. Be sure to
+take a look at them before continuing with the configuration of the broad
+original system of <a class="reference external" href="https://github.com/jupyterhub/jupyterhub">JupyterHub</a>. Today, you can find two main cases:</p>
+<ol class="arabic simple">
+<li><p>If you need a simple case for a small amount of users (0-100) and single server
+take a look at
+<a class="reference external" href="https://github.com/jupyterhub/the-littlest-jupyterhub">The Littlest JupyterHub</a> distribution.</p></li>
+<li><p>If you need to allow for even more users, a dynamic amount of servers can be used on a cloud,
+take a look at the <a class="reference external" href="https://github.com/jupyterhub/zero-to-jupyterhub-k8s">Zero to JupyterHub with Kubernetes</a> .</p></li>
+</ol>
+<p>Four subsystems make up JupyterHub:</p>
+<ul class="simple">
+<li><p>a <strong>Hub</strong> (tornado process) that is the heart of JupyterHub</p></li>
+<li><p>a <strong>configurable http proxy</strong> (node-http-proxy) that receives the requests from the client’s browser</p></li>
+<li><p>multiple <strong>single-user Jupyter notebook servers</strong> (Python/IPython/tornado) that are monitored by Spawners</p></li>
+<li><p>an <strong>authentication class</strong> that manages how users can access the system</p></li>
+</ul>
+<p>Besides these central pieces, you can add optional configurations through a <code class="docutils literal notranslate"><span class="pre">config.py</span></code> file and manage users kernels on an admin panel. A simplification of the whole system can be seen in the figure below:</p>
+<a class="reference internal image-reference" href="_images/jhub-fluxogram.jpeg"><img alt="JupyterHub subsystems" class="align-center" src="_images/jhub-fluxogram.jpeg" style="width: 80%;" /></a>
+<p>JupyterHub performs the following functions:</p>
+<ul class="simple">
+<li><p>The Hub launches a proxy</p></li>
+<li><p>The proxy forwards all requests to the Hub by default</p></li>
+<li><p>The Hub handles user login and spawns single-user servers on demand</p></li>
+<li><p>The Hub configures the proxy to forward URL prefixes to the single-user
+notebook servers</p></li>
+</ul>
+<p>For convenient administration of the Hub, its users, and services,
+JupyterHub also provides a <a class="reference internal" href="reference/rest-api.html"><span class="doc">REST API</span></a>.</p>
+<p>The JupyterHub team and Project Jupyter value our community, and JupyterHub
+follows the Jupyter <a class="reference external" href="https://jupyter.readthedocs.io/en/latest/community/content-community.html">Community Guides</a>.</p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading">#</a></h2>
+<section id="distributions">
+<span id="index-distributions"></span><h3>Distributions<a class="headerlink" href="#distributions" title="Permalink to this heading">#</a></h3>
+<p>A JupyterHub <strong>distribution</strong> is tailored towards a particular set of
+use cases. These are generally easier to set up than setting up
+JupyterHub from scratch, assuming they fit your use case.</p>
+<p>The two popular ones are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://z2jh.jupyter.org">Zero to JupyterHub on Kubernetes</a>, for
+running JupyterHub on top of <a class="reference external" href="https://k8s.io">Kubernetes</a>. This
+can scale to large number of machines &amp; users.</p></li>
+<li><p><a class="reference external" href="http://tljh.jupyter.org">The Littlest JupyterHub</a>, for an easy
+to set up &amp; run JupyterHub supporting 1-100 users on a single machine.</p></li>
+</ul>
+</section>
+<section id="installation-guide">
+<h3>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation-guide.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart-docker.html">Using Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-basics.html">Installation Basics</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="getting-started">
+<h3>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started/index.html">Get Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/config-basics.html">Configuration Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/networking-basics.html">Networking basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/security-basics.html">Security settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/authenticators-users-basics.html">Authentication and User Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/spawners-basics.html">Spawners and single-user notebook servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/services-basics.html">External services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/faq.html">Frequently asked questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started/institutional-faq.html">Institutional FAQ</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="technical-reference">
+<h3>Technical Reference<a class="headerlink" href="#technical-reference" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Technical Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/websecurity.html">Security Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/authenticators.html">Authenticators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/spawners.html">Spawners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/monitoring.html">Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/database.html">The Hub’s Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/templates.html">Working with templates and UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events/index.html">Eventlogging and Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config-examples.html">Configuration examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="administrators-guide">
+<h3>Administrators guide<a class="headerlink" href="#administrators-guide" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index-admin.html">Administrator’s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="admin/upgrading.html">Upgrading JupyterHub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="admin/log-messages.html">Interpreting common log messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="api-reference">
+<h3>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">JupyterHub API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/app.html">Application configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/auth.html">Authenticators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/spawner.html">Spawners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/proxy.html">Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/user.html">Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/service.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/services.auth.html">Services Authentication</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="rbac-reference">
+<h3>RBAC Reference<a class="headerlink" href="#rbac-reference" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rbac/index.html">JupyterHub RBAC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rbac/index.html#motivation">Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac/index.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac/index.html#technical-overview">Technical Overview</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="contributing">
+<h3>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">#</a></h3>
+<p>We want you to contribute to JupyterHub in ways that are most exciting
+&amp; useful to you. We value documentation, testing, bug reporting &amp; code equally,
+and are glad to have your contributions in whatever form you wish :)</p>
+<p>Our <a class="reference external" href="https://github.com/jupyter/governance/blob/HEAD/conduct/code_of_conduct.md">Code of Conduct</a>
+(<a class="reference external" href="https://github.com/jupyter/governance/blob/HEAD/conduct/reporting_online.md">reporting guidelines</a>)
+helps keep our community welcoming to as many people as possible.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing/index.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing/community.html">Community communication channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/setup.html">Setting up a development install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/docs.html">Contributing Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/tests.html">Testing JupyterHub and linting code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/roadmap.html">The JupyterHub roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/security.html">Reporting security issues in Jupyter or JupyterHub</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="about-jupyterhub">
+<h3>About JupyterHub<a class="headerlink" href="#about-jupyterhub" title="Permalink to this heading">#</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index-about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributor-list.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gallery-jhub-deployments.html">A Gallery of JupyterHub Deployments</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+</ul>
+</section>
+<section id="questions-suggestions">
+<h2>Questions? Suggestions?<a class="headerlink" href="#questions-suggestions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://groups.google.com/forum/#!forum/jupyter">Jupyter mailing list</a></p></li>
+<li><p><a class="reference external" href="https://jupyter.org">Jupyter website</a></p></li>
+</ul>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='right-next' id="next-link" href="installation-guide.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Installation</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#distributions">
+     Distributions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installation-guide">
+     Installation Guide
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getting-started">
+     Getting Started
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#technical-reference">
+     Technical Reference
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#administrators-guide">
+     Administrators guide
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#api-reference">
+     API Reference
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rbac-reference">
+     RBAC Reference
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contributing">
+     Contributing
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-jupyterhub">
+     About JupyterHub
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#indices-and-tables">
+   Indices and tables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#questions-suggestions">
+   Questions? Suggestions?
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/index.rst">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/index.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

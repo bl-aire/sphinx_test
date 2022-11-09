@@ -1,0 +1,1037 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>JupyterHub API &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/index';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Application configuration" href="app.html" />
+    <link rel="prev" title="Changelog" href="../changelog.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="#">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="#">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Application configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawner.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.auth.html">Services Authentication</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="jupyterhub-api">
+<span id="api-index"></span><h1>JupyterHub API<a class="headerlink" href="#jupyterhub-api" title="Permalink to this heading">#</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Release<span class="colon">:</span></dt>
+<dd class="field-odd"><p>3.1.0.dev</p>
+</dd>
+<dt class="field-even">Date<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nov 09, 2022</p>
+</dd>
+</dl>
+<p>JupyterHub also provides a REST API for administration of the Hub and users.
+The documentation on <a class="reference external" href="../reference/rest.html">Using JupyterHub’s REST API</a> provides
+information on:</p>
+<ul class="simple">
+<li><p>what you can do with the API</p></li>
+<li><p>creating an API token</p></li>
+<li><p>adding API tokens to the config files</p></li>
+<li><p>making an API request programmatically using the requests library</p></li>
+<li><p>learning more about JupyterHub’s API</p></li>
+</ul>
+<p>JupyterHub API Reference:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Application configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.html#module-jupyterhub.app">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.app</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.html#jupyterhub"><code class="xref py py-class docutils literal notranslate"><span class="pre">JupyterHub</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub"><code class="docutils literal notranslate"><span class="pre">JupyterHub</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.active_server_limit"><code class="docutils literal notranslate"><span class="pre">JupyterHub.active_server_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.active_user_window"><code class="docutils literal notranslate"><span class="pre">JupyterHub.active_user_window</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.activity_resolution"><code class="docutils literal notranslate"><span class="pre">JupyterHub.activity_resolution</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.admin_access"><code class="docutils literal notranslate"><span class="pre">JupyterHub.admin_access</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.admin_users"><code class="docutils literal notranslate"><span class="pre">JupyterHub.admin_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.allow_named_servers"><code class="docutils literal notranslate"><span class="pre">JupyterHub.allow_named_servers</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.answer_yes"><code class="docutils literal notranslate"><span class="pre">JupyterHub.answer_yes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.api_page_default_limit"><code class="docutils literal notranslate"><span class="pre">JupyterHub.api_page_default_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.api_page_max_limit"><code class="docutils literal notranslate"><span class="pre">JupyterHub.api_page_max_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.api_tokens"><code class="docutils literal notranslate"><span class="pre">JupyterHub.api_tokens</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.authenticate_prometheus"><code class="docutils literal notranslate"><span class="pre">JupyterHub.authenticate_prometheus</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.authenticator_class"><code class="docutils literal notranslate"><span class="pre">JupyterHub.authenticator_class</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.base_url"><code class="docutils literal notranslate"><span class="pre">JupyterHub.base_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.bind_url"><code class="docutils literal notranslate"><span class="pre">JupyterHub.bind_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.cleanup_proxy"><code class="docutils literal notranslate"><span class="pre">JupyterHub.cleanup_proxy</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.cleanup_servers"><code class="docutils literal notranslate"><span class="pre">JupyterHub.cleanup_servers</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.concurrent_spawn_limit"><code class="docutils literal notranslate"><span class="pre">JupyterHub.concurrent_spawn_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.config_file"><code class="docutils literal notranslate"><span class="pre">JupyterHub.config_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.confirm_no_ssl"><code class="docutils literal notranslate"><span class="pre">JupyterHub.confirm_no_ssl</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.cookie_max_age_days"><code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_max_age_days</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.cookie_secret"><code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_secret</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.cookie_secret_file"><code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_secret_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.custom_scopes"><code class="docutils literal notranslate"><span class="pre">JupyterHub.custom_scopes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.data_files_path"><code class="docutils literal notranslate"><span class="pre">JupyterHub.data_files_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.db_kwargs"><code class="docutils literal notranslate"><span class="pre">JupyterHub.db_kwargs</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.db_url"><code class="docutils literal notranslate"><span class="pre">JupyterHub.db_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.debug_db"><code class="docutils literal notranslate"><span class="pre">JupyterHub.debug_db</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.debug_proxy"><code class="docutils literal notranslate"><span class="pre">JupyterHub.debug_proxy</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.default_server_name"><code class="docutils literal notranslate"><span class="pre">JupyterHub.default_server_name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.default_url"><code class="docutils literal notranslate"><span class="pre">JupyterHub.default_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.external_ssl_authorities"><code class="docutils literal notranslate"><span class="pre">JupyterHub.external_ssl_authorities</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.extra_handlers"><code class="docutils literal notranslate"><span class="pre">JupyterHub.extra_handlers</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.extra_log_file"><code class="docutils literal notranslate"><span class="pre">JupyterHub.extra_log_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.extra_log_handlers"><code class="docutils literal notranslate"><span class="pre">JupyterHub.extra_log_handlers</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.forwarded_host_header"><code class="docutils literal notranslate"><span class="pre">JupyterHub.forwarded_host_header</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.generate_certs"><code class="docutils literal notranslate"><span class="pre">JupyterHub.generate_certs</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.generate_config"><code class="docutils literal notranslate"><span class="pre">JupyterHub.generate_config</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_bind_url"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_bind_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_connect_ip"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_connect_ip</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_connect_port"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_connect_port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_connect_url"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_connect_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_ip"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_ip</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_port"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.hub_routespec"><code class="docutils literal notranslate"><span class="pre">JupyterHub.hub_routespec</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.implicit_spawn_seconds"><code class="docutils literal notranslate"><span class="pre">JupyterHub.implicit_spawn_seconds</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.init_spawners_timeout"><code class="docutils literal notranslate"><span class="pre">JupyterHub.init_spawners_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.internal_certs_location"><code class="docutils literal notranslate"><span class="pre">JupyterHub.internal_certs_location</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.internal_ssl"><code class="docutils literal notranslate"><span class="pre">JupyterHub.internal_ssl</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.ip"><code class="docutils literal notranslate"><span class="pre">JupyterHub.ip</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.jinja_environment_options"><code class="docutils literal notranslate"><span class="pre">JupyterHub.jinja_environment_options</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.last_activity_interval"><code class="docutils literal notranslate"><span class="pre">JupyterHub.last_activity_interval</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.load_groups"><code class="docutils literal notranslate"><span class="pre">JupyterHub.load_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.load_roles"><code class="docutils literal notranslate"><span class="pre">JupyterHub.load_roles</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.log_datefmt"><code class="docutils literal notranslate"><span class="pre">JupyterHub.log_datefmt</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.log_format"><code class="docutils literal notranslate"><span class="pre">JupyterHub.log_format</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.log_level"><code class="docutils literal notranslate"><span class="pre">JupyterHub.log_level</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.logging_config"><code class="docutils literal notranslate"><span class="pre">JupyterHub.logging_config</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.logo_file"><code class="docutils literal notranslate"><span class="pre">JupyterHub.logo_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.named_server_limit_per_user"><code class="docutils literal notranslate"><span class="pre">JupyterHub.named_server_limit_per_user</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.oauth_token_expires_in"><code class="docutils literal notranslate"><span class="pre">JupyterHub.oauth_token_expires_in</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.pid_file"><code class="docutils literal notranslate"><span class="pre">JupyterHub.pid_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.port"><code class="docutils literal notranslate"><span class="pre">JupyterHub.port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.proxy_api_ip"><code class="docutils literal notranslate"><span class="pre">JupyterHub.proxy_api_ip</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.proxy_api_port"><code class="docutils literal notranslate"><span class="pre">JupyterHub.proxy_api_port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.proxy_auth_token"><code class="docutils literal notranslate"><span class="pre">JupyterHub.proxy_auth_token</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.proxy_check_interval"><code class="docutils literal notranslate"><span class="pre">JupyterHub.proxy_check_interval</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.proxy_class"><code class="docutils literal notranslate"><span class="pre">JupyterHub.proxy_class</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.proxy_cmd"><code class="docutils literal notranslate"><span class="pre">JupyterHub.proxy_cmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.recreate_internal_certs"><code class="docutils literal notranslate"><span class="pre">JupyterHub.recreate_internal_certs</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.redirect_to_server"><code class="docutils literal notranslate"><span class="pre">JupyterHub.redirect_to_server</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.reset_db"><code class="docutils literal notranslate"><span class="pre">JupyterHub.reset_db</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.service_check_interval"><code class="docutils literal notranslate"><span class="pre">JupyterHub.service_check_interval</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.service_tokens"><code class="docutils literal notranslate"><span class="pre">JupyterHub.service_tokens</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.services"><code class="docutils literal notranslate"><span class="pre">JupyterHub.services</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.show_config"><code class="docutils literal notranslate"><span class="pre">JupyterHub.show_config</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.show_config_json"><code class="docutils literal notranslate"><span class="pre">JupyterHub.show_config_json</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.shutdown_on_logout"><code class="docutils literal notranslate"><span class="pre">JupyterHub.shutdown_on_logout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.spawner_class"><code class="docutils literal notranslate"><span class="pre">JupyterHub.spawner_class</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.ssl_cert"><code class="docutils literal notranslate"><span class="pre">JupyterHub.ssl_cert</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.ssl_key"><code class="docutils literal notranslate"><span class="pre">JupyterHub.ssl_key</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.statsd_host"><code class="docutils literal notranslate"><span class="pre">JupyterHub.statsd_host</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.statsd_port"><code class="docutils literal notranslate"><span class="pre">JupyterHub.statsd_port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.statsd_prefix"><code class="docutils literal notranslate"><span class="pre">JupyterHub.statsd_prefix</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.subdomain_host"><code class="docutils literal notranslate"><span class="pre">JupyterHub.subdomain_host</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.template_paths"><code class="docutils literal notranslate"><span class="pre">JupyterHub.template_paths</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.template_vars"><code class="docutils literal notranslate"><span class="pre">JupyterHub.template_vars</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.tornado_settings"><code class="docutils literal notranslate"><span class="pre">JupyterHub.tornado_settings</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.trust_user_provided_tokens"><code class="docutils literal notranslate"><span class="pre">JupyterHub.trust_user_provided_tokens</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.trusted_alt_names"><code class="docutils literal notranslate"><span class="pre">JupyterHub.trusted_alt_names</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.trusted_downstream_ips"><code class="docutils literal notranslate"><span class="pre">JupyterHub.trusted_downstream_ips</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.upgrade_db"><code class="docutils literal notranslate"><span class="pre">JupyterHub.upgrade_db</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.use_legacy_stopped_server_status_code"><code class="docutils literal notranslate"><span class="pre">JupyterHub.use_legacy_stopped_server_status_code</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.html#jupyterhub.app.JupyterHub.user_redirect_hook"><code class="docutils literal notranslate"><span class="pre">JupyterHub.user_redirect_hook</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authenticators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="auth.html#module-jupyterhub.auth">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.auth</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="auth.html#authenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Authenticator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator"><code class="docutils literal notranslate"><span class="pre">Authenticator</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.add_user"><code class="docutils literal notranslate"><span class="pre">Authenticator.add_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.admin_users"><code class="docutils literal notranslate"><span class="pre">Authenticator.admin_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.allowed_users"><code class="docutils literal notranslate"><span class="pre">Authenticator.allowed_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.auth_refresh_age"><code class="docutils literal notranslate"><span class="pre">Authenticator.auth_refresh_age</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.authenticate"><code class="docutils literal notranslate"><span class="pre">Authenticator.authenticate()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.auto_login"><code class="docutils literal notranslate"><span class="pre">Authenticator.auto_login</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.auto_login_oauth2_authorize"><code class="docutils literal notranslate"><span class="pre">Authenticator.auto_login_oauth2_authorize</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.blocked_users"><code class="docutils literal notranslate"><span class="pre">Authenticator.blocked_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.check_allowed"><code class="docutils literal notranslate"><span class="pre">Authenticator.check_allowed()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.check_blocked_users"><code class="docutils literal notranslate"><span class="pre">Authenticator.check_blocked_users()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.delete_invalid_users"><code class="docutils literal notranslate"><span class="pre">Authenticator.delete_invalid_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.delete_user"><code class="docutils literal notranslate"><span class="pre">Authenticator.delete_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.enable_auth_state"><code class="docutils literal notranslate"><span class="pre">Authenticator.enable_auth_state</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.get_authenticated_user"><code class="docutils literal notranslate"><span class="pre">Authenticator.get_authenticated_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.get_custom_html"><code class="docutils literal notranslate"><span class="pre">Authenticator.get_custom_html()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.get_handlers"><code class="docutils literal notranslate"><span class="pre">Authenticator.get_handlers()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.is_admin"><code class="docutils literal notranslate"><span class="pre">Authenticator.is_admin()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.login_url"><code class="docutils literal notranslate"><span class="pre">Authenticator.login_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.logout_url"><code class="docutils literal notranslate"><span class="pre">Authenticator.logout_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.manage_groups"><code class="docutils literal notranslate"><span class="pre">Authenticator.manage_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.normalize_username"><code class="docutils literal notranslate"><span class="pre">Authenticator.normalize_username()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.post_auth_hook"><code class="docutils literal notranslate"><span class="pre">Authenticator.post_auth_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.post_spawn_stop"><code class="docutils literal notranslate"><span class="pre">Authenticator.post_spawn_stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.pre_spawn_start"><code class="docutils literal notranslate"><span class="pre">Authenticator.pre_spawn_start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.refresh_pre_spawn"><code class="docutils literal notranslate"><span class="pre">Authenticator.refresh_pre_spawn</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.refresh_user"><code class="docutils literal notranslate"><span class="pre">Authenticator.refresh_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.run_post_auth_hook"><code class="docutils literal notranslate"><span class="pre">Authenticator.run_post_auth_hook()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.username_map"><code class="docutils literal notranslate"><span class="pre">Authenticator.username_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.username_pattern"><code class="docutils literal notranslate"><span class="pre">Authenticator.username_pattern</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.validate_username"><code class="docutils literal notranslate"><span class="pre">Authenticator.validate_username()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.Authenticator.whitelist"><code class="docutils literal notranslate"><span class="pre">Authenticator.whitelist</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="auth.html#localauthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalAuthenticator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.add_system_user"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.add_system_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.add_user"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.add_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.add_user_cmd"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.add_user_cmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.admin_users"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.admin_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.allowed_groups"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.allowed_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.allowed_users"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.allowed_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.auth_refresh_age"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.auth_refresh_age</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.auto_login"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.auto_login</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.auto_login_oauth2_authorize"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.auto_login_oauth2_authorize</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.blocked_users"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.blocked_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.check_allowed"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.check_allowed()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.check_allowed_groups"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.check_allowed_groups()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.create_system_users"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.create_system_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.delete_invalid_users"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.delete_invalid_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.enable_auth_state"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.enable_auth_state</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.group_whitelist"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.group_whitelist</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.manage_groups"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.manage_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.post_auth_hook"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.post_auth_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.refresh_pre_spawn"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.refresh_pre_spawn</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.system_user_exists"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.system_user_exists()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.uids"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.uids</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.username_map"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.username_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.username_pattern"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.username_pattern</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.LocalAuthenticator.whitelist"><code class="docutils literal notranslate"><span class="pre">LocalAuthenticator.whitelist</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="auth.html#pamauthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PAMAuthenticator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.add_user_cmd"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.add_user_cmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.admin_groups"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.admin_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.admin_users"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.admin_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.allowed_groups"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.allowed_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.allowed_users"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.allowed_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.auth_refresh_age"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.auth_refresh_age</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.auto_login"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.auto_login</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.auto_login_oauth2_authorize"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.auto_login_oauth2_authorize</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.blocked_users"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.blocked_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.check_account"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.check_account</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.create_system_users"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.create_system_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.delete_invalid_users"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.delete_invalid_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.enable_auth_state"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.enable_auth_state</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.encoding"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.encoding</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.group_whitelist"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.group_whitelist</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.manage_groups"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.manage_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.open_sessions"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.open_sessions</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.pam_normalize_username"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.pam_normalize_username</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.post_auth_hook"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.post_auth_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.refresh_pre_spawn"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.refresh_pre_spawn</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.service"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.service</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.uids"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.uids</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.username_map"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.username_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.username_pattern"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.username_pattern</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.PAMAuthenticator.whitelist"><code class="docutils literal notranslate"><span class="pre">PAMAuthenticator.whitelist</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="auth.html#dummyauthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DummyAuthenticator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.admin_users"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.admin_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.allowed_users"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.allowed_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.auth_refresh_age"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.auth_refresh_age</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.auto_login"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.auto_login</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.auto_login_oauth2_authorize"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.auto_login_oauth2_authorize</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.blocked_users"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.blocked_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.delete_invalid_users"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.delete_invalid_users</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.enable_auth_state"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.enable_auth_state</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.manage_groups"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.manage_groups</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.password"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.password</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.post_auth_hook"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.post_auth_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.refresh_pre_spawn"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.refresh_pre_spawn</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.username_map"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.username_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.username_pattern"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.username_pattern</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="auth.html#jupyterhub.auth.DummyAuthenticator.whitelist"><code class="docutils literal notranslate"><span class="pre">DummyAuthenticator.whitelist</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spawner.html">Spawners</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spawner.html#module-jupyterhub.spawner">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.spawner</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spawner.html#spawner"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spawner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner"><code class="docutils literal notranslate"><span class="pre">Spawner</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.args"><code class="docutils literal notranslate"><span class="pre">Spawner.args</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.auth_state_hook"><code class="docutils literal notranslate"><span class="pre">Spawner.auth_state_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.cmd"><code class="docutils literal notranslate"><span class="pre">Spawner.cmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.consecutive_failure_limit"><code class="docutils literal notranslate"><span class="pre">Spawner.consecutive_failure_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.cpu_guarantee"><code class="docutils literal notranslate"><span class="pre">Spawner.cpu_guarantee</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.cpu_limit"><code class="docutils literal notranslate"><span class="pre">Spawner.cpu_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.create_certs"><code class="docutils literal notranslate"><span class="pre">Spawner.create_certs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.debug"><code class="docutils literal notranslate"><span class="pre">Spawner.debug</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.default_url"><code class="docutils literal notranslate"><span class="pre">Spawner.default_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.disable_user_config"><code class="docutils literal notranslate"><span class="pre">Spawner.disable_user_config</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.env_keep"><code class="docutils literal notranslate"><span class="pre">Spawner.env_keep</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.environment"><code class="docutils literal notranslate"><span class="pre">Spawner.environment</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.format_string"><code class="docutils literal notranslate"><span class="pre">Spawner.format_string()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.get_args"><code class="docutils literal notranslate"><span class="pre">Spawner.get_args()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.get_env"><code class="docutils literal notranslate"><span class="pre">Spawner.get_env()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.get_state"><code class="docutils literal notranslate"><span class="pre">Spawner.get_state()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.http_timeout"><code class="docutils literal notranslate"><span class="pre">Spawner.http_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.hub_connect_url"><code class="docutils literal notranslate"><span class="pre">Spawner.hub_connect_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.ip"><code class="docutils literal notranslate"><span class="pre">Spawner.ip</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.mem_guarantee"><code class="docutils literal notranslate"><span class="pre">Spawner.mem_guarantee</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.mem_limit"><code class="docutils literal notranslate"><span class="pre">Spawner.mem_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.move_certs"><code class="docutils literal notranslate"><span class="pre">Spawner.move_certs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.notebook_dir"><code class="docutils literal notranslate"><span class="pre">Spawner.notebook_dir</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.oauth_client_allowed_scopes"><code class="docutils literal notranslate"><span class="pre">Spawner.oauth_client_allowed_scopes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.oauth_roles"><code class="docutils literal notranslate"><span class="pre">Spawner.oauth_roles</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.options_form"><code class="docutils literal notranslate"><span class="pre">Spawner.options_form</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.options_from_form"><code class="docutils literal notranslate"><span class="pre">Spawner.options_from_form</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.poll"><code class="docutils literal notranslate"><span class="pre">Spawner.poll()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.poll_interval"><code class="docutils literal notranslate"><span class="pre">Spawner.poll_interval</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.port"><code class="docutils literal notranslate"><span class="pre">Spawner.port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.post_stop_hook"><code class="docutils literal notranslate"><span class="pre">Spawner.post_stop_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.pre_spawn_hook"><code class="docutils literal notranslate"><span class="pre">Spawner.pre_spawn_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.ssl_alt_names"><code class="docutils literal notranslate"><span class="pre">Spawner.ssl_alt_names</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.ssl_alt_names_include_local"><code class="docutils literal notranslate"><span class="pre">Spawner.ssl_alt_names_include_local</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.start"><code class="docutils literal notranslate"><span class="pre">Spawner.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.start_timeout"><code class="docutils literal notranslate"><span class="pre">Spawner.start_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.stop"><code class="docutils literal notranslate"><span class="pre">Spawner.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.Spawner.template_namespace"><code class="docutils literal notranslate"><span class="pre">Spawner.template_namespace()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spawner.html#localprocessspawner"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalProcessSpawner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.args"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.args</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.auth_state_hook"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.auth_state_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.cmd"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.cmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.consecutive_failure_limit"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.consecutive_failure_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.cpu_guarantee"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.cpu_guarantee</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.cpu_limit"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.cpu_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.debug"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.debug</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.default_url"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.default_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.disable_user_config"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.disable_user_config</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.env_keep"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.env_keep</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.environment"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.environment</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.http_timeout"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.http_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.hub_connect_url"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.hub_connect_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.interrupt_timeout"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.interrupt_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.ip"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.ip</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.kill_timeout"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.kill_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.mem_guarantee"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.mem_guarantee</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.mem_limit"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.mem_limit</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.notebook_dir"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.notebook_dir</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.oauth_client_allowed_scopes"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.oauth_client_allowed_scopes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.oauth_roles"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.oauth_roles</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.options_form"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.options_form</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.options_from_form"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.options_from_form</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.poll_interval"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.poll_interval</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.popen_kwargs"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.popen_kwargs</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.port"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.post_stop_hook"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.post_stop_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.pre_spawn_hook"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.pre_spawn_hook</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.shell_cmd"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.shell_cmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.ssl_alt_names"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.ssl_alt_names</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.ssl_alt_names_include_local"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.ssl_alt_names_include_local</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.start_timeout"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.start_timeout</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="spawner.html#jupyterhub.spawner.LocalProcessSpawner.term_timeout"><code class="docutils literal notranslate"><span class="pre">LocalProcessSpawner.term_timeout</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="proxy.html#module-jupyterhub.proxy">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.proxy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="proxy.html#proxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proxy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy"><code class="docutils literal notranslate"><span class="pre">Proxy</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.add_all_services"><code class="docutils literal notranslate"><span class="pre">Proxy.add_all_services()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.add_all_users"><code class="docutils literal notranslate"><span class="pre">Proxy.add_all_users()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.add_hub_route"><code class="docutils literal notranslate"><span class="pre">Proxy.add_hub_route()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.add_route"><code class="docutils literal notranslate"><span class="pre">Proxy.add_route()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.add_service"><code class="docutils literal notranslate"><span class="pre">Proxy.add_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.add_user"><code class="docutils literal notranslate"><span class="pre">Proxy.add_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.check_routes"><code class="docutils literal notranslate"><span class="pre">Proxy.check_routes()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.delete_route"><code class="docutils literal notranslate"><span class="pre">Proxy.delete_route()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.delete_service"><code class="docutils literal notranslate"><span class="pre">Proxy.delete_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.delete_user"><code class="docutils literal notranslate"><span class="pre">Proxy.delete_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.extra_routes"><code class="docutils literal notranslate"><span class="pre">Proxy.extra_routes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.get_all_routes"><code class="docutils literal notranslate"><span class="pre">Proxy.get_all_routes()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.get_route"><code class="docutils literal notranslate"><span class="pre">Proxy.get_route()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.should_start"><code class="docutils literal notranslate"><span class="pre">Proxy.should_start</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.start"><code class="docutils literal notranslate"><span class="pre">Proxy.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.stop"><code class="docutils literal notranslate"><span class="pre">Proxy.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.Proxy.validate_routespec"><code class="docutils literal notranslate"><span class="pre">Proxy.validate_routespec()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="proxy.html#configurablehttpproxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.api_url"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.api_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.auth_token"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.auth_token</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.check_running_interval"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.check_running_interval</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.command"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.command</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.concurrency"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.concurrency</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.debug"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.debug</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.extra_routes"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.extra_routes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.log_level"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.log_level</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.pid_file"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.pid_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.should_start"><code class="docutils literal notranslate"><span class="pre">ConfigurableHTTPProxy.should_start</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Users</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user.html#module-jupyterhub.user">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.user</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user.html#userdict"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDict</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="user.html#jupyterhub.user.UserDict"><code class="docutils literal notranslate"><span class="pre">UserDict</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.UserDict.add"><code class="docutils literal notranslate"><span class="pre">UserDict.add()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.UserDict.count_active_users"><code class="docutils literal notranslate"><span class="pre">UserDict.count_active_users()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.UserDict.delete"><code class="docutils literal notranslate"><span class="pre">UserDict.delete()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.UserDict.get"><code class="docutils literal notranslate"><span class="pre">UserDict.get()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="user.html#user"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="user.html#jupyterhub.user.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.User.name"><code class="docutils literal notranslate"><span class="pre">User.name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.User.server"><code class="docutils literal notranslate"><span class="pre">User.server</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.User.spawner"><code class="docutils literal notranslate"><span class="pre">User.spawner</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="user.html#jupyterhub.user.User.escaped_name"><code class="docutils literal notranslate"><span class="pre">User.escaped_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="service.html#module-jupyterhub.services.service">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.services.service</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service.html#service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="service.html#jupyterhub.services.service.Service"><code class="docutils literal notranslate"><span class="pre">Service</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="service.html#jupyterhub.services.service.Service.kind"><code class="docutils literal notranslate"><span class="pre">Service.kind</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="service.html#jupyterhub.services.service.Service.managed"><code class="docutils literal notranslate"><span class="pre">Service.managed</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="services.auth.html">Services Authentication</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="services.auth.html#module-jupyterhub.services.auth">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.services.auth</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="services.auth.html#hubauth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth"><code class="docutils literal notranslate"><span class="pre">HubAuth</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.access_scopes"><code class="docutils literal notranslate"><span class="pre">HubAuth.access_scopes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.api_token"><code class="docutils literal notranslate"><span class="pre">HubAuth.api_token</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.api_url"><code class="docutils literal notranslate"><span class="pre">HubAuth.api_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.base_url"><code class="docutils literal notranslate"><span class="pre">HubAuth.base_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.cache_max_age"><code class="docutils literal notranslate"><span class="pre">HubAuth.cache_max_age</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.certfile"><code class="docutils literal notranslate"><span class="pre">HubAuth.certfile</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.check_scopes"><code class="docutils literal notranslate"><span class="pre">HubAuth.check_scopes()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.client_ca"><code class="docutils literal notranslate"><span class="pre">HubAuth.client_ca</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.cookie_options"><code class="docutils literal notranslate"><span class="pre">HubAuth.cookie_options</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.get_session_id"><code class="docutils literal notranslate"><span class="pre">HubAuth.get_session_id()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.get_token"><code class="docutils literal notranslate"><span class="pre">HubAuth.get_token()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.get_user"><code class="docutils literal notranslate"><span class="pre">HubAuth.get_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.hub_host"><code class="docutils literal notranslate"><span class="pre">HubAuth.hub_host</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.hub_prefix"><code class="docutils literal notranslate"><span class="pre">HubAuth.hub_prefix</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.keyfile"><code class="docutils literal notranslate"><span class="pre">HubAuth.keyfile</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.login_url"><code class="docutils literal notranslate"><span class="pre">HubAuth.login_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.user_for_cookie"><code class="docutils literal notranslate"><span class="pre">HubAuth.user_for_cookie()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuth.user_for_token"><code class="docutils literal notranslate"><span class="pre">HubAuth.user_for_token()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="services.auth.html#huboauth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuth</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth"><code class="docutils literal notranslate"><span class="pre">HubOAuth</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.access_scopes"><code class="docutils literal notranslate"><span class="pre">HubOAuth.access_scopes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.api_token"><code class="docutils literal notranslate"><span class="pre">HubOAuth.api_token</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.api_url"><code class="docutils literal notranslate"><span class="pre">HubOAuth.api_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.base_url"><code class="docutils literal notranslate"><span class="pre">HubOAuth.base_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.cache_max_age"><code class="docutils literal notranslate"><span class="pre">HubOAuth.cache_max_age</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.certfile"><code class="docutils literal notranslate"><span class="pre">HubOAuth.certfile</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.clear_cookie"><code class="docutils literal notranslate"><span class="pre">HubOAuth.clear_cookie()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.client_ca"><code class="docutils literal notranslate"><span class="pre">HubOAuth.client_ca</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.cookie_name"><code class="docutils literal notranslate"><span class="pre">HubOAuth.cookie_name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.cookie_options"><code class="docutils literal notranslate"><span class="pre">HubOAuth.cookie_options</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.generate_state"><code class="docutils literal notranslate"><span class="pre">HubOAuth.generate_state()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.get_next_url"><code class="docutils literal notranslate"><span class="pre">HubOAuth.get_next_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.get_state_cookie_name"><code class="docutils literal notranslate"><span class="pre">HubOAuth.get_state_cookie_name()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.hub_host"><code class="docutils literal notranslate"><span class="pre">HubOAuth.hub_host</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.hub_prefix"><code class="docutils literal notranslate"><span class="pre">HubOAuth.hub_prefix</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.keyfile"><code class="docutils literal notranslate"><span class="pre">HubOAuth.keyfile</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.login_url"><code class="docutils literal notranslate"><span class="pre">HubOAuth.login_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_authorization_url"><code class="docutils literal notranslate"><span class="pre">HubOAuth.oauth_authorization_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_client_id"><code class="docutils literal notranslate"><span class="pre">HubOAuth.oauth_client_id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_redirect_uri"><code class="docutils literal notranslate"><span class="pre">HubOAuth.oauth_redirect_uri</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_token_url"><code class="docutils literal notranslate"><span class="pre">HubOAuth.oauth_token_url</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.set_cookie"><code class="docutils literal notranslate"><span class="pre">HubOAuth.set_cookie()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.set_state_cookie"><code class="docutils literal notranslate"><span class="pre">HubOAuth.set_state_cookie()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.state_cookie_name"><code class="docutils literal notranslate"><span class="pre">HubOAuth.state_cookie_name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuth.token_for_code"><code class="docutils literal notranslate"><span class="pre">HubOAuth.token_for_code()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="services.auth.html#hubauthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuthenticated</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated.allow_all"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated.allow_all</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated.check_hub_user"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated.check_hub_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated.get_current_user"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated.get_current_user()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated.get_login_url"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated.get_login_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated.hub_auth_class"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated.hub_auth_class</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubAuthenticated.hub_scopes"><code class="docutils literal notranslate"><span class="pre">HubAuthenticated.hub_scopes</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="services.auth.html#huboauthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthenticated</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuthenticated"><code class="docutils literal notranslate"><span class="pre">HubOAuthenticated</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="services.auth.html#huboauthcallbackhandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthCallbackHandler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="services.auth.html#jupyterhub.services.auth.HubOAuthCallbackHandler"><code class="docutils literal notranslate"><span class="pre">HubOAuthCallbackHandler</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="../changelog.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Changelog</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="app.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Application configuration</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/api/index.rst">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/api/index.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

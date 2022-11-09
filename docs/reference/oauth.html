@@ -1,0 +1,992 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>JupyterHub and OAuth &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/oauth';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Administrator’s Guide" href="../index-admin.html" />
+    <link rel="prev" title="Configuration Reference" href="config-reference.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="jupyterhub-and-oauth">
+<h1>JupyterHub and OAuth<a class="headerlink" href="#jupyterhub-and-oauth" title="Permalink to this heading">#</a></h1>
+<p>JupyterHub uses OAuth 2 internally as a mechanism for authenticating users.
+As such, JupyterHub itself always functions as an OAuth <strong>provider</strong>.
+More on what that means <a class="reference internal" href="#oauth-terms"><span class="std std-ref">below</span></a>.</p>
+<p>Additionally, JupyterHub is <em>often</em> deployed with <a class="reference external" href="https://oauthenticator.readthedocs.io">oauthenticator</a>,
+where an external identity provider, such as GitHub or KeyCloak, is used to authenticate users.
+When this is the case, there are <em>two</em> nested oauth flows:
+an <em>internal</em> oauth flow where JupyterHub is the <strong>provider</strong>,
+and and <em>external</em> oauth flow, where JupyterHub is a <strong>client</strong>.</p>
+<p>This means that when you are using JupyterHub, there is always <em>at least one</em> and often two layers of OAuth involved in a user logging in and accessing their server.</p>
+<p>Some relevant points:</p>
+<ul class="simple">
+<li><p>Single-user servers <em>never</em> need to communicate with or be aware of the upstream provider configured in your Authenticator.
+As far as they are concerned, only JupyterHub is an OAuth provider,
+and how users authenticate with the Hub itself is irrelevant.</p></li>
+<li><p>When talking to a single-user server,
+there are ~always two tokens:
+a token issued to the server itself to communicate with the Hub API,
+and a second per-user token in the browser to represent the completed login process and authorized permissions.
+More on this <a class="reference internal" href="#two-tokens"><span class="std std-ref">later</span></a>.</p></li>
+</ul>
+<section id="key-oauth-terms">
+<span id="oauth-terms"></span><h2>Key OAuth terms<a class="headerlink" href="#key-oauth-terms" title="Permalink to this heading">#</a></h2>
+<p>Here are some key definitions to keep in mind when we are talking about OAuth.
+You can also read more detail <a class="reference external" href="https://www.oauth.com/oauth2-servers/definitions/">here</a>.</p>
+<ul class="simple">
+<li><p><strong>provider</strong> the entity responsible for managing identity and authorization,
+always a web server.
+JupyterHub is <em>always</em> an oauth provider for JupyterHub’s components.
+When OAuthenticator is used, an external service, such as GitHub or KeyCloak, is also an oauth provider.</p></li>
+<li><p><strong>client</strong> An entity that requests OAuth <strong>tokens</strong> on a user’s behalf,
+generally a web server of some kind.
+OAuth <strong>clients</strong> are services that <em>delegate</em> authentication and/or authorization
+to an OAuth <strong>provider</strong>.
+JupyterHub <em>services</em> or single-user <em>servers</em> are OAuth <strong>clients</strong> of the JupyterHub <strong>provider</strong>.
+When OAuthenticator is used, JupyterHub is itself <em>also</em> an OAuth <strong>client</strong> for the external oauth <strong>provider</strong>, e.g. GitHub.</p></li>
+<li><p><strong>browser</strong> A user’s web browser, which makes requests and stores things like cookies</p></li>
+<li><p><strong>token</strong> The secret value used to represent a user’s authorization. This is the final product of the OAuth process.</p></li>
+<li><p><strong>code</strong> A short-lived temporary secret that the <strong>client</strong> exchanges
+for a <strong>token</strong> at the conclusion of oauth,
+in what’s generally called the “oauth callback handler.”</p></li>
+</ul>
+</section>
+<section id="one-oauth-flow">
+<h2>One oauth flow<a class="headerlink" href="#one-oauth-flow" title="Permalink to this heading">#</a></h2>
+<p>OAuth <strong>flow</strong> is what we call the sequence of HTTP requests involved in authenticating a user and issuing a token, ultimately used for authorized access to a service or single-user server.</p>
+<p>A single oauth flow generally goes like this:</p>
+<section id="oauth-request-and-redirect">
+<h3>OAuth request and redirect<a class="headerlink" href="#oauth-request-and-redirect" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>A <strong>browser</strong> makes an HTTP request to an oauth <strong>client</strong>.</p></li>
+<li><p>There are no credentials, so the client <em>redirects</em> the browser to an “authorize” page on the oauth <strong>provider</strong> with some extra information:</p>
+<ul class="simple">
+<li><p>the oauth <strong>client id</strong> of the client itself</p></li>
+<li><p>the <strong>redirect uri</strong> to be redirected back to after completion</p></li>
+<li><p>the <strong>scopes</strong> requested, which the user should be presented with to confirm.
+This is the “X would like to be able to Y on your behalf. Allow this?” page you see on all the “Login with …” pages around the Internet.</p></li>
+</ul>
+</li>
+<li><p>During this authorize step,
+the browser must be <em>authenticated</em> with the provider.
+This is often already stored in a cookie,
+but if not the provider webapp must begin its <em>own</em> authentication process before serving the authorization page.
+This <em>may</em> even begin another oauth flow!</p></li>
+<li><p>After the user tells the provider that they want to proceed with the authorization,
+the provider records this authorization in a short-lived record called an <strong>oauth code</strong>.</p></li>
+<li><p>Finally, the oauth provider redirects the browser <em>back</em> to the oauth client’s “redirect uri”
+(or “oauth callback uri”),
+with the oauth code in a url parameter.</p></li>
+</ol>
+<p>That’s the end of the requests made between the <strong>browser</strong> and the <strong>provider</strong>.</p>
+</section>
+<section id="state-after-redirect">
+<h3>State after redirect<a class="headerlink" href="#state-after-redirect" title="Permalink to this heading">#</a></h3>
+<p>At this point:</p>
+<ul class="simple">
+<li><p>The browser is authenticated with the <em>provider</em></p></li>
+<li><p>The user’s authorized permissions are recorded in an <em>oauth code</em></p></li>
+<li><p>The <em>provider</em> knows that the given oauth client’s requested permissions have been granted, but the client doesn’t know this yet.</p></li>
+<li><p>All requests so far have been made directly by the browser.
+No requests have originated at the client or provider.</p></li>
+</ul>
+</section>
+<section id="oauth-client-handles-callback-request">
+<h3>OAuth Client Handles Callback Request<a class="headerlink" href="#oauth-client-handles-callback-request" title="Permalink to this heading">#</a></h3>
+<p>Now we get to finish the OAuth process.
+Let’s dig into what the oauth client does when it handles
+the oauth callback request with the</p>
+<ul class="simple">
+<li><p>The OAuth client receives the <em>code</em> and makes an API request to the <em>provider</em> to exchange the code for a real <em>token</em>.
+This is the first direct request between the OAuth <em>client</em> and the <em>provider</em>.</p></li>
+<li><p>Once the token is retrieved, the client <em>usually</em>
+makes a second API request to the <em>provider</em>
+to retrieve information about the owner of the token (the user).
+This is the step where behavior diverges for different OAuth providers.
+Up to this point, all oauth providers are the same, following the oauth specification.
+However, oauth does not define a standard for exchanging tokens for information about their owner or permissions (<a class="reference external" href="https://openid.net/connect/">OpenID Connect</a> does that),
+so this step may be different for each OAuth provider.</p></li>
+<li><p>Finally, the oauth client stores its own record that the user is authorized in a cookie.
+This could be the token itself, or any other appropriate representation of successful authentication.</p></li>
+<li><p>Last of all, now that credentials have been established,
+the browser can be redirected to the <em>original</em> URL where it started,
+to try the request again.
+If the client wasn’t able to keep track of the original URL all this time
+(not always easy!),
+you might end up back at a default landing page instead of where you started the login process. This is frustrating!</p></li>
+</ul>
+<p>😮‍💨 <em>phew</em>.</p>
+<p>So that’s <em>one</em> OAuth process.</p>
+</section>
+</section>
+<section id="full-sequence-of-oauth-in-jupyterhub">
+<h2>Full sequence of OAuth in JupyterHub<a class="headerlink" href="#full-sequence-of-oauth-in-jupyterhub" title="Permalink to this heading">#</a></h2>
+<p>Let’s go through the above oauth process in JupyterHub,
+with specific examples of each HTTP request and what information is contained.
+For bonus points, we are using the double-oauth example of JupyterHub configured with GitHubOAuthenticator.</p>
+<p>To disambiguate, we will call the OAuth process where JupyterHub is the <strong>provider</strong> “internal oauth,”
+and the one with JupyterHub as a <strong>client</strong> “external oauth.”</p>
+<p>Our starting point:</p>
+<ul class="simple">
+<li><p>a user’s single-user server is running. Let’s call them <code class="docutils literal notranslate"><span class="pre">danez</span></code></p></li>
+<li><p>jupyterhub is running with GitHub as an oauth provider (this means two full instances of oauth),</p></li>
+<li><p>Danez has a fresh browser session with no cookies yet</p></li>
+</ul>
+<p>First request:</p>
+<ul class="simple">
+<li><p>browser-&gt;single-user server running JupyterLab or Jupyter Classic</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/user/danez/notebooks/mynotebook.ipynb</span></code></p></li>
+<li><p>no credentials, so single-user server (as an oauth <strong>client</strong>) starts internal oauth process with JupyterHub (the <strong>provider</strong>)</p></li>
+<li><p>response: 302 redirect -&gt; <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>
+with:</p>
+<ul>
+<li><p>client-id=<code class="docutils literal notranslate"><span class="pre">jupyterhub-user-danez</span></code></p></li>
+<li><p>redirect-uri=<code class="docutils literal notranslate"><span class="pre">/user/danez/oauth_callback</span></code> (we’ll come back later!)</p></li>
+</ul>
+</li>
+</ul>
+<p>Second request, following redirect:</p>
+<ul class="simple">
+<li><p>browser-&gt;jupyterhub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/api/oauth2/authorize</span></code></p></li>
+<li><p>no credentials, so jupyterhub starts external oauth process <em>with GitHub</em></p></li>
+<li><p>response: 302 redirect -&gt; <code class="docutils literal notranslate"><span class="pre">https://github.com/login/oauth/authorize</span></code>
+with:</p>
+<ul>
+<li><p>client-id=<code class="docutils literal notranslate"><span class="pre">jupyterhub-client-uuid</span></code></p></li>
+<li><p>redirect-uri=<code class="docutils literal notranslate"><span class="pre">/hub/oauth_callback</span></code> (we’ll come back later!)</p></li>
+</ul>
+</li>
+</ul>
+<p><em>pause</em> This is where JupyterHub configuration comes into play.
+Recall, in this case JupyterHub is using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">authenticator_class</span> <span class="o">=</span> <span class="s1">&#39;github&#39;</span>
+</pre></div>
+</div>
+<p>That means authenticating a request to the Hub itself starts
+a <em>second</em>, external oauth process with GitHub as a provider.
+This external oauth process is optional, though.
+If you were using the default username+password PAMAuthenticator,
+this redirect would have been to <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code> instead, to present the user
+with a login form.</p>
+<p>Third request, following redirect:</p>
+<ul class="simple">
+<li><p>browser-&gt;GitHub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">https://github.com/login/oauth/authorize</span></code></p></li>
+</ul>
+<p>Here, GitHub prompts for login and asks for confirmation of authorization
+(more redirects if you aren’t logged in to GitHub yet, but ultimately back to this <code class="docutils literal notranslate"><span class="pre">/authorize</span></code> URL).</p>
+<p>After successful authorization
+(either by looking up a pre-existing authorization,
+or recording it via form submission)
+GitHub issues an <strong>oauth code</strong> and redirects to <code class="docutils literal notranslate"><span class="pre">/hub/oauth_callback?code=github-code</span></code></p>
+<p>Next request:</p>
+<ul class="simple">
+<li><p>browser-&gt;JupyterHub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/oauth_callback?code=github-code</span></code></p></li>
+</ul>
+<p>Inside the callback handler, JupyterHub makes two API requests:</p>
+<p>The first:</p>
+<ul class="simple">
+<li><p>JupyterHub-&gt;GitHub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">https://github.com/login/oauth/access_token</span></code></p></li>
+<li><p>request made with oauth <strong>code</strong> from url parameter</p></li>
+<li><p>response includes an access <strong>token</strong></p></li>
+</ul>
+<p>The second:</p>
+<ul class="simple">
+<li><p>JupyterHub-&gt;GitHub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">https://api.github.com/user</span></code></p></li>
+<li><p>request made with access <strong>token</strong> in the <code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header</p></li>
+<li><p>response is the user model, including username, email, etc.</p></li>
+</ul>
+<p>Now the external oauth callback request completes with:</p>
+<ul class="simple">
+<li><p>set cookie on <code class="docutils literal notranslate"><span class="pre">/hub/</span></code> path, recording jupyterhub authentication so we don’t need to do external oauth with GitHub again for a while</p></li>
+<li><p>redirect -&gt; <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code></p></li>
+</ul>
+<p>🎉 At this point, we have completed our first OAuth flow! 🎉</p>
+<p>Now, we get our first repeated request:</p>
+<ul class="simple">
+<li><p>browser-&gt;jupyterhub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/api/oauth2/authorize</span></code></p></li>
+<li><p>this time with credentials,
+so jupyterhub either</p>
+<ol class="arabic simple">
+<li><p>serves the internal authorization confirmation page, or</p></li>
+<li><p>automatically accepts authorization (shortcut taken when a user is visiting their own server)</p></li>
+</ol>
+</li>
+<li><p>redirect -&gt; <code class="docutils literal notranslate"><span class="pre">/user/danez/oauth_callback?code=jupyterhub-code</span></code></p></li>
+</ul>
+<p>Here, we start the same oauth callback process as before, but at Danez’s single-user server for the <em>internal</em> oauth</p>
+<ul class="simple">
+<li><p>browser-&gt;single-user server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/user/danez/oauth_callback</span></code></p></li>
+</ul>
+<p>(in handler)</p>
+<p>Inside the internal oauth callback handler,
+Danez’s server makes two API requests to JupyterHub:</p>
+<p>The first:</p>
+<ul class="simple">
+<li><p>single-user server-&gt;JupyterHub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/hub/api/oauth2/token</span></code></p></li>
+<li><p>request made with oauth code from url parameter</p></li>
+<li><p>response includes an API token</p></li>
+</ul>
+<p>The second:</p>
+<ul class="simple">
+<li><p>single-user server-&gt;JupyterHub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/api/user</span></code></p></li>
+<li><p>request made with token in the <code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header</p></li>
+<li><p>response is the user model, including username, groups, etc.</p></li>
+</ul>
+<p>Finally completing <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/user/danez/oauth_callback</span></code>:</p>
+<ul class="simple">
+<li><p>response sets cookie, storing encrypted access token</p></li>
+<li><p><em>finally</em> redirects back to the original <code class="docutils literal notranslate"><span class="pre">/user/danez/notebooks/mynotebook.ipynb</span></code></p></li>
+</ul>
+<p>Final request:</p>
+<ul class="simple">
+<li><p>browser -&gt; single-user server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/user/danez/notebooks/mynotebook.ipynb</span></code></p></li>
+<li><p>encrypted jupyterhub token in cookie</p></li>
+</ul>
+<p>To authenticate this request, the single token stored in the encrypted cookie is passed to the Hub for verification:</p>
+<ul class="simple">
+<li><p>single-user server -&gt; Hub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/api/user</span></code></p></li>
+<li><p>browser’s token in Authorization header</p></li>
+<li><p>response: user model with name, groups, etc.</p></li>
+</ul>
+<p>If the user model matches who should be allowed (e.g. Danez),
+then the request is allowed.
+See <a class="reference internal" href="../rbac/scopes.html"><span class="doc">Scopes in JupyterHub</span></a> for how JupyterHub uses scopes to determine authorized access to servers and services.</p>
+<p><em>the end</em></p>
+</section>
+<section id="token-caches-and-expiry">
+<h2>Token caches and expiry<a class="headerlink" href="#token-caches-and-expiry" title="Permalink to this heading">#</a></h2>
+<p>Because tokens represent information from an external source,
+they can become ‘stale,’
+or the information they represent may no longer be accurate.
+For example: a user’s GitHub account may no longer be authorized to use JupyterHub,
+that should ultimately propagate to revoking access and force logging in again.</p>
+<p>To handle this, OAuth tokens and the various places they are stored can <em>expire</em>,
+which should have the same effect as no credentials,
+and trigger the authorization process again.</p>
+<p>In JupyterHub’s internal oauth, we have these layers of information that can go stale:</p>
+<ul class="simple">
+<li><p>The oauth client has a <strong>cache</strong> of Hub responses for tokens,
+so it doesn’t need to make API requests to the Hub for every request it receives.
+This cache has an expiry of five minutes by default,
+and is governed by the configuration <code class="docutils literal notranslate"><span class="pre">HubAuth.cache_max_age</span></code> in the single-user server.</p></li>
+<li><p>The internal oauth token is stored in a cookie, which has its own expiry (default: 14 days),
+governed by <code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_max_age_days</span></code>.</p></li>
+<li><p>The internal oauth token can also itself expire,
+which is by default the same as the cookie expiry,
+since it makes sense for the token itself and the place it is stored to expire at the same time.
+This is governed by <code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_max_age_days</span></code> first,
+or can overridden by <code class="docutils literal notranslate"><span class="pre">JupyterHub.oauth_token_expires_in</span></code>.</p></li>
+</ul>
+<p>That’s all for <em>internal</em> auth storage,
+but the information from the <em>external</em> authentication provider
+(could be PAM or GitHub OAuth, etc.) can also expire.
+Authenticator configuration governs when JupyterHub needs to ask again,
+triggering the external login process anew before letting a user proceed.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jupyterhub-hub-login</span></code> cookie stores that a browser is authenticated with the Hub.
+This expires according to <code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_max_age_days</span></code> configuration,
+with a default of 14 days.
+The <code class="docutils literal notranslate"><span class="pre">jupyterhub-hub-login</span></code> cookie is encrypted with <code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_secret</span></code>
+configuration.</p></li>
+<li><p><a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.refresh_user()</span></code></a> is a method to refresh a user’s auth info.
+By default, it does nothing, but it can return an updated user model if a user’s information has changed,
+or force a full login process again if needed.</p></li>
+<li><p><a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.auth_refresh_age" title="jupyterhub.auth.Authenticator.auth_refresh_age"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Authenticator.auth_refresh_age</span></code></a> configuration governs how often
+<code class="docutils literal notranslate"><span class="pre">refresh_user()</span></code> will be called to check if a user must login again (default: 300 seconds).</p></li>
+<li><p><a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.refresh_pre_spawn" title="jupyterhub.auth.Authenticator.refresh_pre_spawn"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Authenticator.refresh_pre_spawn</span></code></a> configuration governs whether
+<code class="docutils literal notranslate"><span class="pre">refresh_user()</span></code> should be called prior to spawning a server,
+to force fresh auth info when a server is launched (default: False).
+This can be useful when Authenticators pass access tokens to spawner environments, to ensure they aren’t getting a stale token that’s about to expire.</p></li>
+</ul>
+<p><strong>So what happens when these things expire or get stale?</strong></p>
+<ul class="simple">
+<li><p>If the HubAuth <strong>token response cache</strong> expires,
+when a request is made with a token,
+the Hub is asked for the latest information about the token.
+This usually has no visible effect, since it is just refreshing a cache.
+If it turns out that the token itself has expired or been revoked,
+the request will be denied.</p></li>
+<li><p>If the token has expired, but is still in the cookie:
+when the token response cache expires,
+the next time the server asks the hub about the token,
+no user will be identified and the internal oauth process begins again.</p></li>
+<li><p>If the token <em>cookie</em> expires, the next browser request will be made with no credentials,
+and the internal oauth process will begin again.
+This will usually have the form of a transparent redirect browsers won’t notice.
+However, if this occurs on an API request in a long-lived page visit
+such as a JupyterLab session, the API request may fail and require
+a page refresh to get renewed credentials.</p></li>
+<li><p>If the <em>JupyterHub</em> cookie expires, the next time the browser makes a request to the Hub,
+the Hub’s authorization process must begin again (e.g. login with GitHub).
+Hub cookie expiry on its own <strong>does not</strong> mean that a user can no longer access their single-user server!</p></li>
+<li><p>If credentials from the upstream provider (e.g. GitHub) become stale or outdated,
+these will not be refreshed until/unless <code class="docutils literal notranslate"><span class="pre">refresh_user</span></code> is called
+<em>and</em> <code class="docutils literal notranslate"><span class="pre">refresh_user()</span></code> on the given Authenticator is implemented to perform such a check.
+At this point, few Authenticators implement <code class="docutils literal notranslate"><span class="pre">refresh_user</span></code> to support this feature.
+If your Authenticator does not or cannot implement <code class="docutils literal notranslate"><span class="pre">refresh_user</span></code>,
+the only way to force a check is to reset the <code class="docutils literal notranslate"><span class="pre">JupyterHub.cookie_secret</span></code> encryption key,
+which invalidates the <code class="docutils literal notranslate"><span class="pre">jupyterhub-hub-login</span></code> cookie for all users.</p></li>
+</ul>
+<section id="logging-out">
+<h3>Logging out<a class="headerlink" href="#logging-out" title="Permalink to this heading">#</a></h3>
+<p>Logging out of JupyterHub means clearing and revoking many of these credentials:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">jupyterhub-hub-login</span></code> cookie is revoked, meaning the next request to the Hub itself will require a new login.</p></li>
+<li><p>The token stored in the <code class="docutils literal notranslate"><span class="pre">jupyterhub-user-username</span></code> cookie for the single-user server
+will be revoked, based on its associaton with <code class="docutils literal notranslate"><span class="pre">jupyterhub-session-id</span></code>, but the <em>cookie itself cannot be cleared at this point</em></p></li>
+<li><p>The shared <code class="docutils literal notranslate"><span class="pre">jupyterhub-session-id</span></code> is cleared, which ensures that the HubAuth <strong>token response cache</strong> will not be used,
+and the next request with the expired token will ask the Hub, which will inform the single-user server that the token has expired</p></li>
+</ul>
+</section>
+</section>
+<section id="extra-bits">
+<h2>Extra bits<a class="headerlink" href="#extra-bits" title="Permalink to this heading">#</a></h2>
+<section id="a-tale-of-two-tokens">
+<span id="two-tokens"></span><h3>A tale of two tokens<a class="headerlink" href="#a-tale-of-two-tokens" title="Permalink to this heading">#</a></h3>
+<p><strong>TODO</strong>: discuss API token issued to server at startup ($JUPYTERHUB_API_TOKEN)
+and oauth-issued token in the cookie,
+and some details of how JupyterLab currently deals with that.
+They are different, and JupyterLab should be making requests using the token from the cookie,
+not the token from the server,
+but that is not currently the case.</p>
+</section>
+<section id="redirect-loops">
+<h3>Redirect loops<a class="headerlink" href="#redirect-loops" title="Permalink to this heading">#</a></h3>
+<p>In general, an authenticated web endpoint has this behavior,
+based on the authentication/authorization state of the browser:</p>
+<ul class="simple">
+<li><p>If authorized, allow the request to happen</p></li>
+<li><p>If authenticated (I know who you are) but not authorized (you are not allowed), fail with a 403 permission denied error</p></li>
+<li><p>If not authenticated, start a redirect process to establish authorization,
+which should end in a redirect back to the original URL to try again.
+<strong>This is why problems in authentication result in redirect loops!</strong>
+If the second request fails to detect the authentication that should have been established during the redirect,
+it will start the authentication redirect process over again,
+and keep redirecting in a loop until the browser balks.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="config-reference.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Configuration Reference</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../index-admin.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Administrator’s Guide</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-oauth-terms">
+   Key OAuth terms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-oauth-flow">
+   One oauth flow
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#oauth-request-and-redirect">
+     OAuth request and redirect
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#state-after-redirect">
+     State after redirect
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#oauth-client-handles-callback-request">
+     OAuth Client Handles Callback Request
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#full-sequence-of-oauth-in-jupyterhub">
+   Full sequence of OAuth in JupyterHub
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#token-caches-and-expiry">
+   Token caches and expiry
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logging-out">
+     Logging out
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extra-bits">
+   Extra bits
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-tale-of-two-tokens">
+     A tale of two tokens
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#redirect-loops">
+     Redirect loops
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/oauth.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/oauth.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

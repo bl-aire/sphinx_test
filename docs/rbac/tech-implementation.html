@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Technical Implementation &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'rbac/tech-implementation';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Upgrading JupyterHub with RBAC framework" href="upgrade.html" />
+    <link rel="prev" title="Use Cases" href="use-cases.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="roles.html">Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scopes.html">Scopes in JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use-cases.html">Use Cases</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Technical Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrading JupyterHub with RBAC framework</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="technical-implementation">
+<h1>Technical Implementation<a class="headerlink" href="#technical-implementation" title="Permalink to this heading">#</a></h1>
+<p>Roles are stored in the database, where they are associated with users, services, etc., and can be added or modified as explained in <a class="reference internal" href="roles.html#define-role-target"><span class="std std-ref">Defining Roles</span></a> section. Users, services, groups, and tokens can gain, change, and lose roles. This is currently achieved via <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> (see <a class="reference internal" href="roles.html#define-role-target"><span class="std std-ref">Defining Roles</span></a>) and will be made available via API in future. The latter will allow for changing a token’s role, and thereby its permissions, without the need to issue a new token.</p>
+<p>Roles and scopes utilities can be found in <code class="docutils literal notranslate"><span class="pre">roles.py</span></code> and <code class="docutils literal notranslate"><span class="pre">scopes.py</span></code> modules. Scope variables take on five different formats which is reflected throughout the utilities via specific nomenclature:</p>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Scope variable nomenclature</strong></p>
+<ul class="simple">
+<li><p><em>scopes</em> <br />
+List of scopes that may contain abbreviations (used in role definitions). E.g., <code class="docutils literal notranslate"><span class="pre">[&quot;users:activity!user&quot;,</span> <span class="pre">&quot;self&quot;]</span></code>.</p></li>
+<li><p><em>expanded scopes</em> <br />
+Set of fully expanded scopes without abbreviations (i.e., resolved metascopes, filters, and subscopes). E.g., <code class="docutils literal notranslate"><span class="pre">{&quot;users:activity!user=charlie&quot;,</span> <span class="pre">&quot;read:users:activity!user=charlie&quot;}</span></code>.</p></li>
+<li><p><em>parsed scopes</em> <br />
+Dictionary represenation of expanded scopes. E.g., <code class="docutils literal notranslate"><span class="pre">{&quot;users:activity&quot;:</span> <span class="pre">{&quot;user&quot;:</span> <span class="pre">[&quot;charlie&quot;]},</span> <span class="pre">&quot;read:users:activity&quot;:</span> <span class="pre">{&quot;users&quot;:</span> <span class="pre">[&quot;charlie&quot;]}}</span></code>.</p></li>
+<li><p><em>intersection</em> <br />
+Set of expanded scopes as intersection of 2 expanded scope sets.</p></li>
+<li><p><em>identify scopes</em> <br />
+Set of expanded scopes needed for identify (whoami) endpoints.</p></li>
+</ul>
+</div>
+<section id="resolving-roles-and-scopes">
+<span id="resolving-roles-scopes-target"></span><h2>Resolving roles and scopes<a class="headerlink" href="#resolving-roles-and-scopes" title="Permalink to this heading">#</a></h2>
+<p><strong>Resolving roles</strong> refers to determining which roles a user, service, or group has, extracting the list of scopes from each role and combining them into a single set of scopes.</p>
+<p><strong>Resolving scopes</strong> involves expanding scopes into all their possible subscopes (<em>expanded scopes</em>), parsing them into format used for access evaluation (<em>parsed scopes</em>) and, if applicable, comparing two sets of scopes (<em>intersection</em>). All procedures take into account the scope hierarchy, <a class="reference internal" href="scopes.html#vertical-filtering-target"><span class="std std-ref">vertical</span></a> and <a class="reference internal" href="scopes.html#horizontal-filtering-target"><span class="std std-ref">horizontal filtering</span></a>, limiting or elevated permissions (<code class="docutils literal notranslate"><span class="pre">read:&lt;resource&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">admin:&lt;resource&gt;</span></code>, respectively), and metascopes.</p>
+<p>Roles and scopes are resolved on several occasions, for example when requesting an API token with specific scopes or making an API request. The following sections provide more details.</p>
+<section id="requesting-api-token-with-specific-scopes">
+<span id="requesting-api-token-target"></span><h3>Requesting API token with specific scopes<a class="headerlink" href="#requesting-api-token-with-specific-scopes" title="Permalink to this heading">#</a></h3>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0: </span>API tokens have <em>scopes</em> instead of roles,
+so that their permissions cannot be updated.</p>
+<p>You may still request roles for a token,
+but those roles will be evaluated to the corresponding <em>scopes</em> immediately.</p>
+<p>Prior to 3.0, tokens stored <em>roles</em>,
+which meant their scopes were resolved on each request.</p>
+</div>
+<p>API tokens grant access to JupyterHub’s APIs. The RBAC framework allows for requesting tokens with specific permissions.</p>
+<p>RBAC is involved in several stages of the OAuth token flow.</p>
+<p>When requesting a token via the tokens API (<code class="docutils literal notranslate"><span class="pre">/users/:name/tokens</span></code>), or the token page (<code class="docutils literal notranslate"><span class="pre">/hub/token</span></code>),
+if no scopes are requested, the token is issued with the permissions stored on the default <code class="docutils literal notranslate"><span class="pre">token</span></code> role
+(providing the requester is allowed to create the token).</p>
+<p>OAuth tokens are also requested via OAuth flow</p>
+<p>If the token is requested with any scopes, the permissions of requesting entity are checked against the requested permissions to ensure the token would not grant its owner additional privileges.</p>
+<p>If, due to modifications of permissions of the token or token owner,
+at API request time a token has any scopes that its owner does not,
+those scopes are removed.
+The API request is resolved without additional errors using the scope <em>intersection</em>;
+the Hub logs a warning in this case (see <a class="reference internal" href="#api-request-chart"><span class="std std-ref">Figure 2</span></a>).</p>
+<p>Resolving a token’s scope (yellow box in <a class="reference internal" href="#token-request-chart"><span class="std std-ref">Figure 1</span></a>) corresponds to resolving all the token’s owner roles (including the roles associated with their groups) and the token’s own scopes into a set of scopes. The two sets are compared (Resolve the scopes box in orange in <a class="reference internal" href="#token-request-chart"><span class="std std-ref">Figure 1</span></a>), taking into account the scope hierarchy.
+If the token’s scopes are a subset of the token owner’s scopes, the token is issued with the requested scopes; if not, JupyterHub will raise an error.</p>
+<p><a class="reference internal" href="#token-request-chart"><span class="std std-ref">Figure 1</span></a> below illustrates the steps involved. The orange rectangles highlight where in the process the roles and scopes are resolved.</p>
+<figure class="align-center" id="token-request-chart">
+<img alt="../_images/rbac-token-request-chart.png" src="../_images/rbac-token-request-chart.png" />
+<figcaption>
+<p><span class="caption-text">Figure 1. Resolving roles and scopes during API token request</span><a class="headerlink" href="#token-request-chart" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="making-an-api-request">
+<h3>Making an API request<a class="headerlink" href="#making-an-api-request" title="Permalink to this heading">#</a></h3>
+<p>With the RBAC framework, each authenticated JupyterHub API request is guarded by a scope decorator that specifies which scopes are required to gain the access to the API.</p>
+<p>When an API request is performed, the requesting API token’s scopes are again intersected with its owner’s (yellow box in <a class="reference internal" href="#api-request-chart"><span class="std std-ref">Figure 2</span></a>) to ensure the token does not grant more permissions than its owner has at the request time (e.g., due to changing/losing roles).
+If the owner’s roles do not include some scopes of the token’s scopes, only the <em>intersection</em> of the token’s and owner’s scopes will be used. For example, using a token with scope <code class="docutils literal notranslate"><span class="pre">users</span></code> whose owner’s role scope is <code class="docutils literal notranslate"><span class="pre">read:users:name</span></code> will result in only the <code class="docutils literal notranslate"><span class="pre">read:users:name</span></code> scope being passed on. In the case of no <em>intersection</em>, an empty set of scopes will be used.</p>
+<p>The passed scopes are compared to the scopes required to access the API as follows:</p>
+<ul class="simple">
+<li><p>if the API scopes are present within the set of passed scopes, the access is granted and the API returns its “full” response</p></li>
+<li><p>if that is not the case, another check is utilized to determine if subscopes of the required API scopes can be found in the passed scope set:</p>
+<ul>
+<li><p>if found, the RBAC framework employs the <a class="reference internal" href="scopes.html#vertical-filtering-target"><span class="std std-ref">filtering</span></a> procedures to refine the API response to access only resource attributes corresponding to the passed scopes. For example, providing a scope <code class="docutils literal notranslate"><span class="pre">read:users:activity!group=class-C</span></code> for the <em>GET /users</em> API will return a list of user models from group <code class="docutils literal notranslate"><span class="pre">class-C</span></code> containing only the <code class="docutils literal notranslate"><span class="pre">last_activity</span></code> attribute for each user model</p></li>
+<li><p>if not found, the access to API is denied</p></li>
+</ul>
+</li>
+</ul>
+<p><a class="reference internal" href="#api-request-chart"><span class="std std-ref">Figure 2</span></a> illustrates this process highlighting the steps where the role and scope resolutions as well as filtering occur in orange.</p>
+<figure class="align-center" id="api-request-chart">
+<img alt="../_images/rbac-api-request-chart.png" src="../_images/rbac-api-request-chart.png" />
+<figcaption>
+<p><span class="caption-text">Figure 2. Resolving roles and scopes when an API request is made</span><a class="headerlink" href="#api-request-chart" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="use-cases.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Use Cases</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="upgrade.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Upgrading JupyterHub with RBAC framework</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resolving-roles-and-scopes">
+   Resolving roles and scopes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requesting-api-token-with-specific-scopes">
+     Requesting API token with specific scopes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#making-an-api-request">
+     Making an API request
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/rbac/tech-implementation.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/rbac/tech-implementation.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

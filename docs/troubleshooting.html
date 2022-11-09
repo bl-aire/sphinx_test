@@ -1,0 +1,1105 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Troubleshooting &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'troubleshooting';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Upgrading JupyterHub" href="admin/upgrading.html" />
+    <link rel="prev" title="Administrator’s Guide" href="index-admin.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin/upgrading.html">Upgrading JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin/log-messages.html">Interpreting common log messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading">#</a></h1>
+<p>When troubleshooting, you may see unexpected behaviors or receive an error
+message. This section provide links for identifying the cause of the
+problem and how to resolve it.</p>
+<p><a class="reference internal" href="#behavior"><span class="std std-doc"><em>Behavior</em></span></a></p>
+<ul class="simple">
+<li><p>JupyterHub proxy fails to start</p></li>
+<li><p>sudospawner fails to run</p></li>
+<li><p>What is the default behavior when none of the lists (admin, allowed,
+allowed groups) are set?</p></li>
+<li><p>JupyterHub Docker container not accessible at localhost</p></li>
+</ul>
+<p><a class="reference internal" href="#errors"><span class="std std-doc"><em>Errors</em></span></a></p>
+<ul class="simple">
+<li><p>500 error after spawning my single-user server</p></li>
+</ul>
+<p><a class="reference internal" href="#how-do-i"><span class="std std-doc"><em>How do I…?</em></span></a></p>
+<ul class="simple">
+<li><p>Use a chained SSL certificate</p></li>
+<li><p>Install JupyterHub without a network connection</p></li>
+<li><p>I want access to the whole filesystem, but still default users to their home directory</p></li>
+<li><p>How do I increase the number of pySpark executors on YARN?</p></li>
+<li><p>How do I use JupyterLab’s prerelease version with JupyterHub?</p></li>
+<li><p>How do I set up JupyterHub for a workshop (when users are not known ahead of time)?</p></li>
+<li><p>How do I set up rotating daily logs?</p></li>
+<li><p>Toree integration with HDFS rack awareness script</p></li>
+<li><p>Where do I find Docker images and Dockerfiles related to JupyterHub?</p></li>
+</ul>
+<p><a class="reference internal" href="#troubleshooting-commands"><span class="std std-doc"><em>Troubleshooting commands</em></span></a></p>
+<section id="behavior">
+<h2>Behavior<a class="headerlink" href="#behavior" title="Permalink to this heading">#</a></h2>
+<section id="jupyterhub-proxy-fails-to-start">
+<h3>JupyterHub proxy fails to start<a class="headerlink" href="#jupyterhub-proxy-fails-to-start" title="Permalink to this heading">#</a></h3>
+<p>If you have tried to start the JupyterHub proxy and it fails to start:</p>
+<ul class="simple">
+<li><p>check if the JupyterHub IP configuration setting is
+<code class="docutils literal notranslate"><span class="pre">c.JupyterHub.ip</span> <span class="pre">=</span> <span class="pre">'*'</span></code>; if it is, try <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.ip</span> <span class="pre">=</span> <span class="pre">''</span></code></p></li>
+<li><p>Try starting with <code class="docutils literal notranslate"><span class="pre">jupyterhub</span> <span class="pre">--ip=0.0.0.0</span></code></p></li>
+</ul>
+<p><strong>Note</strong>: If this occurs on Ubuntu/Debian, check that the you are using a
+recent version of node. Some versions of Ubuntu/Debian come with a version
+of node that is very old, and it is necessary to update node.</p>
+</section>
+<section id="sudospawner-fails-to-run">
+<h3>sudospawner fails to run<a class="headerlink" href="#sudospawner-fails-to-run" title="Permalink to this heading">#</a></h3>
+<p>If the sudospawner script is not found in the path, sudospawner will not run.
+To avoid this, specify sudospawner’s absolute path. For example, start
+jupyterhub with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyterhub --SudoSpawner.sudospawner_path=&#39;/absolute/path/to/sudospawner&#39;
+</pre></div>
+</div>
+<p>or add:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c.SudoSpawner.sudospawner_path = &#39;/absolute/path/to/sudospawner&#39;
+</pre></div>
+</div>
+<p>to the config file, <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>.</p>
+</section>
+<section id="what-is-the-default-behavior-when-none-of-the-lists-admin-allowed-allowed-groups-are-set">
+<h3>What is the default behavior when none of the lists (admin, allowed, allowed groups) are set?<a class="headerlink" href="#what-is-the-default-behavior-when-none-of-the-lists-admin-allowed-allowed-groups-are-set" title="Permalink to this heading">#</a></h3>
+<p>When nothing is given for these lists, there will be no admins, and all users
+who can authenticate on the system (i.e. all the unix users on the server with
+a password) will be allowed to start a server. The allowed username set lets you limit
+this to a particular set of users, and admin_users lets you specify who
+among them may use the admin interface (not necessary, unless you need to do
+things like inspect other users’ servers, or modify the user list at runtime).</p>
+</section>
+<section id="jupyterhub-docker-container-not-accessible-at-localhost">
+<h3>JupyterHub Docker container not accessible at localhost<a class="headerlink" href="#jupyterhub-docker-container-not-accessible-at-localhost" title="Permalink to this heading">#</a></h3>
+<p>Even though the command to start your Docker container exposes port 8000
+(<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-p</span> <span class="pre">8000:8000</span> <span class="pre">-d</span> <span class="pre">--name</span> <span class="pre">jupyterhub</span> <span class="pre">jupyterhub/jupyterhub</span> <span class="pre">jupyterhub</span></code>),
+it is possible that the IP address itself is not accessible/visible. As a result
+when you try http://localhost:8000 in your browser, you are unable to connect
+even though the container is running properly. One workaround is to explicitly
+tell Jupyterhub to start at <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code> which is visible to everyone. Try this
+command:
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-p</span> <span class="pre">8000:8000</span> <span class="pre">-d</span> <span class="pre">--name</span> <span class="pre">jupyterhub</span> <span class="pre">jupyterhub/jupyterhub</span> <span class="pre">jupyterhub</span> <span class="pre">--ip</span> <span class="pre">0.0.0.0</span> <span class="pre">--port</span> <span class="pre">8000</span></code></p>
+</section>
+<section id="how-can-i-kill-ports-from-jupyterhub-managed-services-that-have-been-orphaned">
+<h3>How can I kill ports from JupyterHub managed services that have been orphaned?<a class="headerlink" href="#how-can-i-kill-ports-from-jupyterhub-managed-services-that-have-been-orphaned" title="Permalink to this heading">#</a></h3>
+<p>I started JupyterHub + nbgrader on the same host without containers. When I try to restart JupyterHub + nbgrader with this configuration, errors appear that the service accounts cannot start because the ports are being used.</p>
+<p>How can I kill the processes that are using these ports?</p>
+<p>Run the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo kill -9 $(sudo lsof -t -i:&lt;service_port&gt;)
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">&lt;service_port&gt;</span></code> is the port used by the nbgrader course service. This configuration is specified in <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>.</p>
+</section>
+<section id="why-am-i-getting-a-spawn-failed-error-message">
+<h3>Why am I getting a Spawn failed error message?<a class="headerlink" href="#why-am-i-getting-a-spawn-failed-error-message" title="Permalink to this heading">#</a></h3>
+<p>After successfully logging in to JupyterHub with a compatible authenticators, I get a ‘Spawn failed’ error message in the browser. The JupyterHub logs have <code class="docutils literal notranslate"><span class="pre">jupyterhub</span> <span class="pre">KeyError:</span> <span class="pre">&quot;getpwnam():</span> <span class="pre">name</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">&lt;my_user_name&gt;</span></code>.</p>
+<p>This issue occurs when the authenticator requires a local system user to exist. In these cases, you need to use a spawner
+that does not require an existing system user account, such as <code class="docutils literal notranslate"><span class="pre">DockerSpawner</span></code> or <code class="docutils literal notranslate"><span class="pre">KubeSpawner</span></code>.</p>
+</section>
+<section id="how-can-i-run-jupyterhub-with-sudo-but-use-my-current-env-vars-and-virtualenv-location">
+<h3>How can I run JupyterHub with sudo but use my current env vars and virtualenv location?<a class="headerlink" href="#how-can-i-run-jupyterhub-with-sudo-but-use-my-current-env-vars-and-virtualenv-location" title="Permalink to this heading">#</a></h3>
+<p>When launching JupyterHub with <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">jupyterhub</span></code> I get import errors and my environment variables don’t work.</p>
+<p>When launching services with <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">...</span></code> the shell won’t have the same environment variables or <code class="docutils literal notranslate"><span class="pre">PATH</span></code>s in place. The most direct way to solve this issue is to use the full path to your python environment and add environment variables. For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo <span class="nv">MY_ENV</span><span class="o">=</span>abc123 <span class="se">\</span>
+  /home/foo/venv/bin/python3 <span class="se">\</span>
+  /srv/jupyterhub/jupyterhub
+</pre></div>
+</div>
+</section>
+<section id="how-can-i-view-the-logs-for-jupyterhub-or-the-user-s-notebook-servers-when-using-the-dockerspawner">
+<h3>How can I view the logs for JupyterHub or the user’s Notebook servers when using the DockerSpawner?<a class="headerlink" href="#how-can-i-view-the-logs-for-jupyterhub-or-the-user-s-notebook-servers-when-using-the-dockerspawner" title="Permalink to this heading">#</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">logs</span> <span class="pre">&lt;container&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;container&gt;</span></code> is the container name defined within <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code>. For example, to view the logs of the JupyterHub container use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker logs hub
+</pre></div>
+</div>
+<p>By default, the user’s notebook server is named <code class="docutils literal notranslate"><span class="pre">jupyter-&lt;username&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">username</span></code> is the user’s username within JupyterHub’s db. So if you wanted to see the logs for user <code class="docutils literal notranslate"><span class="pre">foo</span></code> you would use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker logs jupyter-foo
+</pre></div>
+</div>
+<p>You can also tail logs to view them in real time using the <code class="docutils literal notranslate"><span class="pre">-f</span></code> option:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker logs -f hub
+</pre></div>
+</div>
+</section>
+</section>
+<section id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Permalink to this heading">#</a></h2>
+<section id="error-after-spawning-my-single-user-server">
+<h3>500 error after spawning my single-user server<a class="headerlink" href="#error-after-spawning-my-single-user-server" title="Permalink to this heading">#</a></h3>
+<p>You receive a 500 error when accessing the URL <code class="docutils literal notranslate"><span class="pre">/user/&lt;your_name&gt;/...</span></code>.
+This is often seen when your single-user server cannot verify your user cookie
+with the Hub.</p>
+<p>There are two likely reasons for this:</p>
+<ol class="arabic simple">
+<li><p>The single-user server cannot connect to the Hub’s API (networking
+configuration problems)</p></li>
+<li><p>The single-user server cannot <em>authenticate</em> its requests (invalid token)</p></li>
+</ol>
+<section id="symptoms">
+<h4>Symptoms<a class="headerlink" href="#symptoms" title="Permalink to this heading">#</a></h4>
+<p>The main symptom is a failure to load <em>any</em> page served by the single-user
+server, met with a 500 error. This is typically the first page at <code class="docutils literal notranslate"><span class="pre">/user/&lt;your_name&gt;</span></code>
+after logging in or clicking “Start my server”. When a single-user notebook server
+receives a request, the notebook server makes an API request to the Hub to
+check if the cookie corresponds to the right user. This request is logged.</p>
+<p>If everything is working, the response logged will be similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">200</span> <span class="n">GET</span> <span class="o">/</span><span class="n">hub</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">authorizations</span><span class="o">/</span><span class="n">cookie</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="n">name</span><span class="o">/</span><span class="p">[</span><span class="n">secret</span><span class="p">]</span> <span class="p">(</span><span class="o">@</span><span class="mf">10.0.1.4</span><span class="p">)</span> <span class="mf">6.10</span><span class="n">ms</span>
+</pre></div>
+</div>
+<p>You should see a similar 200 message, as above, in the Hub log when you first
+visit your single-user notebook server. If you don’t see this message in the log, it
+may mean that your single-user notebook server isn’t connecting to your Hub.</p>
+<p>If you see 403 (forbidden) like this, it’s likely a token problem:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">403</span> <span class="n">GET</span> <span class="o">/</span><span class="n">hub</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">authorizations</span><span class="o">/</span><span class="n">cookie</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="n">name</span><span class="o">/</span><span class="p">[</span><span class="n">secret</span><span class="p">]</span> <span class="p">(</span><span class="o">@</span><span class="mf">10.0.1.4</span><span class="p">)</span> <span class="mf">4.14</span><span class="n">ms</span>
+</pre></div>
+</div>
+<p>Check the logs of the single-user notebook server, which may have more detailed
+information on the cause.</p>
+</section>
+<section id="causes-and-resolutions">
+<h4>Causes and resolutions<a class="headerlink" href="#causes-and-resolutions" title="Permalink to this heading">#</a></h4>
+<section id="no-authorization-request">
+<h5>No authorization request<a class="headerlink" href="#no-authorization-request" title="Permalink to this heading">#</a></h5>
+<p>If you make an API request and it is not received by the server, you likely
+have a network configuration issue. Often, this happens when the Hub is only
+listening on 127.0.0.1 (default) and the single-user servers are not on the
+same ‘machine’ (can be physically remote, or in a docker container or VM). The
+fix for this case is to make sure that <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.hub_ip</span></code> is an address
+that all single-user servers can connect to, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">hub_ip</span> <span class="o">=</span> <span class="s1">&#39;10.0.0.1&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="get-hub-api-authorizations-cookie">
+<h5>403 GET /hub/api/authorizations/cookie<a class="headerlink" href="#get-hub-api-authorizations-cookie" title="Permalink to this heading">#</a></h5>
+<p>If you receive a 403 error, the API token for the single-user server is likely
+invalid. Commonly, the 403 error is caused by resetting the JupyterHub
+database (either removing jupyterhub.sqlite or some other action) while
+leaving single-user servers running. This happens most frequently when using
+DockerSpawner, because Docker’s default behavior is to stop/start containers
+which resets the JupyterHub database, rather than destroying and recreating
+the container every time. This means that the same API token is used by the
+server for its whole life, until the container is rebuilt.</p>
+<p>The fix for this Docker case is to remove any Docker containers seeing this
+issue (typically all containers created before a certain point in time):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker rm -f jupyter-name
+</pre></div>
+</div>
+<p>After this, when you start your server via JupyterHub, it will build a
+new container. If this was the underlying cause of the issue, you should see
+your server again.</p>
+</section>
+<section id="proxy-settings-403-get">
+<h5>Proxy settings (403 GET)<a class="headerlink" href="#proxy-settings-403-get" title="Permalink to this heading">#</a></h5>
+<p>When your whole JupyterHub sits behind a organization proxy (<em>not</em> a reverse proxy like NGINX as part of your setup and <em>not</em> the configurable-http-proxy) the environment variables <code class="docutils literal notranslate"><span class="pre">HTTP_PROXY</span></code>, <code class="docutils literal notranslate"><span class="pre">HTTPS_PROXY</span></code>, <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> and <code class="docutils literal notranslate"><span class="pre">https_proxy</span></code> might be set. This confuses the jupyterhub-singleuser servers: When connecting to the Hub for authorization they connect via the proxy instead of directly connecting to the Hub on localhost. The proxy might deny the request (403 GET). This results in the singleuser server thinking it has a wrong auth token. To circumvent this you should add <code class="docutils literal notranslate"><span class="pre">&lt;hub_url&gt;,&lt;hub_ip&gt;,localhost,127.0.0.1</span></code> to the environment variables <code class="docutils literal notranslate"><span class="pre">NO_PROXY</span></code> and <code class="docutils literal notranslate"><span class="pre">no_proxy</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="launching-jupyter-notebooks-to-run-as-an-externally-managed-jupyterhub-service-with-the-jupyterhub-singleuser-command-returns-a-jupyterhub-api-token-error">
+<h3>Launching Jupyter Notebooks to run as an externally managed JupyterHub service with the <code class="docutils literal notranslate"><span class="pre">jupyterhub-singleuser</span></code> command returns a <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_API_TOKEN</span></code> error<a class="headerlink" href="#launching-jupyter-notebooks-to-run-as-an-externally-managed-jupyterhub-service-with-the-jupyterhub-singleuser-command-returns-a-jupyterhub-api-token-error" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/services.html">JupyterHub services</a> allow processes to interact with JupyterHub’s REST API. Example use-cases include:</p>
+<ul class="simple">
+<li><p><strong>Secure Testing</strong>: provide a canonical Jupyter Notebook for testing production data to reduce the number of entry points into production systems.</p></li>
+<li><p><strong>Grading Assignments</strong>: provide access to shared Jupyter Notebooks that may be used for management tasks such grading assignments.</p></li>
+<li><p><strong>Private Dashboards</strong>: share dashboards with certain group members.</p></li>
+</ul>
+<p>If possible, try to run the Jupyter Notebook as an externally managed service with one of the provided <a class="reference external" href="https://github.com/jupyter/docker-stacks">jupyter/docker-stacks</a>.</p>
+<p>Standard JupyterHub installations include a <a class="reference external" href="https://github.com/jupyterhub/jupyterhub/blob/9fdab027daa32c9017845572ad9d5ba1722dbc53/setup.py#L116">jupyterhub-singleuser</a> command which is built from the <code class="docutils literal notranslate"><span class="pre">jupyterhub.singleuser:main</span></code> method. The <code class="docutils literal notranslate"><span class="pre">jupyterhub-singleuser</span></code> command is the default command when JupyterHub launches single-user Jupyter Notebooks. One of the goals of this command is to make sure the version of JupyterHub installed within the Jupyter Notebook coincides with the version of the JupyterHub server itself.</p>
+<p>If you launch a Jupyter Notebook with the <code class="docutils literal notranslate"><span class="pre">jupyterhub-singleuser</span></code> command directly from the command line the Jupyter Notebook won’t have access to the <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_API_TOKEN</span></code> and will return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    JUPYTERHUB_API_TOKEN env is required to run jupyterhub-singleuser.
+    Did you launch it manually?
+</pre></div>
+</div>
+<p>If you plan on testing <code class="docutils literal notranslate"><span class="pre">jupyterhub-singleuser</span></code> independently from JupyterHub, then you can set the api token environment variable. For example, if were to run the single-user Jupyter Notebook on the host, then:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export JUPYTERHUB_API_TOKEN=my_secret_token
+jupyterhub-singleuser
+</pre></div>
+</div>
+<p>With a docker container, pass in the environment variable with the run command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker run -d \
+  -p 8888:8888 \
+  -e JUPYTERHUB_API_TOKEN=my_secret_token \
+  jupyter/datascience-notebook:latest
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/jupyterhub/jupyterhub/tree/HEAD/examples/service-notebook/external">This example</a> demonstrates how to combine the use of the <code class="docutils literal notranslate"><span class="pre">jupyterhub-singleuser</span></code> environment variables when launching a Notebook as an externally managed service.</p>
+</section>
+</section>
+<section id="how-do-i">
+<h2>How do I…?<a class="headerlink" href="#how-do-i" title="Permalink to this heading">#</a></h2>
+<section id="use-a-chained-ssl-certificate">
+<h3>Use a chained SSL certificate<a class="headerlink" href="#use-a-chained-ssl-certificate" title="Permalink to this heading">#</a></h3>
+<p>Some certificate providers, i.e. Entrust, may provide you with a chained
+certificate that contains multiple files. If you are using a chained
+certificate you will need to concatenate the individual files by appending the
+chain cert and root cert to your host cert:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat your_host.crt chain.crt root.crt &gt; your_host-chained.crt
+</pre></div>
+</div>
+<p>You would then set in your <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> file the <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code> as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c.JupyterHub.ssl_cert = your_host-chained.crt
+c.JupyterHub.ssl_key = your_host.key
+</pre></div>
+</div>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h4>
+<p>Your certificate provider gives you the following files: <code class="docutils literal notranslate"><span class="pre">example_host.crt</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Entrust_L1Kroot.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">Entrust_Root.txt</span></code>.</p>
+<p>Concatenate the files appending the chain cert and root cert to your host cert:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat example_host.crt Entrust_L1Kroot.txt Entrust_Root.txt &gt; example_host-chained.crt
+</pre></div>
+</div>
+<p>You would then use the <code class="docutils literal notranslate"><span class="pre">example_host-chained.crt</span></code> as the value for
+JupyterHub’s <code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code>. You may pass this value as a command line option
+when starting JupyterHub or more conveniently set the <code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code> variable in
+JupyterHub’s configuration file, <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>. In <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>,
+set:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c.JupyterHub.ssl_cert = /path/to/example_host-chained.crt
+c.JupyterHub.ssl_key = /path/to/example_host.key
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code> is example-chained.crt and ssl_key to your private key.</p>
+<p>Then restart JupyterHub.</p>
+<p>See also <a class="reference internal" href="getting-started/security-basics.html#ssl-encryption"><span class="std std-ref">Enabling SSL encryption</span></a>.</p>
+</section>
+</section>
+<section id="install-jupyterhub-without-a-network-connection">
+<h3>Install JupyterHub without a network connection<a class="headerlink" href="#install-jupyterhub-without-a-network-connection" title="Permalink to this heading">#</a></h3>
+<p>Both conda and pip can be used without a network connection. You can make your
+own repository (directory) of conda packages and/or wheels, and then install
+from there instead of the internet.</p>
+<p>For instance, you can install JupyterHub with pip and configurable-http-proxy
+with npmbox:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python3 -m pip wheel jupyterhub
+npmbox configurable-http-proxy
+</pre></div>
+</div>
+</section>
+<section id="i-want-access-to-the-whole-filesystem-but-still-default-users-to-their-home-directory">
+<h3>I want access to the whole filesystem, but still default users to their home directory<a class="headerlink" href="#i-want-access-to-the-whole-filesystem-but-still-default-users-to-their-home-directory" title="Permalink to this heading">#</a></h3>
+<p>Setting the following in <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> will configure access to
+the entire filesystem and set the default to the user’s home directory.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c.Spawner.notebook_dir = &#39;/&#39;
+c.Spawner.default_url = &#39;/home/%U&#39; # %U will be replaced with the username
+</pre></div>
+</div>
+</section>
+<section id="how-do-i-increase-the-number-of-pyspark-executors-on-yarn">
+<h3>How do I increase the number of pySpark executors on YARN?<a class="headerlink" href="#how-do-i-increase-the-number-of-pyspark-executors-on-yarn" title="Permalink to this heading">#</a></h3>
+<p>From the command line, pySpark executors can be configured using a command
+similar to this one:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pyspark --total-executor-cores 2 --executor-memory 1G
+</pre></div>
+</div>
+<p><a class="reference external" href="https://www.cloudera.com/documentation/enterprise/latest/topics/cdh_ig_running_spark_on_yarn.html#spark_on_yarn_config_apps">Cloudera documentation for configuring spark on YARN applications</a>
+provides additional information. The <a class="reference external" href="https://spark.apache.org/docs/0.9.0/configuration.html">pySpark configuration documentation</a>
+is also helpful for programmatic configuration examples.</p>
+</section>
+<section id="how-do-i-use-jupyterlab-s-prerelease-version-with-jupyterhub">
+<h3>How do I use JupyterLab’s prerelease version with JupyterHub?<a class="headerlink" href="#how-do-i-use-jupyterlab-s-prerelease-version-with-jupyterhub" title="Permalink to this heading">#</a></h3>
+<p>While JupyterLab is still under active development, we have had users
+ask about how to try out JupyterLab with JupyterHub.</p>
+<p>You need to install and enable the JupyterLab extension system-wide,
+then you can change the default URL to <code class="docutils literal notranslate"><span class="pre">/lab</span></code>.</p>
+<p>For instance:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python3 -m pip install jupyterlab
+jupyter serverextension enable --py jupyterlab --sys-prefix
+</pre></div>
+</div>
+<p>The important thing is that jupyterlab is installed and enabled in the
+single-user notebook server environment. For system users, this means
+system-wide, as indicated above. For Docker containers, it means inside
+the single-user docker image, etc.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>, configure the Spawner to tell the single-user
+notebook servers to default to JupyterLab:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c.Spawner.default_url = &#39;/lab&#39;
+</pre></div>
+</div>
+</section>
+<section id="how-do-i-set-up-jupyterhub-for-a-workshop-when-users-are-not-known-ahead-of-time">
+<h3>How do I set up JupyterHub for a workshop (when users are not known ahead of time)?<a class="headerlink" href="#how-do-i-set-up-jupyterhub-for-a-workshop-when-users-are-not-known-ahead-of-time" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Set up JupyterHub using OAuthenticator for GitHub authentication</p></li>
+<li><p>Configure admin list to have workshop leaders be listed with administrator privileges.</p></li>
+</ol>
+<p>Users will need a GitHub account to login and be authenticated by the Hub.</p>
+</section>
+<section id="how-do-i-set-up-rotating-daily-logs">
+<h3>How do I set up rotating daily logs?<a class="headerlink" href="#how-do-i-set-up-rotating-daily-logs" title="Permalink to this heading">#</a></h3>
+<p>You can do this with <a class="reference external" href="https://linux.die.net/man/8/logrotate">logrotate</a>,
+or pipe to <code class="docutils literal notranslate"><span class="pre">logger</span></code> to use syslog instead of directly to a file.</p>
+<p>For example, with this logrotate config file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">.</span><span class="n">log</span> <span class="p">{</span>
+  <span class="n">copytruncate</span>
+  <span class="n">daily</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and run this daily by putting a script in <code class="docutils literal notranslate"><span class="pre">/etc/cron.daily/</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>logrotate /path/to/above-config
+</pre></div>
+</div>
+<p>Or use syslog:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyterhub | logger -t jupyterhub
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting-commands">
+<h2>Troubleshooting commands<a class="headerlink" href="#troubleshooting-commands" title="Permalink to this heading">#</a></h2>
+<p>The following commands provide additional detail about installed packages,
+versions, and system information that may be helpful when troubleshooting
+a JupyterHub deployment. The commands are:</p>
+<ul class="simple">
+<li><p>System and deployment information</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter troubleshoot
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Kernel information</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter kernelspec list
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Debug logs when running JupyterHub</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyterhub --debug
+</pre></div>
+</div>
+<section id="toree-integration-with-hdfs-rack-awareness-script">
+<h3>Toree integration with HDFS rack awareness script<a class="headerlink" href="#toree-integration-with-hdfs-rack-awareness-script" title="Permalink to this heading">#</a></h3>
+<p>The Apache Toree kernel will an issue, when running with JupyterHub, if the standard HDFS
+rack awareness script is used. This will materialize in the logs as a repeated WARN:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">16</span>/11/29 <span class="m">16</span>:24:20 WARN ScriptBasedMapping: Exception running /etc/hadoop/conf/topology_script.py some.ip.address
+ExitCodeException <span class="nv">exitCode</span><span class="o">=</span><span class="m">1</span>:   File <span class="s2">&quot;/etc/hadoop/conf/topology_script.py&quot;</span>, line <span class="m">63</span>
+    print rack
+             ^
+SyntaxError: Missing parentheses <span class="k">in</span> call to <span class="s1">&#39;print&#39;</span>
+
+    at <span class="sb">`</span>org.apache.hadoop.util.Shell.runCommand<span class="o">(</span>Shell.java:576<span class="o">)</span><span class="sb">`</span>
+</pre></div>
+</div>
+<p>In order to resolve this issue, there are two potential options.</p>
+<ol class="arabic simple">
+<li><p>Update HDFS core-site.xml, so the parameter “net.topology.script.file.name” points to a custom
+script (e.g. /etc/hadoop/conf/custom_topology_script.py). Copy the original script and change the first line point
+to a python two installation (e.g. /usr/bin/python).</p></li>
+<li><p>In spark-env.sh add a Python 2 installation to your path (e.g. export PATH=/opt/anaconda2/bin:$PATH).</p></li>
+</ol>
+</section>
+<section id="where-do-i-find-docker-images-and-dockerfiles-related-to-jupyterhub">
+<h3>Where do I find Docker images and Dockerfiles related to JupyterHub?<a class="headerlink" href="#where-do-i-find-docker-images-and-dockerfiles-related-to-jupyterhub" title="Permalink to this heading">#</a></h3>
+<p>Docker images can be found at the <a class="reference external" href="https://hub.docker.com/u/jupyterhub/">JupyterHub organization on DockerHub</a>.
+The Docker image <a class="reference external" href="https://hub.docker.com/r/jupyterhub/singleuser/">jupyterhub/singleuser</a>
+provides an example single user notebook server for use with DockerSpawner.</p>
+<p>Additional single user notebook server images can be found at the <a class="reference external" href="https://hub.docker.com/r/jupyter/">Jupyter
+organization on DockerHub</a> and information
+about each image at the <a class="reference external" href="https://github.com/jupyter/docker-stacks">jupyter/docker-stacks repo</a>.</p>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="index-admin.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Administrator’s Guide</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="admin/upgrading.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Upgrading JupyterHub</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#behavior">
+   Behavior
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jupyterhub-proxy-fails-to-start">
+     JupyterHub proxy fails to start
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sudospawner-fails-to-run">
+     sudospawner fails to run
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-is-the-default-behavior-when-none-of-the-lists-admin-allowed-allowed-groups-are-set">
+     What is the default behavior when none of the lists (admin, allowed, allowed groups) are set?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jupyterhub-docker-container-not-accessible-at-localhost">
+     JupyterHub Docker container not accessible at localhost
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-can-i-kill-ports-from-jupyterhub-managed-services-that-have-been-orphaned">
+     How can I kill ports from JupyterHub managed services that have been orphaned?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-am-i-getting-a-spawn-failed-error-message">
+     Why am I getting a Spawn failed error message?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-can-i-run-jupyterhub-with-sudo-but-use-my-current-env-vars-and-virtualenv-location">
+     How can I run JupyterHub with sudo but use my current env vars and virtualenv location?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-can-i-view-the-logs-for-jupyterhub-or-the-user-s-notebook-servers-when-using-the-dockerspawner">
+     How can I view the logs for JupyterHub or the user’s Notebook servers when using the DockerSpawner?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#errors">
+   Errors
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#error-after-spawning-my-single-user-server">
+     500 error after spawning my single-user server
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#symptoms">
+       Symptoms
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#causes-and-resolutions">
+       Causes and resolutions
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#no-authorization-request">
+         No authorization request
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#get-hub-api-authorizations-cookie">
+         403 GET /hub/api/authorizations/cookie
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#proxy-settings-403-get">
+         Proxy settings (403 GET)
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#launching-jupyter-notebooks-to-run-as-an-externally-managed-jupyterhub-service-with-the-jupyterhub-singleuser-command-returns-a-jupyterhub-api-token-error">
+     Launching Jupyter Notebooks to run as an externally managed JupyterHub service with the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jupyterhub-singleuser
+      </span>
+     </code>
+     command returns a
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       JUPYTERHUB_API_TOKEN
+      </span>
+     </code>
+     error
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-i">
+   How do I…?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#use-a-chained-ssl-certificate">
+     Use a chained SSL certificate
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example">
+       Example
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-jupyterhub-without-a-network-connection">
+     Install JupyterHub without a network connection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#i-want-access-to-the-whole-filesystem-but-still-default-users-to-their-home-directory">
+     I want access to the whole filesystem, but still default users to their home directory
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-i-increase-the-number-of-pyspark-executors-on-yarn">
+     How do I increase the number of pySpark executors on YARN?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-i-use-jupyterlab-s-prerelease-version-with-jupyterhub">
+     How do I use JupyterLab’s prerelease version with JupyterHub?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-i-set-up-jupyterhub-for-a-workshop-when-users-are-not-known-ahead-of-time">
+     How do I set up JupyterHub for a workshop (when users are not known ahead of time)?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-i-set-up-rotating-daily-logs">
+     How do I set up rotating daily logs?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#troubleshooting-commands">
+   Troubleshooting commands
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#toree-integration-with-hdfs-rack-awareness-script">
+     Toree integration with HDFS rack awareness script
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#where-do-i-find-docker-images-and-dockerfiles-related-to-jupyterhub">
+     Where do I find Docker images and Dockerfiles related to JupyterHub?
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/troubleshooting.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/troubleshooting.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

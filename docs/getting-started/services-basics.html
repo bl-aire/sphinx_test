@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>External services &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting-started/services-basics';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Frequently asked questions" href="faq.html" />
+    <link rel="prev" title="Spawners and single-user notebook servers" href="spawners-basics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="config-basics.html">Configuration Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="networking-basics.html">Networking basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-basics.html">Security settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators-users-basics.html">Authentication and User Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners-basics.html">Spawners and single-user notebook servers</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">External services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="institutional-faq.html">Institutional FAQ</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="external-services">
+<h1>External services<a class="headerlink" href="#external-services" title="Permalink to this heading">#</a></h1>
+<p>When working with JupyterHub, a <strong>Service</strong> is defined as a process
+that interacts with the Hub’s REST API. A Service may perform a specific
+action or task. For example, shutting down individuals’ single user
+notebook servers that have been idle for some time is a good example of
+a task that could be automated by a Service. Let’s look at how the
+<a class="reference external" href="https://github.com/jupyterhub/jupyterhub-idle-culler">jupyterhub_idle_culler</a> script can be used as a Service.</p>
+<section id="real-world-example-to-cull-idle-servers">
+<h2>Real-world example to cull idle servers<a class="headerlink" href="#real-world-example-to-cull-idle-servers" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub has a REST API that can be used by external services. This
+document will:</p>
+<ul class="simple">
+<li><p>explain some basic information about API tokens</p></li>
+<li><p>clarify that API tokens can be used to authenticate to
+single-user servers as of <a class="reference internal" href="../changelog.html"><span class="doc std std-doc">version 0.8.0</span></a></p></li>
+<li><p>show how the <a class="reference external" href="https://github.com/jupyterhub/jupyterhub-idle-culler">jupyterhub_idle_culler</a> script can be:</p>
+<ul>
+<li><p>used in a Hub-managed service</p></li>
+<li><p>run as a standalone script</p></li>
+</ul>
+</li>
+</ul>
+<p>Both examples for <code class="docutils literal notranslate"><span class="pre">jupyterhub_idle_culler</span></code> will communicate tasks to the
+Hub via the REST API.</p>
+</section>
+<section id="api-token-basics">
+<h2>API Token basics<a class="headerlink" href="#api-token-basics" title="Permalink to this heading">#</a></h2>
+<section id="create-an-api-token">
+<h3>Create an API token<a class="headerlink" href="#create-an-api-token" title="Permalink to this heading">#</a></h3>
+<p>To run such an external service, an API token must be created and
+provided to the service.</p>
+<p>As of <a class="reference internal" href="../changelog.html"><span class="doc std std-doc">version 0.6.0</span></a>, the preferred way of doing
+this is to first generate an API token:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl rand -hex <span class="m">32</span>
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="../changelog.html"><span class="doc std std-doc">version 0.8.0</span></a>, a TOKEN request page for
+generating an API token is available from the JupyterHub user interface:</p>
+<p><img alt="Request API TOKEN page" src="../_images/token-request.png" /></p>
+<p><img alt="API TOKEN success page" src="../_images/token-request-success.png" /></p>
+</section>
+<section id="pass-environment-variable-with-token-to-the-hub">
+<h3>Pass environment variable with token to the Hub<a class="headerlink" href="#pass-environment-variable-with-token-to-the-hub" title="Permalink to this heading">#</a></h3>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">cull_idle_servers</span></code>, it is passed as the environment
+variable called <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_API_TOKEN</span></code>.</p>
+</section>
+<section id="use-api-tokens-for-services-and-tasks-that-require-external-access">
+<h3>Use API tokens for services and tasks that require external access<a class="headerlink" href="#use-api-tokens-for-services-and-tasks-that-require-external-access" title="Permalink to this heading">#</a></h3>
+<p>While API tokens are often associated with a specific user, API tokens
+can be used by services that require external access for activities
+that may not correspond to a specific human, e.g. adding users during
+setup for a tutorial or workshop. Add a service and its API token to the
+JupyterHub configuration file, <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;adding-users&#39;</span><span class="p">,</span> <span class="s1">&#39;api_token&#39;</span><span class="p">:</span> <span class="s1">&#39;super-secret-token&#39;</span><span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="restart-jupyterhub">
+<h3>Restart JupyterHub<a class="headerlink" href="#restart-jupyterhub" title="Permalink to this heading">#</a></h3>
+<p>Upon restarting JupyterHub, you should see a message like below in the
+logs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Adding</span> <span class="n">API</span> <span class="n">token</span> <span class="k">for</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="authenticating-to-single-user-servers-using-api-token">
+<h2>Authenticating to single-user servers using API token<a class="headerlink" href="#authenticating-to-single-user-servers-using-api-token" title="Permalink to this heading">#</a></h2>
+<p>In JupyterHub 0.7, there is no mechanism for token authentication to
+single-user servers, and only cookies can be used for authentication.
+0.8 supports using JupyterHub API tokens to authenticate to single-user
+servers.</p>
+</section>
+<section id="configure-the-idle-culler-to-run-as-a-hub-managed-service">
+<h2>Configure the idle culler to run as a Hub-Managed Service<a class="headerlink" href="#configure-the-idle-culler-to-run-as-a-hub-managed-service" title="Permalink to this heading">#</a></h2>
+<p>Install the idle culler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterhub</span><span class="o">-</span><span class="n">idle</span><span class="o">-</span><span class="n">culler</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>, add the following dictionary for the
+<code class="docutils literal notranslate"><span class="pre">idle-culler</span></code> Service to the <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.services</span></code> list:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;idle-culler&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;jupyterhub_idle_culler&#39;</span><span class="p">,</span> <span class="s1">&#39;--timeout=3600&#39;</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;list-and-cull&quot;</span><span class="p">,</span> <span class="c1"># name the role</span>
+        <span class="s2">&quot;services&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;idle-culler&quot;</span><span class="p">,</span> <span class="c1"># assign the service to this role</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="c1"># declare what permissions the service should have</span>
+            <span class="s2">&quot;list:users&quot;</span><span class="p">,</span> <span class="c1"># list users</span>
+            <span class="s2">&quot;read:users:activity&quot;</span><span class="p">,</span> <span class="c1"># read user last-activity</span>
+            <span class="s2">&quot;admin:servers&quot;</span><span class="p">,</span> <span class="c1"># start/stop servers</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span></code> indicates that the Service will be launched as a
+subprocess, managed by the Hub.</p></li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>Prior to 2.0, the idle-culler required ‘admin’ permissions.
+It now needs the scopes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">list:users</span></code> to access the user list endpoint</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read:users:activity</span></code> to read activity info</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin:servers</span></code> to start/stop servers</p></li>
+</ul>
+</div>
+</section>
+<section id="run-cull-idle-manually-as-a-standalone-script">
+<h2>Run <code class="docutils literal notranslate"><span class="pre">cull-idle</span></code> manually as a standalone script<a class="headerlink" href="#run-cull-idle-manually-as-a-standalone-script" title="Permalink to this heading">#</a></h2>
+<p>Now you can run your script by providing it
+the API token and it will authenticate through the REST API to
+interact with it.</p>
+<p>This will run the idle culler service manually. It can be run as a standalone
+script anywhere with access to the Hub, and will periodically check for idle
+servers and shut them down via the Hub’s REST API. In order to shutdown the
+servers, the token given to <code class="docutils literal notranslate"><span class="pre">cull-idle</span></code> must have permission to list users
+and admin their servers.</p>
+<p>Generate an API token and store it in the <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_API_TOKEN</span></code> environment
+variable. Run <code class="docutils literal notranslate"><span class="pre">jupyterhub_idle_culler</span></code> manually.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    <span class="nb">export</span> <span class="nv">JUPYTERHUB_API_TOKEN</span><span class="o">=</span><span class="s1">&#39;token&#39;</span>
+    python -m jupyterhub_idle_culler <span class="o">[</span>--timeout<span class="o">=</span><span class="m">900</span><span class="o">]</span> <span class="o">[</span>--url<span class="o">=</span>http://127.0.0.1:8081/hub/api<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="spawners-basics.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Spawners and single-user notebook servers</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="faq.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Frequently asked questions</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#real-world-example-to-cull-idle-servers">
+   Real-world example to cull idle servers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#api-token-basics">
+   API Token basics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-an-api-token">
+     Create an API token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pass-environment-variable-with-token-to-the-hub">
+     Pass environment variable with token to the Hub
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#use-api-tokens-for-services-and-tasks-that-require-external-access">
+     Use API tokens for services and tasks that require external access
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#restart-jupyterhub">
+     Restart JupyterHub
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authenticating-to-single-user-servers-using-api-token">
+   Authenticating to single-user servers using API token
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configure-the-idle-culler-to-run-as-a-hub-managed-service">
+   Configure the idle culler to run as a Hub-Managed Service
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-cull-idle-manually-as-a-standalone-script">
+   Run
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cull-idle
+    </span>
+   </code>
+   manually as a standalone script
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/getting-started/services-basics.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/getting-started/services-basics.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

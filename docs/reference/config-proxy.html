@@ -1,0 +1,807 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Using a reverse proxy &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/config-proxy';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Run JupyterHub without root privileges using sudo" href="config-sudo.html" />
+    <link rel="prev" title="Configure GitHub OAuth" href="config-ghoauth.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="using-a-reverse-proxy">
+<h1>Using a reverse proxy<a class="headerlink" href="#using-a-reverse-proxy" title="Permalink to this heading">#</a></h1>
+<p>In the following example, we show configuration files for a JupyterHub server
+running locally on port <code class="docutils literal notranslate"><span class="pre">8000</span></code> but accessible from the outside on the standard
+SSL port <code class="docutils literal notranslate"><span class="pre">443</span></code>. This could be useful if the JupyterHub server machine is also
+hosting other domains or content on <code class="docutils literal notranslate"><span class="pre">443</span></code>. The goal in this example is to
+satisfy the following:</p>
+<ul class="simple">
+<li><p>JupyterHub is running on a server, accessed <em>only</em> via <code class="docutils literal notranslate"><span class="pre">HUB.DOMAIN.TLD:443</span></code></p></li>
+<li><p>On the same machine, <code class="docutils literal notranslate"><span class="pre">NO_HUB.DOMAIN.TLD</span></code> strictly serves different content,
+also on port <code class="docutils literal notranslate"><span class="pre">443</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nginx</span></code> or <code class="docutils literal notranslate"><span class="pre">apache</span></code> is used as the public access point (which means that
+only nginx/apache will bind to <code class="docutils literal notranslate"><span class="pre">443</span></code>)</p></li>
+<li><p>After testing, the server in question should be able to score at least an A on the
+Qualys SSL Labs <a class="reference external" href="https://www.ssllabs.com/ssltest/">SSL Server Test</a></p></li>
+</ul>
+<p>Let’s start out with needed JupyterHub configuration in <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Force the proxy to only listen to connections to 127.0.0.1 (on port 8000)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">bind_url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8000&#39;</span>
+</pre></div>
+</div>
+<p>(For Jupyterhub &lt; 0.9 use <code class="docutils literal notranslate"><span class="pre">c.JupyterHub.ip</span> <span class="pre">=</span> <span class="pre">'127.0.0.1'</span></code>.)</p>
+<p>For high-quality SSL configuration, we also generate Diffie-Helman parameters.
+This can take a few minutes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl dhparam -out /etc/ssl/certs/dhparam.pem <span class="m">4096</span>
+</pre></div>
+</div>
+<section id="nginx">
+<h2>nginx<a class="headerlink" href="#nginx" title="Permalink to this heading">#</a></h2>
+<p>This <strong><code class="docutils literal notranslate"><span class="pre">nginx</span></code> config file</strong> is fairly standard fare except for the two
+<code class="docutils literal notranslate"><span class="pre">location</span></code> blocks within the main section for HUB.DOMAIN.tld.
+To create a new site for jupyterhub in your nginx config, make a new file
+in <code class="docutils literal notranslate"><span class="pre">sites.enabled</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">/etc/nginx/sites.enabled/jupyterhub.conf</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># top-level http config for websocket headers</span>
+<span class="c1"># If Upgrade is defined, Connection = upgrade</span>
+<span class="c1"># If Upgrade is empty, Connection = close</span>
+map <span class="nv">$http_upgrade</span> <span class="nv">$connection_upgrade</span> <span class="o">{</span>
+    default upgrade<span class="p">;</span>
+    <span class="s1">&#39;&#39;</span>      close<span class="p">;</span>
+<span class="o">}</span>
+
+<span class="c1"># HTTP server to redirect all 80 traffic to SSL/HTTPS</span>
+server <span class="o">{</span>
+    listen <span class="m">80</span><span class="p">;</span>
+    server_name HUB.DOMAIN.TLD<span class="p">;</span>
+
+    <span class="c1"># Tell all requests to port 80 to be 302 redirected to HTTPS</span>
+    <span class="k">return</span> <span class="m">302</span> https://<span class="nv">$host$request_uri</span><span class="p">;</span>
+<span class="o">}</span>
+
+<span class="c1"># HTTPS server to handle JupyterHub</span>
+server <span class="o">{</span>
+    listen <span class="m">443</span><span class="p">;</span>
+    ssl on<span class="p">;</span>
+
+    server_name HUB.DOMAIN.TLD<span class="p">;</span>
+
+    ssl_certificate /etc/letsencrypt/live/HUB.DOMAIN.TLD/fullchain.pem<span class="p">;</span>
+    ssl_certificate_key /etc/letsencrypt/live/HUB.DOMAIN.TLD/privkey.pem<span class="p">;</span>
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2<span class="p">;</span>
+    ssl_prefer_server_ciphers on<span class="p">;</span>
+    ssl_dhparam /etc/ssl/certs/dhparam.pem<span class="p">;</span>
+    ssl_ciphers <span class="s1">&#39;ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA&#39;</span><span class="p">;</span>
+    ssl_session_timeout 1d<span class="p">;</span>
+    ssl_session_cache shared:SSL:50m<span class="p">;</span>
+    ssl_stapling on<span class="p">;</span>
+    ssl_stapling_verify on<span class="p">;</span>
+    add_header Strict-Transport-Security max-age<span class="o">=</span><span class="m">15768000</span><span class="p">;</span>
+
+    <span class="c1"># Managing literal requests to the JupyterHub front end</span>
+    location / <span class="o">{</span>
+        proxy_pass http://127.0.0.1:8000<span class="p">;</span>
+        proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+        proxy_set_header Host <span class="nv">$host</span><span class="p">;</span>
+        proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+
+        <span class="c1"># websocket headers</span>
+        proxy_http_version <span class="m">1</span>.1<span class="p">;</span>
+        proxy_set_header Upgrade <span class="nv">$http_upgrade</span><span class="p">;</span>
+        proxy_set_header Connection <span class="nv">$connection_upgrade</span><span class="p">;</span>
+        proxy_set_header X-Scheme <span class="nv">$scheme</span><span class="p">;</span>
+
+        proxy_buffering off<span class="p">;</span>
+    <span class="o">}</span>
+
+    <span class="c1"># Managing requests to verify letsencrypt host</span>
+    location ~ /.well-known <span class="o">{</span>
+        allow all<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">nginx</span></code> is not running on port 443, substitute <code class="docutils literal notranslate"><span class="pre">$http_host</span></code> for <code class="docutils literal notranslate"><span class="pre">$host</span></code> on
+the lines setting the <code class="docutils literal notranslate"><span class="pre">Host</span></code> header.</p>
+<p><code class="docutils literal notranslate"><span class="pre">nginx</span></code> will now be the front facing element of JupyterHub on <code class="docutils literal notranslate"><span class="pre">443</span></code> which means
+it is also free to bind other servers, like <code class="docutils literal notranslate"><span class="pre">NO_HUB.DOMAIN.TLD</span></code> to the same port
+on the same machine and network interface. In fact, one can simply use the same
+server blocks as above for <code class="docutils literal notranslate"><span class="pre">NO_HUB</span></code> and simply add line for the root directory
+of the site as well as the applicable location call:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>server <span class="o">{</span>
+    listen <span class="m">80</span><span class="p">;</span>
+    server_name NO_HUB.DOMAIN.TLD<span class="p">;</span>
+
+    <span class="c1"># Tell all requests to port 80 to be 302 redirected to HTTPS</span>
+    <span class="k">return</span> <span class="m">302</span> https://<span class="nv">$host$request_uri</span><span class="p">;</span>
+<span class="o">}</span>
+
+server <span class="o">{</span>
+    listen <span class="m">443</span><span class="p">;</span>
+    ssl on<span class="p">;</span>
+
+    <span class="c1"># INSERT OTHER SSL PARAMETERS HERE AS ABOVE</span>
+    <span class="c1"># SSL cert may differ</span>
+
+    <span class="c1"># Set the appropriate root directory</span>
+    root /var/www/html
+
+    <span class="c1"># Set URI handling</span>
+    location / <span class="o">{</span>
+        try_files <span class="nv">$uri</span> <span class="nv">$uri</span>/ <span class="o">=</span><span class="m">404</span><span class="p">;</span>
+    <span class="o">}</span>
+
+    <span class="c1"># Managing requests to verify letsencrypt host</span>
+    location ~ /.well-known <span class="o">{</span>
+        allow all<span class="p">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now restart <code class="docutils literal notranslate"><span class="pre">nginx</span></code>, restart the JupyterHub, and enjoy accessing
+<code class="docutils literal notranslate"><span class="pre">https://HUB.DOMAIN.TLD</span></code> while serving other content securely on
+<code class="docutils literal notranslate"><span class="pre">https://NO_HUB.DOMAIN.TLD</span></code>.</p>
+<section id="selinux-permissions-for-nginx">
+<h3>SELinux permissions for nginx<a class="headerlink" href="#selinux-permissions-for-nginx" title="Permalink to this heading">#</a></h3>
+<p>On distributions with SELinux enabled (e.g. Fedora), one may encounter permission errors
+when the nginx service is started.</p>
+<p>We need to allow nginx to perform network relay and connect to the jupyterhub port. The
+following commands do that:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>semanage port -a -t http_port_t -p tcp <span class="m">8000</span>
+setsebool -P httpd_can_network_relay <span class="m">1</span>
+setsebool -P httpd_can_network_connect <span class="m">1</span>
+</pre></div>
+</div>
+<p>Replace 8000 with the port the jupyterhub server is running from.</p>
+</section>
+</section>
+<section id="apache">
+<h2>Apache<a class="headerlink" href="#apache" title="Permalink to this heading">#</a></h2>
+<p>As with nginx above, you can use <a class="reference external" href="https://httpd.apache.org">Apache</a> as the reverse proxy.
+First, we will need to enable the apache modules that we are going to need:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>a2enmod ssl rewrite proxy headers proxy_http proxy_wstunnel
+</pre></div>
+</div>
+<p>Our Apache configuration is equivalent to the nginx configuration above:</p>
+<ul class="simple">
+<li><p>Redirect HTTP to HTTPS</p></li>
+<li><p>Good SSL Configuration</p></li>
+<li><p>Support for websockets on any proxied URL</p></li>
+<li><p>JupyterHub is running locally at http://127.0.0.1:8000</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># redirect HTTP to HTTPS</span>
+Listen <span class="m">80</span>
+&lt;VirtualHost HUB.DOMAIN.TLD:80&gt;
+  ServerName HUB.DOMAIN.TLD
+  Redirect / https://HUB.DOMAIN.TLD/
+&lt;/VirtualHost&gt;
+
+Listen <span class="m">443</span>
+&lt;VirtualHost HUB.DOMAIN.TLD:443&gt;
+
+  ServerName HUB.DOMAIN.TLD
+
+  <span class="c1"># enable HTTP/2, if available</span>
+  Protocols h2 http/1.1
+
+  <span class="c1"># HTTP Strict Transport Security (mod_headers is required) (63072000 seconds)</span>
+  Header always <span class="nb">set</span> Strict-Transport-Security <span class="s2">&quot;max-age=63072000&quot;</span>
+
+  <span class="c1"># configure SSL</span>
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/HUB.DOMAIN.TLD/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/HUB.DOMAIN.TLD/privkey.pem
+  SSLOpenSSLConfCmd DHParameters /etc/ssl/certs/dhparam.pem
+
+  <span class="c1"># intermediate configuration from ssl-config.mozilla.org (2022-03-03)</span>
+  <span class="c1"># Please note, that this configuration might be out-dated - please update it accordingly using https://ssl-config.mozilla.org/</span>
+  SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1
+  SSLCipherSuite          ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+  SSLHonorCipherOrder     off
+  SSLSessionTickets       off
+
+  <span class="c1"># Use RewriteEngine to handle websocket connection upgrades</span>
+  RewriteEngine On
+  RewriteCond %<span class="o">{</span>HTTP:Connection<span class="o">}</span> Upgrade <span class="o">[</span>NC<span class="o">]</span>
+  RewriteCond %<span class="o">{</span>HTTP:Upgrade<span class="o">}</span> websocket <span class="o">[</span>NC<span class="o">]</span>
+  RewriteRule /<span class="o">(</span>.*<span class="o">)</span> ws://127.0.0.1:8000/<span class="nv">$1</span> <span class="o">[</span>P,L<span class="o">]</span>
+
+  &lt;Location <span class="s2">&quot;/&quot;</span>&gt;
+    <span class="c1"># preserve Host header to avoid cross-origin problems</span>
+    ProxyPreserveHost on
+    <span class="c1"># proxy to JupyterHub</span>
+    ProxyPass         http://127.0.0.1:8000/
+    ProxyPassReverse  http://127.0.0.1:8000/
+    RequestHeader     <span class="nb">set</span> <span class="s2">&quot;X-Forwarded-Proto&quot;</span> <span class="nv">expr</span><span class="o">=</span>%<span class="o">{</span>REQUEST_SCHEME<span class="o">}</span>
+  &lt;/Location&gt;
+&lt;/VirtualHost&gt;
+</pre></div>
+</div>
+<p>In case of the need to run the jupyterhub under /jhub/ or other location please use the below configurations:</p>
+<ul class="simple">
+<li><p>JupyterHub running locally at http://127.0.0.1:8000/jhub/ or other location</p></li>
+</ul>
+<p>httpd.conf amendments:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> RewriteRule /jhub/<span class="o">(</span>.*<span class="o">)</span> ws://127.0.0.1:8000/jhub/<span class="nv">$1</span> <span class="o">[</span>P,L<span class="o">]</span>
+ RewriteRule /jhub/<span class="o">(</span>.*<span class="o">)</span> http://127.0.0.1:8000/jhub/<span class="nv">$1</span> <span class="o">[</span>P,L<span class="o">]</span>
+
+ ProxyPass /jhub/ http://127.0.0.1:8000/jhub/
+ ProxyPassReverse /jhub/  http://127.0.0.1:8000/jhub/
+</pre></div>
+</div>
+<p>jupyterhub_config.py amendments:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> --The public facing URL of the whole JupyterHub application.
+ --This is the address on which the proxy will bind. Sets protocol, ip, base_url
+ c.JupyterHub.bind_url <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8000/jhub/&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="config-ghoauth.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Configure GitHub OAuth</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="config-sudo.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nginx">
+   nginx
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#selinux-permissions-for-nginx">
+     SELinux permissions for nginx
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apache">
+   Apache
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/config-proxy.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/config-proxy.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

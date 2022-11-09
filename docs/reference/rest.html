@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Using JupyterHub’s REST API &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/rest';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JupyterHub REST API" href="rest-api.html" />
+    <link rel="prev" title="Running proxy separately from the hub" href="separate-proxy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="using-jupyterhub-s-rest-api">
+<span id="rest-api"></span><h1>Using JupyterHub’s REST API<a class="headerlink" href="#using-jupyterhub-s-rest-api" title="Permalink to this heading">#</a></h1>
+<p>This section will give you information on:</p>
+<ul class="simple">
+<li><p>what you can do with the API</p></li>
+<li><p>create an API token</p></li>
+<li><p>add API tokens to the config files</p></li>
+<li><p>make an API request programmatically using the requests library</p></li>
+<li><p>learn more about JupyterHub’s API</p></li>
+</ul>
+<section id="what-you-can-do-with-the-api">
+<h2>What you can do with the API<a class="headerlink" href="#what-you-can-do-with-the-api" title="Permalink to this heading">#</a></h2>
+<p>Using the <a class="reference internal" href="rest-api.html"><span class="doc std std-doc">JupyterHub REST API</span></a>, you can perform actions on the Hub,
+such as:</p>
+<ul class="simple">
+<li><p>checking which users are active</p></li>
+<li><p>adding or removing users</p></li>
+<li><p>stopping or starting single user notebook servers</p></li>
+<li><p>authenticating services</p></li>
+<li><p>communicating with an individual Jupyter server’s REST API</p></li>
+</ul>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>
+API provides a standard way for users to get and send information to the
+Hub.</p>
+</section>
+<section id="create-an-api-token">
+<h2>Create an API token<a class="headerlink" href="#create-an-api-token" title="Permalink to this heading">#</a></h2>
+<p>To send requests using JupyterHub API, you must pass an API token with
+the request.</p>
+<p>The preferred way of generating an API token is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl rand -hex <span class="m">32</span>
+</pre></div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">openssl</span></code> command generates a potential token that can then be
+added to JupyterHub using <code class="docutils literal notranslate"><span class="pre">.api_tokens</span></code> configuration setting in
+<code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>.</p>
+<p>Alternatively, use the <code class="docutils literal notranslate"><span class="pre">jupyterhub</span> <span class="pre">token</span></code> command to generate a token
+for a specific hub user by passing the ‘username’:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyterhub token &lt;username&gt;
+</pre></div>
+</div>
+<p>This command generates a random string to use as a token and registers
+it for the given user with the Hub’s database.</p>
+<p>In <a class="reference internal" href="../changelog.html"><span class="doc std std-doc">version 0.8.0</span></a>, a token request page for
+generating an API token is available from the JupyterHub user interface:</p>
+<p><img alt="Request API token page" src="../_images/token-request.png" /></p>
+<p><img alt="API token success page" src="../_images/token-request-success.png" /></p>
+</section>
+<section id="assigning-permissions-to-a-token">
+<h2>Assigning permissions to a token<a class="headerlink" href="#assigning-permissions-to-a-token" title="Permalink to this heading">#</a></h2>
+<p>Prior to JupyterHub 2.0, there were two levels of permissions:</p>
+<ol class="arabic simple">
+<li><p>user, and</p></li>
+<li><p>admin</p></li>
+</ol>
+<p>where a token would always have full permissions to do whatever its owner could do.</p>
+<p>In JupyterHub 2.0,
+specific permissions are now defined as ‘scopes’,
+and can be assigned both at the user/service level,
+and at the individual token level.</p>
+<p>This allows e.g. a user with full admin permissions to request a token with limited permissions.</p>
+<section id="updating-to-admin-services">
+<h3>Updating to admin services<a class="headerlink" href="#updating-to-admin-services" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">api_tokens</span></code> configuration has been softly deprecated since the introduction of services.
+We have no plans to remove it,
+but deployments are encouraged to use service configuration instead.</p>
+<p>If you have been using <code class="docutils literal notranslate"><span class="pre">api_tokens</span></code> to create an admin user
+and a token for that user to perform some automations,
+the services mechanism may be a better fit.
+If you have the following configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">admin_users</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;service-admin&quot;</span><span class="p">,}</span>
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">api_tokens</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;secret-token&quot;</span><span class="p">:</span> <span class="s2">&quot;service-admin&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This can be updated to create a service, with the following configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1"># give the token a name</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;service-admin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;api_token&quot;</span><span class="p">:</span> <span class="s2">&quot;secret-token&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;admin&quot;: True, # if using JupyterHub 1.x</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="c1"># roles are new in JupyterHub 2.0</span>
+<span class="c1"># prior to 2.0, only &#39;admin&#39;: True or False</span>
+<span class="c1"># was available</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;service-role&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="c1"># specify the permissions the token should have</span>
+            <span class="s2">&quot;admin:users&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;services&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="c1"># assign the service the above permissions</span>
+            <span class="s2">&quot;service-admin&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The token will have the permissions listed in the role
+(see [scopes][] for a list of available permissions),
+but there will no longer be a user account created to house it.
+The main noticeable difference is that there will be no notebook server associated with the account
+and the service will not show up in the various user list pages and APIs.</p>
+</section>
+</section>
+<section id="make-an-api-request">
+<h2>Make an API request<a class="headerlink" href="#make-an-api-request" title="Permalink to this heading">#</a></h2>
+<p>To authenticate your requests, pass the API token in the request’s
+Authorization header.</p>
+<section id="use-requests">
+<h3>Use requests<a class="headerlink" href="#use-requests" title="Permalink to this heading">#</a></h3>
+<p>Using the popular Python <a class="reference external" href="https://docs.python-requests.org">requests</a>
+library, here’s example code to make an API request for the users of a JupyterHub
+deployment. An API GET request is made, and the request sends an API token for
+authorization. The response contains information about the users:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">api_url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8081/hub/api&#39;</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_url</span> <span class="o">+</span> <span class="s1">&#39;/users&#39;</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;token </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example provides a slightly more complicated request, yet the
+process is very similar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">api_url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8081/hub/api&#39;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mygroup&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;user1&#39;</span><span class="p">,</span> <span class="s1">&#39;user2&#39;</span><span class="p">]}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_url</span> <span class="o">+</span> <span class="s1">&#39;/groups/formgrade-data301/users&#39;</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;token </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The same API token can also authorize access to the <a class="reference external" href="https://petstore3.swagger.io/?url=https://raw.githubusercontent.com/jupyter/notebook/HEAD/notebook/services/api/api.yaml">Jupyter Notebook REST API</a>
+provided by notebook servers managed by JupyterHub if it has the necessary <code class="docutils literal notranslate"><span class="pre">access:users:servers</span></code> scope:</p>
+</section>
+</section>
+<section id="paginating-api-requests">
+<span id="api-pagination"></span><h2>Paginating API requests<a class="headerlink" href="#paginating-api-requests" title="Permalink to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0.</span></p>
+</div>
+<p>Pagination is available through the <code class="docutils literal notranslate"><span class="pre">offset</span></code> and <code class="docutils literal notranslate"><span class="pre">limit</span></code> query parameters on
+list endpoints, which can be used to return ideally sized windows of results.
+Here’s example code demonstrating pagination on the <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users</span></code>
+endpoint to fetch the first 20 records.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">api_url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8081/hub/api&#39;</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="n">api_url</span> <span class="o">+</span> <span class="s1">&#39;/users?offset=0&amp;limit=20&#39;</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/jupyterhub-pagination+json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;token </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For backward-compatibility, the default structure of list responses is unchanged.
+However, this lacks pagination information (e.g. is there a next page),
+so if you have enough users that they won’t fit in the first response,
+it is a good idea to opt-in to the new paginated list format.
+There is a new schema for list responses which include pagination information.
+You can request this by including the header:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Accept</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">-</span><span class="n">pagination</span><span class="o">+</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>with your request, in which case a response will look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+      <span class="o">...</span>
+    <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;_pagination&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;next&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:8081/hub/api/users?limit=20&amp;offset=20&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where the list results (same as pre-2.0) will be in <code class="docutils literal notranslate"><span class="pre">items</span></code>,
+and pagination info will be in <code class="docutils literal notranslate"><span class="pre">_pagination</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">next</span></code> field will include the offset, limit, and URL for requesting the next page.
+<code class="docutils literal notranslate"><span class="pre">next</span></code> will be <code class="docutils literal notranslate"><span class="pre">null</span></code> if there is no next page.</p>
+<p>Pagination is governed by two configuration options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JupyterHub.api_page_default_limit</span></code> - the page size, if <code class="docutils literal notranslate"><span class="pre">limit</span></code> is unspecified in the request
+and the new pagination API is requested
+(default: 50)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JupyterHub.api_page_max_limit</span></code> - the maximum page size a request can ask for (default: 200)</p></li>
+</ul>
+<p>Pagination is enabled on the <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users</span></code>, <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/groups</span></code>, and <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/proxy</span></code> REST endpoints.</p>
+</section>
+<section id="enabling-users-to-spawn-multiple-named-servers-via-the-api">
+<h2>Enabling users to spawn multiple named-servers via the API<a class="headerlink" href="#enabling-users-to-spawn-multiple-named-servers-via-the-api" title="Permalink to this heading">#</a></h2>
+<p>With JupyterHub version 0.8, support for multiple servers per user has landed.
+Prior to that, each user could only launch a single default server via the API
+like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST -H <span class="s2">&quot;Authorization: token &lt;token&gt;&quot;</span> <span class="s2">&quot;http://127.0.0.1:8081/hub/api/users/&lt;user&gt;/server&quot;</span>
+</pre></div>
+</div>
+<p>With the named-server functionality, it’s now possible to launch more than one
+specifically named servers against a given user. This could be used, for instance,
+to launch each server based on a different image.</p>
+<p>First you must enable named-servers by including the following setting in the <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">c.JupyterHub.allow_named_servers</span> <span class="pre">=</span> <span class="pre">True</span></code></p>
+<p>If using the <a class="reference external" href="https://github.com/jupyterhub/zero-to-jupyterhub-k8s">zero-to-jupyterhub-k8s</a> set-up to run JupyterHub,
+then instead of editing the <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code> file directly, you could pass
+the following as part of the <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file, as per the <a class="reference external" href="https://zero-to-jupyterhub.readthedocs.io/en/latest/">tutorial</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hub:
+  extraConfig: <span class="p">|</span>
+    c.JupyterHub.allow_named_servers <span class="o">=</span> True
+</pre></div>
+</div>
+<p>With that setting in place, a new named-server is activated like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST -H <span class="s2">&quot;Authorization: token &lt;token&gt;&quot;</span> <span class="s2">&quot;http://127.0.0.1:8081/hub/api/users/&lt;user&gt;/servers/&lt;serverA&gt;&quot;</span>
+curl -X POST -H <span class="s2">&quot;Authorization: token &lt;token&gt;&quot;</span> <span class="s2">&quot;http://127.0.0.1:8081/hub/api/users/&lt;user&gt;/servers/&lt;serverB&gt;&quot;</span>
+</pre></div>
+</div>
+<p>The same servers can be stopped by substituting <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> for <code class="docutils literal notranslate"><span class="pre">POST</span></code> above.</p>
+<section id="some-caveats-for-using-named-servers">
+<h3>Some caveats for using named-servers<a class="headerlink" href="#some-caveats-for-using-named-servers" title="Permalink to this heading">#</a></h3>
+<p>For named-servers via the API to work, the spawner used to spawn these servers
+will need to be able to handle the case of multiple servers per user and ensure
+uniqueness of names, particularly if servers are spawned via docker containers
+or kubernetes pods.</p>
+</section>
+</section>
+<section id="learn-more-about-the-api">
+<h2>Learn more about the API<a class="headerlink" href="#learn-more-about-the-api" title="Permalink to this heading">#</a></h2>
+<p>You can see the full <a class="reference internal" href="rest-api.html"><span class="doc std std-doc">JupyterHub REST API</span></a> for details.</p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="separate-proxy.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Running proxy separately from the hub</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="rest-api.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">JupyterHub REST API</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-you-can-do-with-the-api">
+   What you can do with the API
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-an-api-token">
+   Create an API token
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assigning-permissions-to-a-token">
+   Assigning permissions to a token
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#updating-to-admin-services">
+     Updating to admin services
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make-an-api-request">
+   Make an API request
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#use-requests">
+     Use requests
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#paginating-api-requests">
+   Paginating API requests
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#enabling-users-to-spawn-multiple-named-servers-via-the-api">
+   Enabling users to spawn multiple named-servers via the API
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#some-caveats-for-using-named-servers">
+     Some caveats for using named-servers
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learn-more-about-the-api">
+   Learn more about the API
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/rest.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/rest.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

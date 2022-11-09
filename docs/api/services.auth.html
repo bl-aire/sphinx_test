@@ -1,0 +1,1679 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Services Authentication &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/services.auth';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JupyterHub RBAC" href="../rbac/index.html" />
+    <link rel="prev" title="Services" href="service.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Application configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawner.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">Services</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Services Authentication</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="services-authentication">
+<h1>Services Authentication<a class="headerlink" href="#services-authentication" title="Permalink to this heading">#</a></h1>
+<section id="module-jupyterhub.services.auth">
+<span id="module-jupyterhub-services-auth"></span><h2>Module: <a class="reference internal" href="#module-jupyterhub.services.auth" title="jupyterhub.services.auth"><code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.services.auth</span></code></a><a class="headerlink" href="#module-jupyterhub.services.auth" title="Permalink to this heading">#</a></h2>
+<p>Authenticating services with JupyterHub.</p>
+<p>Tokens are sent to the Hub for verification.
+The Hub replies with a JSON model describing the authenticated user.</p>
+<p>This contains two levels of authentication:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#jupyterhub.services.auth.HubOAuth" title="jupyterhub.services.auth.HubOAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuth</span></code></a> - Use OAuth 2 to authenticate browsers with the Hub.
+This should be used for any service that should respond to browser requests
+(i.e. most services).</p></li>
+<li><p><a class="reference internal" href="#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a> - token-only authentication, for a service that only need to handle token-authenticated API requests</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">Auth</span></code> classes (<a class="reference internal" href="#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a>, <a class="reference internal" href="#jupyterhub.services.auth.HubOAuth" title="jupyterhub.services.auth.HubOAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuth</span></code></a>)
+can be used in any application, even outside tornado.
+They contain reference implementations of talking to the Hub API
+to resolve a token to a user.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Authenticated</span></code> classes (<a class="reference internal" href="#jupyterhub.services.auth.HubAuthenticated" title="jupyterhub.services.auth.HubAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuthenticated</span></code></a>, <a class="reference internal" href="#jupyterhub.services.auth.HubOAuthenticated" title="jupyterhub.services.auth.HubOAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthenticated</span></code></a>)
+are mixins for tornado handlers that should authenticate with the Hub.</p>
+<p>If you are using OAuth, you will also need to register an oauth callback handler to complete the oauth process.
+A tornado implementation is provided in <a class="reference internal" href="#jupyterhub.services.auth.HubOAuthCallbackHandler" title="jupyterhub.services.auth.HubOAuthCallbackHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthCallbackHandler</span></code></a>.</p>
+<section id="hubauth">
+<h3><a class="reference internal" href="#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a><a class="headerlink" href="#hubauth" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.services.auth.</span></span><span class="sig-name descname"><span class="pre">HubAuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth" title="Permalink to this definition">#</a></dt>
+<dd><p>A class for authenticating with JupyterHub</p>
+<p>This can be used by any application.</p>
+<p>Use this base class only for direct, token-authenticated applications
+(web APIs).
+For applications that support direct visits from browsers,
+use HubOAuth to enable OAuth redirect-based authentication.</p>
+<p>If using tornado, use via <a class="reference internal" href="#jupyterhub.services.auth.HubAuthenticated" title="jupyterhub.services.auth.HubAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuthenticated</span></code></a> mixin.
+If using manually, use the <code class="docutils literal notranslate"><span class="pre">.user_for_token(token_value)</span></code> method
+to identify the user owning a given token.</p>
+<p>The following config must be set:</p>
+<ul class="simple">
+<li><p>api_token (token for authenticating with JupyterHub API),
+fetched from the JUPYTERHUB_API_TOKEN env by default.</p></li>
+</ul>
+<p>The following config MAY be set:</p>
+<ul class="simple">
+<li><p>api_url: the base URL of the Hub’s internal API,
+fetched from JUPYTERHUB_API_URL by default.</p></li>
+<li><p>cookie_cache_max_age: the number of seconds responses
+from the Hub should be cached.</p></li>
+<li><p>login_url (the <em>public</em> <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code> URL of the Hub).</p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.access_scopes">
+<span class="sig-name descname"><span class="pre">access_scopes</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.access_scopes</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.access_scopes" title="Permalink to this definition">#</a></dt>
+<dd><p>OAuth scopes to use for allowing access.</p>
+<p>Get from $JUPYTERHUB_OAUTH_ACCESS_SCOPES by default.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.api_token">
+<span class="sig-name descname"><span class="pre">api_token</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.api_token</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.api_token" title="Permalink to this definition">#</a></dt>
+<dd><p>API key for accessing Hub API.</p>
+<p>Default: $JUPYTERHUB_API_TOKEN</p>
+<p>Loaded from services configuration in jupyterhub_config.
+Will be auto-generated for hub-managed services.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.api_url">
+<span class="sig-name descname"><span class="pre">api_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.api_url</span> <span class="pre">=</span> <span class="pre">Unicode('http://127.0.0.1:8081/hub/api')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.api_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The base API URL of the Hub.</p>
+<p>Typically <code class="docutils literal notranslate"><span class="pre">http://hub-ip:hub-port/hub/api</span></code>
+Default: $JUPYTERHUB_API_URL</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.base_url</span> <span class="pre">=</span> <span class="pre">Unicode('/')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.base_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The base URL prefix of this application</p>
+<p>e.g. /services/service-name/ or /user/name/</p>
+<p>Default: get from JUPYTERHUB_SERVICE_PREFIX</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.cache_max_age">
+<span class="sig-name descname"><span class="pre">cache_max_age</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.cache_max_age</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.cache_max_age" title="Permalink to this definition">#</a></dt>
+<dd><p>The maximum time (in seconds) to cache the Hub’s responses for authentication.</p>
+<p>A larger value reduces load on the Hub and occasional response lag.
+A smaller value reduces propagation time of changes on the Hub (rare).</p>
+<p>Default: 300 (five minutes)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.certfile">
+<span class="sig-name descname"><span class="pre">certfile</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.certfile</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.certfile" title="Permalink to this definition">#</a></dt>
+<dd><p>The ssl cert to use for requests</p>
+<p>Use with keyfile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.check_scopes">
+<span class="sig-name descname"><span class="pre">check_scopes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">required_scopes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.check_scopes" title="Permalink to this definition">#</a></dt>
+<dd><p>Check whether the user has required scope(s)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.client_ca">
+<span class="sig-name descname"><span class="pre">client_ca</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.client_ca</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.client_ca" title="Permalink to this definition">#</a></dt>
+<dd><p>The ssl certificate authority to use to verify requests</p>
+<p>Use with keyfile and certfile</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.cookie_options">
+<span class="sig-name descname"><span class="pre">cookie_options</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.cookie_options</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.cookie_options" title="Permalink to this definition">#</a></dt>
+<dd><p>Additional options to pass when setting cookies.</p>
+<p>Can include things like <code class="docutils literal notranslate"><span class="pre">expires_days=None</span></code> for session-expiry
+or <code class="docutils literal notranslate"><span class="pre">secure=True</span></code> if served on HTTPS and default HTTPS discovery fails
+(e.g. behind some proxies).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.get_session_id">
+<span class="sig-name descname"><span class="pre">get_session_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.get_session_id" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the jupyterhub session id</p>
+<p>from the jupyterhub-session-id cookie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.get_token">
+<span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_cookie</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.get_token" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the token authenticating a request</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2: </span>in_cookie added.
+Previously, only URL params and header were considered.
+Pass <code class="docutils literal notranslate"><span class="pre">in_cookie=False</span></code> to preserve that behavior.</p>
+</div>
+<ul class="simple">
+<li><p>in URL parameters: ?token=&lt;token&gt;</p></li>
+<li><p>in header: Authorization: token &lt;token&gt;</p></li>
+<li><p>in cookie (stored after oauth), if in_cookie is True</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.get_user">
+<span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.get_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the Hub user for a given tornado handler.</p>
+<p>Checks cookie with the Hub to identify the current user.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.4: </span>async support via <code class="docutils literal notranslate"><span class="pre">sync</span></code> argument.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler" title="(in Tornado v6.2)"><em>tornado.web.RequestHandler</em></a>) – the current request handler</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – whether to block for the result or return an awaitable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>The user model, if a user is identified, None if authentication fails.</p>
+<p>The ‘name’ field contains the user’s name.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>user_model (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.hub_host">
+<span class="sig-name descname"><span class="pre">hub_host</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.hub_host</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.hub_host" title="Permalink to this definition">#</a></dt>
+<dd><p>The public host of JupyterHub</p>
+<p>Only used if JupyterHub is spreading servers across subdomains.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.hub_prefix">
+<span class="sig-name descname"><span class="pre">hub_prefix</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.hub_prefix</span> <span class="pre">=</span> <span class="pre">Unicode('/hub/')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.hub_prefix" title="Permalink to this definition">#</a></dt>
+<dd><p>The URL prefix for the Hub itself.</p>
+<p>Typically /hub/
+Default: $JUPYTERHUB_BASE_URL</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.keyfile">
+<span class="sig-name descname"><span class="pre">keyfile</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.keyfile</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.keyfile" title="Permalink to this definition">#</a></dt>
+<dd><p>The ssl key to use for requests</p>
+<p>Use with certfile</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.login_url">
+<span class="sig-name descname"><span class="pre">login_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubAuth.login_url</span> <span class="pre">=</span> <span class="pre">Unicode('/hub/login')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.login_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The login URL to use</p>
+<p>Typically /hub/login</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.user_for_cookie">
+<span class="sig-name descname"><span class="pre">user_for_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encrypted_cookie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.user_for_cookie" title="Permalink to this definition">#</a></dt>
+<dd><p>Deprecated and removed. Use HubOAuth to authenticate browsers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuth.user_for_token">
+<span class="sig-name descname"><span class="pre">user_for_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuth.user_for_token" title="Permalink to this definition">#</a></dt>
+<dd><p>Ask the Hub to identify the user for a given token.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.4: </span>async support via <code class="docutils literal notranslate"><span class="pre">sync</span></code> argument.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – the token</p></li>
+<li><p><strong>use_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Specify use_cache=False to skip cached cookie values (default: True)</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – whether to block for the result or return an awaitable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>The user model, if a user is identified, None if authentication fails.</p>
+<p>The ‘name’ field contains the user’s name.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>user_model (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="huboauth">
+<h3><a class="reference internal" href="#jupyterhub.services.auth.HubOAuth" title="jupyterhub.services.auth.HubOAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuth</span></code></a><a class="headerlink" href="#huboauth" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.services.auth.</span></span><span class="sig-name descname"><span class="pre">HubOAuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth" title="Permalink to this definition">#</a></dt>
+<dd><p>HubAuth using OAuth for login instead of cookies set by the Hub.</p>
+<p>Use this class if you want users to be able to visit your service with a browser.
+They will be authenticated via OAuth with the Hub.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.access_scopes">
+<span class="sig-name descname"><span class="pre">access_scopes</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.access_scopes</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.access_scopes" title="Permalink to this definition">#</a></dt>
+<dd><p>OAuth scopes to use for allowing access.</p>
+<p>Get from $JUPYTERHUB_OAUTH_ACCESS_SCOPES by default.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.api_token">
+<span class="sig-name descname"><span class="pre">api_token</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.api_token</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.api_token" title="Permalink to this definition">#</a></dt>
+<dd><p>API key for accessing Hub API.</p>
+<p>Default: $JUPYTERHUB_API_TOKEN</p>
+<p>Loaded from services configuration in jupyterhub_config.
+Will be auto-generated for hub-managed services.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.api_url">
+<span class="sig-name descname"><span class="pre">api_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.api_url</span> <span class="pre">=</span> <span class="pre">Unicode('http://127.0.0.1:8081/hub/api')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.api_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The base API URL of the Hub.</p>
+<p>Typically <code class="docutils literal notranslate"><span class="pre">http://hub-ip:hub-port/hub/api</span></code>
+Default: $JUPYTERHUB_API_URL</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.base_url</span> <span class="pre">=</span> <span class="pre">Unicode('/')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.base_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The base URL prefix of this application</p>
+<p>e.g. /services/service-name/ or /user/name/</p>
+<p>Default: get from JUPYTERHUB_SERVICE_PREFIX</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.cache_max_age">
+<span class="sig-name descname"><span class="pre">cache_max_age</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.cache_max_age</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.cache_max_age" title="Permalink to this definition">#</a></dt>
+<dd><p>The maximum time (in seconds) to cache the Hub’s responses for authentication.</p>
+<p>A larger value reduces load on the Hub and occasional response lag.
+A smaller value reduces propagation time of changes on the Hub (rare).</p>
+<p>Default: 300 (five minutes)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.certfile">
+<span class="sig-name descname"><span class="pre">certfile</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.certfile</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.certfile" title="Permalink to this definition">#</a></dt>
+<dd><p>The ssl cert to use for requests</p>
+<p>Use with keyfile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.clear_cookie">
+<span class="sig-name descname"><span class="pre">clear_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.clear_cookie" title="Permalink to this definition">#</a></dt>
+<dd><p>Clear the OAuth cookie</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.client_ca">
+<span class="sig-name descname"><span class="pre">client_ca</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.client_ca</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.client_ca" title="Permalink to this definition">#</a></dt>
+<dd><p>The ssl certificate authority to use to verify requests</p>
+<p>Use with keyfile and certfile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.cookie_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cookie_name</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.cookie_name" title="Permalink to this definition">#</a></dt>
+<dd><p>Use OAuth client_id for cookie name</p>
+<p>because we don’t want to use the same cookie name
+across OAuth clients.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.cookie_options">
+<span class="sig-name descname"><span class="pre">cookie_options</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.cookie_options</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.cookie_options" title="Permalink to this definition">#</a></dt>
+<dd><p>Additional options to pass when setting cookies.</p>
+<p>Can include things like <code class="docutils literal notranslate"><span class="pre">expires_days=None</span></code> for session-expiry
+or <code class="docutils literal notranslate"><span class="pre">secure=True</span></code> if served on HTTPS and default HTTPS discovery fails
+(e.g. behind some proxies).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.generate_state">
+<span class="sig-name descname"><span class="pre">generate_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.generate_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate a state string, given a next_url redirect target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>next_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The URL of the page to redirect to on successful login.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state (str)</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The base64-encoded state string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.get_next_url">
+<span class="sig-name descname"><span class="pre">get_next_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b64_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.get_next_url" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the next_url for redirection, given an encoded OAuth state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.get_state_cookie_name">
+<span class="sig-name descname"><span class="pre">get_state_cookie_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b64_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.get_state_cookie_name" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the cookie name for oauth state, given an encoded OAuth state</p>
+<p>Cookie name is stored in the state itself because the cookie name
+is randomized to deal with races between concurrent oauth sequences.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.hub_host">
+<span class="sig-name descname"><span class="pre">hub_host</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.hub_host</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.hub_host" title="Permalink to this definition">#</a></dt>
+<dd><p>The public host of JupyterHub</p>
+<p>Only used if JupyterHub is spreading servers across subdomains.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.hub_prefix">
+<span class="sig-name descname"><span class="pre">hub_prefix</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.hub_prefix</span> <span class="pre">=</span> <span class="pre">Unicode('/hub/')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.hub_prefix" title="Permalink to this definition">#</a></dt>
+<dd><p>The URL prefix for the Hub itself.</p>
+<p>Typically /hub/
+Default: $JUPYTERHUB_BASE_URL</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.keyfile">
+<span class="sig-name descname"><span class="pre">keyfile</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.keyfile</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.keyfile" title="Permalink to this definition">#</a></dt>
+<dd><p>The ssl key to use for requests</p>
+<p>Use with certfile</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.login_url">
+<span class="sig-name descname"><span class="pre">login_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.login_url</span> <span class="pre">=</span> <span class="pre">Unicode('/hub/login')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.login_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The login URL to use</p>
+<p>Typically /hub/login</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.oauth_authorization_url">
+<span class="sig-name descname"><span class="pre">oauth_authorization_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.oauth_authorization_url</span> <span class="pre">=</span> <span class="pre">Unicode('/hub/api/oauth2/authorize')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.oauth_authorization_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The URL to redirect to when starting the OAuth process</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.oauth_client_id">
+<span class="sig-name descname"><span class="pre">oauth_client_id</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.oauth_client_id</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.oauth_client_id" title="Permalink to this definition">#</a></dt>
+<dd><p>The OAuth client ID for this application.</p>
+<p>Use JUPYTERHUB_CLIENT_ID by default.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.oauth_redirect_uri">
+<span class="sig-name descname"><span class="pre">oauth_redirect_uri</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.oauth_redirect_uri</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.oauth_redirect_uri" title="Permalink to this definition">#</a></dt>
+<dd><p>OAuth redirect URI</p>
+<p>Should generally be /base_url/oauth_callback</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.oauth_token_url">
+<span class="sig-name descname"><span class="pre">oauth_token_url</span></span><em class="property"><span class="w"> </span><span class="pre">c.HubOAuth.oauth_token_url</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.oauth_token_url" title="Permalink to this definition">#</a></dt>
+<dd><p>The URL for requesting an OAuth token from JupyterHub</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.set_cookie">
+<span class="sig-name descname"><span class="pre">set_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.set_cookie" title="Permalink to this definition">#</a></dt>
+<dd><p>Set a cookie recording OAuth result</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.set_state_cookie">
+<span class="sig-name descname"><span class="pre">set_state_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.set_state_cookie" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate an OAuth state and store it in a cookie</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<em>RequestHandler</em>) – A tornado RequestHandler</p></li>
+<li><p><strong>next_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The page to redirect to on successful login</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> – The OAuth state that has been stored in the cookie (url safe, base64-encoded)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.state_cookie_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">state_cookie_name</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.state_cookie_name" title="Permalink to this definition">#</a></dt>
+<dd><p>The cookie name for storing OAuth state</p>
+<p>This cookie is only live for the duration of the OAuth handshake.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuth.token_for_code">
+<span class="sig-name descname"><span class="pre">token_for_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuth.token_for_code" title="Permalink to this definition">#</a></dt>
+<dd><p>Get token for OAuth temporary code</p>
+<p>This is the last step of OAuth login.
+Should be called in OAuth Callback handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – oauth code for finishing OAuth login</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JupyterHub API Token</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>token (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="hubauthenticated">
+<h3><a class="reference internal" href="#jupyterhub.services.auth.HubAuthenticated" title="jupyterhub.services.auth.HubAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuthenticated</span></code></a><a class="headerlink" href="#hubauthenticated" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.services.auth.</span></span><span class="sig-name descname"><span class="pre">HubAuthenticated</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated" title="Permalink to this definition">#</a></dt>
+<dd><p>Mixin for tornado handlers that are authenticated with JupyterHub</p>
+<p>A handler that mixes this in must have the following attributes/properties:</p>
+<ul class="simple">
+<li><p>.hub_auth: A HubAuth instance</p></li>
+<li><p>.hub_scopes: A set of JupyterHub 2.0 OAuth scopes to allow.
+Default comes from .hub_auth.oauth_access_scopes,
+which in turn is set by $JUPYTERHUB_OAUTH_ACCESS_SCOPES
+Default values include:
+- ‘access:services’, ‘access:services!service={service_name}’ for services
+- ‘access:servers’, ‘access:servers!user={user}’,
+‘access:servers!server={user}/{server_name}’
+for single-user servers</p></li>
+</ul>
+<p>If hub_scopes is not used (e.g. JupyterHub 1.x),
+these additional properties can be used:</p>
+<ul class="simple">
+<li><p>.allow_admin: If True, allow any admin user.
+Default: False.</p></li>
+<li><p>.hub_users: A set of usernames to allow.
+If left unspecified or None, username will not be checked.</p></li>
+<li><p>.hub_groups: A set of group names to allow.
+If left unspecified or None, groups will not be checked.</p></li>
+<li><p>.allow_admin: Is admin user access allowed or not
+If left unspecified or False, admin user won’t have an access.</p></li>
+</ul>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyHandler</span><span class="p">(</span><span class="n">HubAuthenticated</span><span class="p">,</span> <span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hub_auth</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hub_auth</span> <span class="o">=</span> <span class="n">hub_auth</span>
+
+    <span class="nd">@web</span><span class="o">.</span><span class="n">authenticated</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated.allow_all">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allow_all</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated.allow_all" title="Permalink to this definition">#</a></dt>
+<dd><p>Property indicating that all successfully identified user
+or service should be allowed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated.check_hub_user">
+<span class="sig-name descname"><span class="pre">check_hub_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated.check_hub_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Check whether Hub-authenticated user or service should be allowed.</p>
+<p>Returns the input if the user should be allowed, None otherwise.</p>
+<p>Override for custom logic in authenticating users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – the user or service model returned from <a class="reference internal" href="#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The user model if the user should be allowed, None otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>user_model (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated.get_current_user">
+<span class="sig-name descname"><span class="pre">get_current_user</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated.get_current_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Tornado’s authentication method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The user model, if a user is identified, None if authentication fails.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>user_model (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated.get_login_url">
+<span class="sig-name descname"><span class="pre">get_login_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated.get_login_url" title="Permalink to this definition">#</a></dt>
+<dd><p>Return the Hub’s login URL</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated.hub_auth_class">
+<span class="sig-name descname"><span class="pre">hub_auth_class</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated.hub_auth_class" title="Permalink to this definition">#</a></dt>
+<dd><p>alias of <a class="reference internal" href="#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubAuthenticated.hub_scopes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hub_scopes</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubAuthenticated.hub_scopes" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of allowed scopes (use hub_auth.access_scopes by default)</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="huboauthenticated">
+<h3><a class="reference internal" href="#jupyterhub.services.auth.HubOAuthenticated" title="jupyterhub.services.auth.HubOAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthenticated</span></code></a><a class="headerlink" href="#huboauthenticated" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuthenticated">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.services.auth.</span></span><span class="sig-name descname"><span class="pre">HubOAuthenticated</span></span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuthenticated" title="Permalink to this definition">#</a></dt>
+<dd><p>Simple subclass of HubAuthenticated using OAuth instead of old shared cookies</p>
+</dd></dl>
+
+</section>
+<section id="huboauthcallbackhandler">
+<h3><a class="reference internal" href="#jupyterhub.services.auth.HubOAuthCallbackHandler" title="jupyterhub.services.auth.HubOAuthCallbackHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuthCallbackHandler</span></code></a><a class="headerlink" href="#huboauthcallbackhandler" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.services.auth.HubOAuthCallbackHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.services.auth.</span></span><span class="sig-name descname"><span class="pre">HubOAuthCallbackHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">application</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.Application" title="(in Tornado v6.2)"><span class="pre">Application</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://www.tornadoweb.org/en/stable/httputil.html#tornado.httputil.HTTPServerRequest" title="(in Tornado v6.2)"><span class="pre">HTTPServerRequest</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.services.auth.HubOAuthCallbackHandler" title="Permalink to this definition">#</a></dt>
+<dd><p>OAuth Callback handler</p>
+<p>Finishes the OAuth flow, setting a cookie to record the user’s info.</p>
+<p>Should be registered at <code class="docutils literal notranslate"><span class="pre">SERVICE_PREFIX/oauth_callback</span></code></p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="service.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Services</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../rbac/index.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">JupyterHub RBAC</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-jupyterhub.services.auth">
+   Module:
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     jupyterhub.services.auth
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hubauth">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       HubAuth
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         HubAuth
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.access_scopes">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.access_scopes
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.api_token">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.api_token
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.api_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.api_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.base_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.base_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.cache_max_age">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.cache_max_age
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.certfile">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.certfile
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.check_scopes">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.check_scopes()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.client_ca">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.client_ca
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.cookie_options">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.cookie_options
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.get_session_id">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.get_session_id()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.get_token">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.get_token()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.get_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.get_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.hub_host">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.hub_host
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.hub_prefix">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.hub_prefix
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.keyfile">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.keyfile
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.login_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.login_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.user_for_cookie">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.user_for_cookie()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuth.user_for_token">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuth.user_for_token()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#huboauth">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       HubOAuth
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         HubOAuth
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.access_scopes">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.access_scopes
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.api_token">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.api_token
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.api_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.api_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.base_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.base_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.cache_max_age">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.cache_max_age
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.certfile">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.certfile
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.clear_cookie">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.clear_cookie()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.client_ca">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.client_ca
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.cookie_name">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.cookie_name
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.cookie_options">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.cookie_options
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.generate_state">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.generate_state()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.get_next_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.get_next_url()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.get_state_cookie_name">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.get_state_cookie_name()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.hub_host">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.hub_host
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.hub_prefix">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.hub_prefix
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.keyfile">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.keyfile
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.login_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.login_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.oauth_authorization_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.oauth_authorization_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.oauth_client_id">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.oauth_client_id
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.oauth_redirect_uri">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.oauth_redirect_uri
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.oauth_token_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.oauth_token_url
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.set_cookie">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.set_cookie()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.set_state_cookie">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.set_state_cookie()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.state_cookie_name">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.state_cookie_name
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuth.token_for_code">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubOAuth.token_for_code()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hubauthenticated">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       HubAuthenticated
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         HubAuthenticated
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated.allow_all">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuthenticated.allow_all
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated.check_hub_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuthenticated.check_hub_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated.get_current_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuthenticated.get_current_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated.get_login_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuthenticated.get_login_url()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated.hub_auth_class">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuthenticated.hub_auth_class
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubAuthenticated.hub_scopes">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           HubAuthenticated.hub_scopes
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#huboauthenticated">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       HubOAuthenticated
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuthenticated">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         HubOAuthenticated
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#huboauthcallbackhandler">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       HubOAuthCallbackHandler
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.services.auth.HubOAuthCallbackHandler">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         HubOAuthCallbackHandler
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/api/services.auth.rst">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/api/services.auth.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

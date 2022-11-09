@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Services &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/services';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing a custom Proxy implementation" href="proxy.html" />
+    <link rel="prev" title="Spawners" href="spawners.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="services">
+<h1>Services<a class="headerlink" href="#services" title="Permalink to this heading">#</a></h1>
+<section id="definition-of-a-service">
+<h2>Definition of a Service<a class="headerlink" href="#definition-of-a-service" title="Permalink to this heading">#</a></h2>
+<p>When working with JupyterHub, a <strong>Service</strong> is defined as a process that interacts
+with the Hub’s REST API. A Service may perform a specific
+action or task. For example, the following tasks can each be a unique Service:</p>
+<ul class="simple">
+<li><p>shutting down individuals’ single user notebook servers that have been idle
+for some time</p></li>
+<li><p>registering additional web servers which should use the Hub’s authentication
+and be served behind the Hub’s proxy.</p></li>
+</ul>
+<p>Two key features help define a Service:</p>
+<ul class="simple">
+<li><p>Is the Service <strong>managed</strong> by JupyterHub?</p></li>
+<li><p>Does the Service have a web server that should be added to the proxy’s
+table?</p></li>
+</ul>
+<p>Currently, these characteristics distinguish two types of Services:</p>
+<ul class="simple">
+<li><p>A <strong>Hub-Managed Service</strong> which is managed by JupyterHub</p></li>
+<li><p>An <strong>Externally-Managed Service</strong> which runs its own web server and
+communicates operation instructions via the Hub’s API.</p></li>
+</ul>
+</section>
+<section id="properties-of-a-service">
+<h2>Properties of a Service<a class="headerlink" href="#properties-of-a-service" title="Permalink to this heading">#</a></h2>
+<p>A Service may have the following properties:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name:</span> <span class="pre">str</span></code> - the name of the service</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin:</span> <span class="pre">bool</span> <span class="pre">(default</span> <span class="pre">-</span> <span class="pre">false)</span></code> - whether the service should have
+administrative privileges</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">url:</span> <span class="pre">str</span> <span class="pre">(default</span> <span class="pre">-</span> <span class="pre">None)</span></code> - The URL where the service is/should be. If a
+url is specified for where the Service runs its own web server,
+the service will be added to the proxy at <code class="docutils literal notranslate"><span class="pre">/services/:name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">api_token:</span> <span class="pre">str</span> <span class="pre">(default</span> <span class="pre">-</span> <span class="pre">None)</span></code> - For Externally-Managed Services you need to specify
+an API token to perform API requests to the Hub</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">display:</span> <span class="pre">bool</span> <span class="pre">(default</span> <span class="pre">-</span> <span class="pre">True)</span></code> - When set to true, display a link to the
+service’s URL under the ‘Services’ dropdown in user’s hub home page.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_no_confirm:</span> <span class="pre">bool</span> <span class="pre">(default</span> <span class="pre">-</span> <span class="pre">False)</span></code> - When set to true,
+skip the OAuth confirmation page when users access this service.</p>
+<p>By default, when users authenticate with a service using JupyterHub,
+they are prompted to confirm that they want to grant that service
+access to their credentials.
+Skipping the confirmation page is useful for admin-managed services that are considered part of the Hub
+and shouldn’t need extra prompts for login.</p>
+</li>
+</ul>
+<p>If a service is also to be managed by the Hub, it has a few extra options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command:</span> <span class="pre">(str/Popen</span> <span class="pre">list)</span></code> - Command for JupyterHub to spawn the service. - Only use this if the service should be a subprocess. - If command is not specified, the Service is assumed to be managed
+externally. - If a command is specified for launching the Service, the Service will
+be started and managed by the Hub.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">environment:</span> <span class="pre">dict</span></code> - additional environment variables for the Service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user:</span> <span class="pre">str</span></code> - the name of a system user to manage the Service. If
+unspecified, run as the same user as the Hub.</p></li>
+</ul>
+</section>
+<section id="hub-managed-services">
+<h2>Hub-Managed Services<a class="headerlink" href="#hub-managed-services" title="Permalink to this heading">#</a></h2>
+<p>A <strong>Hub-Managed Service</strong> is started by the Hub, and the Hub is responsible
+for the Service’s actions. A Hub-Managed Service can only be a local
+subprocess of the Hub. The Hub will take care of starting the process and
+restarts it if it stops.</p>
+<p>While Hub-Managed Services share some similarities with notebook Spawners,
+there are no plans for Hub-Managed Services to support the same spawning
+abstractions as a notebook Spawner.</p>
+<p>If you wish to run a Service in a Docker container or other deployment
+environments, the Service can be registered as an
+<strong>Externally-Managed Service</strong>, as described below.</p>
+</section>
+<section id="launching-a-hub-managed-service">
+<h2>Launching a Hub-Managed Service<a class="headerlink" href="#launching-a-hub-managed-service" title="Permalink to this heading">#</a></h2>
+<p>A Hub-Managed Service is characterized by its specified <code class="docutils literal notranslate"><span class="pre">command</span></code> for launching
+the Service. For example, a ‘cull idle’ notebook server task configured as a
+Hub-Managed Service would include:</p>
+<ul class="simple">
+<li><p>the Service name,</p></li>
+<li><p>admin permissions, and</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">command</span></code> to launch the Service which will cull idle servers after a
+timeout interval</p></li>
+</ul>
+<p>This example would be configured as follows in <code class="docutils literal notranslate"><span class="pre">jupyterhub_config.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">load_roles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;idle-culler&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;read:users:activity&quot;</span><span class="p">,</span> <span class="c1"># read user last_activity</span>
+            <span class="s2">&quot;servers&quot;</span><span class="p">,</span> <span class="c1"># start and stop servers</span>
+            <span class="c1"># &#39;admin:users&#39; # needed if culling idle users as well</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;idle-culler&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;jupyterhub_idle_culler&#39;</span><span class="p">,</span> <span class="s1">&#39;--timeout=3600&#39;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>A Hub-Managed Service may also be configured with additional optional
+parameters, which describe the environment needed to start the Service process:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">environment:</span> <span class="pre">dict</span></code> - additional environment variables for the Service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user:</span> <span class="pre">str</span></code> - name of the user to run the server if different from the Hub.
+Requires Hub to be root.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cwd:</span> <span class="pre">path</span></code> directory in which to run the Service, if different from the
+Hub directory.</p></li>
+</ul>
+<p>The Hub will pass the following environment variables to launch the Service:</p>
+<div class="highlight-bash notranslate" id="service-env"><div class="highlight"><pre><span></span>JUPYTERHUB_SERVICE_NAME:   The name of the service
+JUPYTERHUB_API_TOKEN:      API token assigned to the service
+JUPYTERHUB_API_URL:        URL <span class="k">for</span> the JupyterHub API <span class="o">(</span>default, http://127.0.0.1:8080/hub/api<span class="o">)</span>
+JUPYTERHUB_BASE_URL:       Base URL of the Hub <span class="o">(</span>https://mydomain<span class="o">[</span>:port<span class="o">]</span>/<span class="o">)</span>
+JUPYTERHUB_SERVICE_PREFIX: URL path prefix of this service <span class="o">(</span>/services/:service-name/<span class="o">)</span>
+JUPYTERHUB_SERVICE_URL:    Local URL where the service is expected to be listening.
+                           Only <span class="k">for</span> proxied web services.
+JUPYTERHUB_OAUTH_SCOPES:   JSON-serialized list of scopes to use <span class="k">for</span> allowing access to the service
+                           <span class="o">(</span>deprecated <span class="k">in</span> <span class="m">3</span>.0, use JUPYTERHUB_OAUTH_ACCESS_SCOPES<span class="o">)</span>.
+JUPYTERHUB_OAUTH_ACCESS_SCOPES: JSON-serialized list of scopes to use <span class="k">for</span> allowing access to the service <span class="o">(</span>new <span class="k">in</span> <span class="m">3</span>.0<span class="o">)</span>.
+JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES: JSON-serialized list of scopes that can be requested by the oauth client on behalf of users <span class="o">(</span>new <span class="k">in</span> <span class="m">3</span>.0<span class="o">)</span>.
+</pre></div>
+</div>
+<p>For the previous ‘cull idle’ Service example, these environment variables
+would be passed to the Service when the Hub starts the ‘cull idle’ Service:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>JUPYTERHUB_SERVICE_NAME: <span class="s1">&#39;idle-culler&#39;</span>
+JUPYTERHUB_API_TOKEN: API token assigned to the service
+JUPYTERHUB_API_URL: http://127.0.0.1:8080/hub/api
+JUPYTERHUB_BASE_URL: https://mydomain<span class="o">[</span>:port<span class="o">]</span>
+JUPYTERHUB_SERVICE_PREFIX: /services/idle-culler/
+</pre></div>
+</div>
+<p>See the GitHub repo for additional information about the <a class="reference external" href="https://github.com/jupyterhub/jupyterhub-idle-culler">jupyterhub_idle_culler</a>.</p>
+</section>
+<section id="externally-managed-services">
+<h2>Externally-Managed Services<a class="headerlink" href="#externally-managed-services" title="Permalink to this heading">#</a></h2>
+<p>You may prefer to use your own service management tools, such as Docker or
+systemd, to manage a JupyterHub Service. These <strong>Externally-Managed
+Services</strong>, unlike Hub-Managed Services, are not subprocesses of the Hub. You
+must tell JupyterHub which API token the Externally-Managed Service is using
+to perform its API requests. Each Externally-Managed Service will need a
+unique API token, because the Hub authenticates each API request and the API
+token is used to identify the originating Service or user.</p>
+<p>A configuration example of an Externally-Managed Service with admin access and
+running its own web server is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;my-web-service&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://10.0.1.1:1984&#39;</span><span class="p">,</span>
+        <span class="c1"># any secret &gt;8 characters, you&#39;ll use api_token to</span>
+        <span class="c1"># authenticate api requests to the hub from your service</span>
+        <span class="s1">&#39;api_token&#39;</span><span class="p">:</span> <span class="s1">&#39;super-secret&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">url</span></code> field will be passed along to the Service as
+<code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_URL</span></code>.</p>
+</section>
+<section id="writing-your-own-services">
+<h2>Writing your own Services<a class="headerlink" href="#writing-your-own-services" title="Permalink to this heading">#</a></h2>
+<p>When writing your own services, you have a few decisions to make (in addition
+to what your service does!):</p>
+<ol class="arabic simple">
+<li><p>Does my service need a public URL?</p></li>
+<li><p>Do I want JupyterHub to start/stop the service?</p></li>
+<li><p>Does my service need to authenticate users?</p></li>
+</ol>
+<p>When a Service is managed by JupyterHub, the Hub will pass the necessary
+information to the Service via the environment variables described above. A
+flexible Service, whether managed by the Hub or not, can make use of these
+same environment variables.</p>
+<p>When you run a service that has a url, it will be accessible under a
+<code class="docutils literal notranslate"><span class="pre">/services/</span></code> prefix, such as <code class="docutils literal notranslate"><span class="pre">https://myhub.horse/services/my-service/</span></code>. For
+your service to route proxied requests properly, it must take
+<code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_PREFIX</span></code> into account when routing requests. For example, a
+web service would normally service its root handler at <code class="docutils literal notranslate"><span class="pre">'/'</span></code>, but the proxied
+service would need to serve <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_PREFIX</span></code>.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_PREFIX</span></code> will contain a trailing slash. This must
+be taken into consideration when creating the service routes. If you include an
+extra slash you might get unexpected behavior. For example if your service has a
+<code class="docutils literal notranslate"><span class="pre">/foo</span></code> endpoint, the route would be <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_PREFIX</span> <span class="pre">+</span> <span class="pre">foo</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">/foo/bar</span></code> would be <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_SERVICE_PREFIX</span> <span class="pre">+</span> <span class="pre">foo/bar</span></code>.</p>
+</section>
+<section id="hub-authentication-and-services">
+<h2>Hub Authentication and Services<a class="headerlink" href="#hub-authentication-and-services" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub provides some utilities for using the Hub’s authentication
+mechanism to govern access to your service.</p>
+<p>Requests to all JupyterHub services are made with OAuth tokens.
+These can either be requests with a token in the <code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header,
+or url parameter <code class="docutils literal notranslate"><span class="pre">?token=...</span></code>,
+or browser requests which must complete the OAuth authorization code flow,
+which results in a token that should be persisted for future requests
+(persistence is up to the service,
+but an encrypted cookie confined to the service path is appropriate,
+and provided by default).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>The shared <code class="docutils literal notranslate"><span class="pre">jupyterhub-services</span></code> cookie is removed.
+OAuth must be used to authenticate browser requests with services.</p>
+</div>
+<p>JupyterHub includes a reference implementation of Hub authentication that
+can be used by services. You may go beyond this reference implementation and
+create custom hub-authenticating clients and services. We describe the process
+below.</p>
+<p>The reference, or base, implementation is the <a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a> class,
+which implements the API requests to the Hub that resolve a token to a User model.</p>
+<p>There are two levels of authentication with the Hub:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuth" title="jupyterhub.services.auth.HubAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuth</span></code></a> - the most basic authentication,
+for services that should only accept API requests authorized with a token.</p></li>
+<li><p><a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubOAuth" title="jupyterhub.services.auth.HubOAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubOAuth</span></code></a> - For services that should use oauth to authenticate with the Hub.
+This should be used for any service that serves pages that should be visited with a browser.</p></li>
+</ul>
+<p>To use HubAuth, you must set the <code class="docutils literal notranslate"><span class="pre">.api_token</span></code>, either programmatically when constructing the class,
+or via the <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_API_TOKEN</span></code> environment variable.</p>
+<p>Most of the logic for authentication implementation is found in the
+<a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuth.user_for_token" title="jupyterhub.services.auth.HubAuth.user_for_token"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HubAuth.user_for_token()</span></code></a> methods,
+which makes a request of the Hub, and returns:</p>
+<ul>
+<li><p>None, if no user could be identified, or</p></li>
+<li><p>a dict of the following form:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;groups&quot;</span><span class="p">],</span>
+  <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;access:users:servers!server=username/&quot;</span><span class="p">,</span>
+  <span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>You are then free to use the returned user information to take appropriate
+action.</p>
+<p>HubAuth also caches the Hub’s response for a number of seconds,
+configurable by the <code class="docutils literal notranslate"><span class="pre">cookie_cache_max_age</span></code> setting (default: five minutes).</p>
+<p>If your service would like to make further requests <em>on behalf of users</em>,
+it should use the token issued by this OAuth process.
+If you are using tornado,
+you can access the token authenticating the current request with <a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuth.get_token" title="jupyterhub.services.auth.HubAuth.get_token"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HubAuth.get_token()</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2: </span><a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuth.get_token" title="jupyterhub.services.auth.HubAuth.get_token"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HubAuth.get_token()</span></code></a> adds support for retrieving
+tokens stored in tornado cookies after completion of OAuth.
+Previously, it only retrieved tokens from URL parameters or the Authorization header.
+Passing <code class="docutils literal notranslate"><span class="pre">get_token(handler,</span> <span class="pre">in_cookie=False)</span></code> preserves this behavior.</p>
+</div>
+<section id="flask-example">
+<h3>Flask Example<a class="headerlink" href="#flask-example" title="Permalink to this heading">#</a></h3>
+<p>For example, you have a Flask service that returns information about a user.
+JupyterHub’s HubAuth class can be used to authenticate requests to the Flask
+service. See the <code class="docutils literal notranslate"><span class="pre">service-whoami-flask</span></code> example in the
+<a class="reference external" href="https://github.com/jupyterhub/jupyterhub/tree/HEAD/examples/service-whoami-flask">JupyterHub GitHub repo</a>
+for more details.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">whoami service authentication with the Hub</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">make_response</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span>
+
+<span class="kn">from</span> <span class="nn">jupyterhub.services.auth</span> <span class="kn">import</span> <span class="n">HubOAuth</span>
+
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;JUPYTERHUB_SERVICE_PREFIX&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+<span class="n">auth</span> <span class="o">=</span> <span class="n">HubOAuth</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;JUPYTERHUB_API_TOKEN&#39;</span><span class="p">],</span> <span class="n">cache_max_age</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># encryption key for session cookies</span>
+<span class="n">app</span><span class="o">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">authenticated</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator for authenticating with the Hub via OAuth&quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">user_for_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># redirect to login url on failed auth</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">generate_state</span><span class="p">(</span><span class="n">next_url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">redirect</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">login_url</span> <span class="o">+</span> <span class="s1">&#39;&amp;state=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">state</span><span class="p">))</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">state_cookie_name</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">return</span> <span class="n">decorated</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+<span class="nd">@authenticated</span>
+<span class="k">def</span> <span class="nf">whoami</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">mimetype</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;oauth_callback&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">oauth_callback</span><span class="p">():</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">403</span>
+
+    <span class="c1"># validate state field</span>
+    <span class="n">arg_state</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">cookie_state</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">state_cookie_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arg_state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">arg_state</span> <span class="o">!=</span> <span class="n">cookie_state</span><span class="p">:</span>
+        <span class="c1"># state doesn&#39;t match</span>
+        <span class="k">return</span> <span class="mi">403</span>
+
+    <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">token_for_code</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="c1"># store token in session cookie</span>
+    <span class="n">session</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="n">next_url</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">get_next_url</span><span class="p">(</span><span class="n">cookie_state</span><span class="p">)</span> <span class="ow">or</span> <span class="n">prefix</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">redirect</span><span class="p">(</span><span class="n">next_url</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+</section>
+<section id="authenticating-tornado-services-with-jupyterhub">
+<h3>Authenticating tornado services with JupyterHub<a class="headerlink" href="#authenticating-tornado-services-with-jupyterhub" title="Permalink to this heading">#</a></h3>
+<p>Since most Jupyter services are written with tornado,
+we include a mixin class, [<code class="docutils literal notranslate"><span class="pre">HubOAuthenticated</span></code>][huboauthenticated],
+for quickly authenticating your own tornado services with JupyterHub.</p>
+<p>Tornado’s <a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.authenticated" title="(in Tornado v6.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">authenticated()</span></code></a> decorator calls a Handler’s <a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_current_user" title="(in Tornado v6.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_current_user()</span></code></a>
+method to identify the user. Mixing in <a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuthenticated" title="jupyterhub.services.auth.HubAuthenticated"><code class="xref py py-class docutils literal notranslate"><span class="pre">HubAuthenticated</span></code></a> defines
+<a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.get_current_user" title="jupyterhub.services.auth.HubAuthenticated.get_current_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_current_user()</span></code></a> to use HubAuth. If you want to configure the HubAuth
+instance beyond the default, you’ll want to define an <a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.initialize" title="(in Tornado v6.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize()</span></code></a> method,
+such as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyHandler</span><span class="p">(</span><span class="n">HubOAuthenticated</span><span class="p">,</span> <span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hub_auth</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hub_auth</span> <span class="o">=</span> <span class="n">hub_auth</span>
+
+    <span class="nd">@web</span><span class="o">.</span><span class="n">authenticated</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>The HubAuth class will automatically load the desired configuration from the Service
+<a class="reference internal" href="#service-env"><span class="std std-ref">environment variables</span></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>Access scopes are used to govern access to services.
+Prior to 2.0,
+sets of users and groups could be used to grant access
+by defining <code class="docutils literal notranslate"><span class="pre">.hub_groups</span></code> or <code class="docutils literal notranslate"><span class="pre">.hub_users</span></code> on the authenticated handler.
+These are ignored if the 2.0 <code class="docutils literal notranslate"><span class="pre">.hub_scopes</span></code> is defined.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../api/services.auth.html#jupyterhub.services.auth.HubAuth.check_scopes" title="jupyterhub.services.auth.HubAuth.check_scopes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HubAuth.check_scopes()</span></code></a></p>
+</div>
+</section>
+<section id="implementing-your-own-authentication-with-jupyterhub">
+<h3>Implementing your own Authentication with JupyterHub<a class="headerlink" href="#implementing-your-own-authentication-with-jupyterhub" title="Permalink to this heading">#</a></h3>
+<p>If you don’t want to use the reference implementation
+(e.g. you find the implementation a poor fit for your Flask app),
+you can implement authentication via the Hub yourself.
+JupyterHub is a standard OAuth2 provider,
+so you can use any OAuth 2 client implementation appropriate for your toolkit.
+See the <a class="reference external" href="https://github.com/jupyterhub/jupyterhub/tree/HEAD/examples/service-fastapi">FastAPI example</a> for an example of using JupyterHub as an OAuth provider with <a class="reference external" href="https://fastapi.tiangolo.com">FastAPI</a>,
+without using any code imported from JupyterHub.</p>
+<p>On completion of OAuth, you will have an access token for JupyterHub,
+which can be used to identify the user and the permissions (scopes)
+the user has authorized for your service.</p>
+<p>You will only get to this stage if the user has the required <code class="docutils literal notranslate"><span class="pre">access:services!service=$service-name</span></code> scope.</p>
+<p>To retrieve the user model for the token, make a request to <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/api/user</span></code> with the token in the Authorization header.
+For example, using flask:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">whoami service authentication with the Hub</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">make_response</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span>
+
+<span class="kn">from</span> <span class="nn">jupyterhub.services.auth</span> <span class="kn">import</span> <span class="n">HubOAuth</span>
+
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;JUPYTERHUB_SERVICE_PREFIX&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+<span class="n">auth</span> <span class="o">=</span> <span class="n">HubOAuth</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;JUPYTERHUB_API_TOKEN&#39;</span><span class="p">],</span> <span class="n">cache_max_age</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># encryption key for session cookies</span>
+<span class="n">app</span><span class="o">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">authenticated</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator for authenticating with the Hub via OAuth&quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">user_for_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># redirect to login url on failed auth</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">generate_state</span><span class="p">(</span><span class="n">next_url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">redirect</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">login_url</span> <span class="o">+</span> <span class="s1">&#39;&amp;state=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">state</span><span class="p">))</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">state_cookie_name</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">return</span> <span class="n">decorated</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+<span class="nd">@authenticated</span>
+<span class="k">def</span> <span class="nf">whoami</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">mimetype</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;oauth_callback&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">oauth_callback</span><span class="p">():</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">403</span>
+
+    <span class="c1"># validate state field</span>
+    <span class="n">arg_state</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">cookie_state</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">state_cookie_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arg_state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">arg_state</span> <span class="o">!=</span> <span class="n">cookie_state</span><span class="p">:</span>
+        <span class="c1"># state doesn&#39;t match</span>
+        <span class="k">return</span> <span class="mi">403</span>
+
+    <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">token_for_code</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="c1"># store token in session cookie</span>
+    <span class="n">session</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="n">next_url</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">get_next_url</span><span class="p">(</span><span class="n">cookie_state</span><span class="p">)</span> <span class="ow">or</span> <span class="n">prefix</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">redirect</span><span class="p">(</span><span class="n">next_url</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>We recommend looking at the [<code class="docutils literal notranslate"><span class="pre">HubOAuth</span></code>][huboauth] class implementation for reference,
+and taking note of the following process:</p>
+<ol class="arabic">
+<li><p>retrieve the token from the request.</p></li>
+<li><p>Make an API request <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/hub/api/user</span></code>,
+with the token in the <code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header.</p>
+<p>For example, with <a class="reference external" href="http://docs.python-requests.org/en/master/">requests</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s2">&quot;http://127.0.0.1:8081/hub/api/user&quot;</span><span class="p">,</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Authorization&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;token </span><span class="si">{</span><span class="n">api_token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>On success, the reply will be a JSON model describing the user:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;inara&quot;</span><span class="p">,</span>
+  <span class="c1"># groups may be omitted, depending on permissions</span>
+  <span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;serenity&quot;</span><span class="p">,</span> <span class="s2">&quot;guild&quot;</span><span class="p">],</span>
+  <span class="c1"># scopes is new in JupyterHub 2.0</span>
+  <span class="s2">&quot;scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;access:services&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;read:users:name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;read:users!user=inara&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;...&quot;</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">scopes</span></code> field can be used to manage access.
+Note: a user will have access to a service to complete oauth access to the service for the first time.
+Individual permissions may be revoked at any later point without revoking the token,
+in which case the <code class="docutils literal notranslate"><span class="pre">scopes</span></code> field in this model should be checked on each access.
+The default required scopes for access are available from <code class="docutils literal notranslate"><span class="pre">hub_auth.oauth_scopes</span></code> or <code class="docutils literal notranslate"><span class="pre">$JUPYTERHUB_OAUTH_ACCESS_SCOPES</span></code>.</p>
+<p>An example of using an Externally-Managed Service and authentication is
+in <a class="reference external" href="https://github.com/jupyter/nbviewer#securing-the-notebook-viewer">nbviewer README</a> section on securing the notebook viewer,
+and an example of its configuration is found <a class="reference external" href="https://github.com/jupyter/nbviewer/blob/ed942b10a52b6259099e2dd687930871dc8aac22/nbviewer/providers/base.py#L95">here</a>.
+nbviewer can also be run as a Hub-Managed Service as described <a class="reference external" href="https://github.com/jupyter/nbviewer#securing-the-notebook-viewer">nbviewer README</a>
+section on securing the notebook viewer.</p>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="spawners.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Spawners</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="proxy.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Writing a custom Proxy implementation</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#definition-of-a-service">
+   Definition of a Service
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties-of-a-service">
+   Properties of a Service
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hub-managed-services">
+   Hub-Managed Services
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#launching-a-hub-managed-service">
+   Launching a Hub-Managed Service
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#externally-managed-services">
+   Externally-Managed Services
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#writing-your-own-services">
+   Writing your own Services
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hub-authentication-and-services">
+   Hub Authentication and Services
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#flask-example">
+     Flask Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#authenticating-tornado-services-with-jupyterhub">
+     Authenticating tornado services with JupyterHub
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementing-your-own-authentication-with-jupyterhub">
+     Implementing your own Authentication with JupyterHub
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/services.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/services.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

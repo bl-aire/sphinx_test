@@ -1,0 +1,1057 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Starting servers with the JupyterHub API &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/server-api';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monitoring" href="monitoring.html" />
+    <link rel="prev" title="JupyterHub REST API" href="rest-api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="starting-servers-with-the-jupyterhub-api">
+<h1>Starting servers with the JupyterHub API<a class="headerlink" href="#starting-servers-with-the-jupyterhub-api" title="Permalink to this heading">#</a></h1>
+<p>JupyterHub’s <a class="reference internal" href="rest.html"><span class="doc std std-doc">REST API</span></a> allows launching servers on behalf of users
+without ever interacting with the JupyterHub UI.
+This allows you to build services launching Jupyter-based services for users
+without relying on the JupyterHub UI at all,
+enabling a variety of user/launch/lifecycle patterns not natively supported by JupyterHub,
+without needing to develop all the server management features of JupyterHub Spawners and/or Authenticators.
+<a class="reference external" href="https://binderhub.readthedocs.io">BinderHub</a> is an example of such an application.</p>
+<p>This document provides an example of working with the JupyterHub API to
+manage servers for users.
+In particular, we will cover how to:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#checking"><span class="std std-ref">check status of servers</span></a></p></li>
+<li><p><a class="reference internal" href="#starting"><span class="std std-ref">start servers</span></a></p></li>
+<li><p><a class="reference internal" href="#waiting"><span class="std std-ref">wait for servers to be ready</span></a></p></li>
+<li><p><a class="reference internal" href="#communicating"><span class="std std-ref">communicate with servers</span></a></p></li>
+<li><p><a class="reference internal" href="#stopping"><span class="std std-ref">stop servers</span></a></p></li>
+</ol>
+<section id="checking-server-status">
+<span id="checking"></span><h2>Checking server status<a class="headerlink" href="#checking-server-status" title="Permalink to this heading">#</a></h2>
+<p>Requesting information about a user includes a <code class="docutils literal notranslate"><span class="pre">servers</span></code> field,
+which is a dictionary.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">hub</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="p">:</span><span class="n">username</span>
+</pre></div>
+</div>
+<p><strong>Required scope: <code class="docutils literal notranslate"><span class="pre">read:servers</span></code></strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;pending&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test-1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;last_activity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-03T18:12:46.026411Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-03T18:09:59.767600Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">servers</span></code> dict is empty, the user has no running servers.
+The keys of the <code class="docutils literal notranslate"><span class="pre">servers</span></code> dict are server names as strings.
+Many JupyterHub deployments only use the ‘default’ server,
+which has the empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> for a name.
+In this case, the servers dict will always have either zero or one elements.</p>
+<p>This is the servers dict when the user’s default server is fully running and ready:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;last_activity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-03T18:48:35.934000Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;started&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-03T18:48:29.093885Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;pending&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/user/test-1/&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;user_options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;progress_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/hub/api/users/test-1/server/progress&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Key properties of a server:</p>
+<dl class="simple myst">
+<dt>name</dt><dd><p>the server’s name. Always the same as the key in <code class="docutils literal notranslate"><span class="pre">servers</span></code></p>
+</dd>
+<dt>ready</dt><dd><p>boolean. If true, the server can be expected to respond to requests at <code class="docutils literal notranslate"><span class="pre">url</span></code>.</p>
+</dd>
+<dt>pending</dt><dd><p><code class="docutils literal notranslate"><span class="pre">null</span></code> or a string indicating a transitional state (such as <code class="docutils literal notranslate"><span class="pre">start</span></code> or <code class="docutils literal notranslate"><span class="pre">stop</span></code>).
+Will always be <code class="docutils literal notranslate"><span class="pre">null</span></code> if <code class="docutils literal notranslate"><span class="pre">ready</span></code> is true,
+and will always be a string if <code class="docutils literal notranslate"><span class="pre">ready</span></code> is false.</p>
+</dd>
+<dt>url</dt><dd><p>The server’s url (just the path, e.g. <code class="docutils literal notranslate"><span class="pre">/users/:name/:servername/</span></code>)
+where the server can be accessed if <code class="docutils literal notranslate"><span class="pre">ready</span></code> is true.</p>
+</dd>
+<dt>progress_url</dt><dd><p>The API url path (starting with <code class="docutils literal notranslate"><span class="pre">/hub/api</span></code>)
+where the progress API can be used to wait for the server to be ready.
+See below for more details on the progress API.</p>
+</dd>
+<dt>last_activity</dt><dd><p>ISO8601 timestamp indicating when activity was last observed on the server</p>
+</dd>
+<dt>started</dt><dd><p>ISO801 timestamp indicating when the server was last started</p>
+</dd>
+</dl>
+<p>We’ve seen the <code class="docutils literal notranslate"><span class="pre">servers</span></code> model with no servers and with one <code class="docutils literal notranslate"><span class="pre">ready</span></code> server.
+Here is what it looks like immediately after requesting a server launch,
+while the server is not ready yet:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;last_activity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-03T18:48:29.093885Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;started&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-03T18:48:29.093885Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;pending&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spawn&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/user/test-1/&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;user_options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;progress_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/hub/api/users/test-1/server/progress&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">ready</span></code> is false and <code class="docutils literal notranslate"><span class="pre">pending</span></code> is <code class="docutils literal notranslate"><span class="pre">spawn</span></code>.
+This means that the server is not ready
+(attempting to access it may not work)
+because it isn’t finished spawning yet.
+We’ll get more into that below in <a class="reference internal" href="#waiting"><span class="std std-ref">waiting for a server</span></a>.</p>
+</section>
+<section id="starting-servers">
+<span id="starting"></span><h2>Starting servers<a class="headerlink" href="#starting-servers" title="Permalink to this heading">#</a></h2>
+<p>To start a server, make the request</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="o">/</span><span class="n">hub</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="p">:</span><span class="n">username</span><span class="o">/</span><span class="n">servers</span><span class="o">/</span><span class="p">[:</span><span class="n">servername</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Required scope: <code class="docutils literal notranslate"><span class="pre">servers</span></code></strong></p>
+<p>(omit servername for the default server)</p>
+<p>Assuming the request was valid,
+there are two possible responses:</p>
+<dl class="simple myst">
+<dt>201 Created</dt><dd><p>This status code means the launch completed and the server is ready.
+It should be available at the server’s URL immediately.</p>
+</dd>
+<dt>202 Accepted</dt><dd><p>This is the more likely response,
+and means that the server has begun launching,
+but isn’t immediately ready.
+The server has <code class="docutils literal notranslate"><span class="pre">pending:</span> <span class="pre">'spawn'</span></code> at this point.</p>
+</dd>
+</dl>
+<p><em>Aside: how quickly JupyterHub responds with <code class="docutils literal notranslate"><span class="pre">202</span> <span class="pre">Accepted</span></code> is governed by the <code class="docutils literal notranslate"><span class="pre">slow_spawn_timeout</span></code> tornado setting.</em></p>
+</section>
+<section id="waiting-for-a-server">
+<span id="waiting"></span><h2>Waiting for a server<a class="headerlink" href="#waiting-for-a-server" title="Permalink to this heading">#</a></h2>
+<p>If you are starting a server via the API,
+there’s a good change you want to know when it’s ready.
+There are two ways to do with:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#polling"><span class="std std-ref">Polling the server model</span></a></p></li>
+<li><p>the <a class="reference internal" href="#progress"><span class="std std-ref">progress API</span></a></p></li>
+</ol>
+<section id="polling-the-server-model">
+<span id="polling"></span><h3>Polling the server model<a class="headerlink" href="#polling-the-server-model" title="Permalink to this heading">#</a></h3>
+<p>The simplest way to check if a server is ready
+is to request the user model.</p>
+<p>If:</p>
+<ol class="arabic simple">
+<li><p>the server name is in the user’s <code class="docutils literal notranslate"><span class="pre">servers</span></code> model, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">servers['servername']['ready']</span></code> is true</p></li>
+</ol>
+<p>A Python example, checking if a server is ready:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">server_ready</span><span class="p">(</span><span class="n">hub_url</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hub_url</span><span class="si">}</span><span class="s2">/hub/api/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/servers/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;token </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="n">user_model</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="n">servers</span> <span class="o">=</span> <span class="n">user_model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;servers&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="k">if</span> <span class="n">server_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">servers</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">server</span> <span class="o">=</span> <span class="n">servers</span><span class="p">[</span><span class="n">server_name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">server</span><span class="p">[</span><span class="s1">&#39;ready&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2"> ready at </span><span class="si">{</span><span class="n">server</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2"> not ready, pending </span><span class="si">{</span><span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>You can keep making this check until <code class="docutils literal notranslate"><span class="pre">ready</span></code> is true.</p>
+</section>
+<section id="progress-api">
+<span id="progress"></span><h3>Progress API<a class="headerlink" href="#progress-api" title="Permalink to this heading">#</a></h3>
+<p>The most <em>efficient</em> way to wait for a server to start is the progress API.</p>
+<p>The progress URL is available in the server model under <code class="docutils literal notranslate"><span class="pre">progress_url</span></code>,
+and has the form <code class="docutils literal notranslate"><span class="pre">/hub/api/users/:user/servers/:servername/progress</span></code>.</p>
+<p><em>the default server progress can be accessed at <code class="docutils literal notranslate"><span class="pre">:user/servers//progress</span></code> or <code class="docutils literal notranslate"><span class="pre">:user/server/progress</span></code></em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">hub</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="p">:</span><span class="n">user</span><span class="o">/</span><span class="n">servers</span><span class="o">/</span><span class="p">:</span><span class="n">servername</span><span class="o">/</span><span class="n">progress</span>
+</pre></div>
+</div>
+<p><strong>Required scope: <code class="docutils literal notranslate"><span class="pre">read:servers</span></code></strong></p>
+<p>This is an <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#examples">EventStream</a> API.
+In an event stream, messages are <em>streamed</em> and delivered on lines of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>where the line after <code class="docutils literal notranslate"><span class="pre">data:</span></code> contains a JSON-serialized dictionary.
+Lines that do not start with <code class="docutils literal notranslate"><span class="pre">data:</span></code> should be ignored.</p>
+<p>progress events have the form:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ready&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># or False</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple myst">
+<dt>progress</dt><dd><p>integer, 0-100</p>
+</dd>
+<dt>message</dt><dd><p>string message describing progress stages</p>
+</dd>
+<dt>ready</dt><dd><p>present and true only for the last event when the server is ready</p>
+</dd>
+<dt>url</dt><dd><p>only present if <code class="docutils literal notranslate"><span class="pre">ready</span></code> is true; will be the server’s url</p>
+</dd>
+</dl>
+<p>the progress API can be used even with fully ready servers.
+If the server is ready,
+there will only be one event that looks like:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Server ready at /user/test-1/&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;html_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Server ready at &lt;a href=\&quot;/user/test-1/\&quot;&gt;/user/test-1/&lt;/a&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/user/test-1/&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">ready</span></code> and <code class="docutils literal notranslate"><span class="pre">url</span></code> are the same as in the server model (<code class="docutils literal notranslate"><span class="pre">ready</span></code> will always be true).</p>
+<p>A typical complete stream from the event-stream API:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">data</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Server requested&quot;</span><span class="p">}</span>
+
+<span class="n">data</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Spawning server...&quot;</span><span class="p">}</span>
+
+<span class="n">data</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Server ready at /user/test-user/&quot;</span><span class="p">,</span> <span class="s2">&quot;html_message&quot;</span><span class="p">:</span> <span class="s2">&quot;Server ready at &lt;a href=</span><span class="se">\&quot;</span><span class="s2">/user/test-user/</span><span class="se">\&quot;</span><span class="s2">&gt;/user/test-user/&lt;/a&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;/user/test-user/&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is a Python example for consuming an event stream:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_stream</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generator yielding events from a JSON event stream</span>
+
+<span class="sd">    For use with the server progress API</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">():</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+        <span class="c1"># event lines all start with `data:`</span>
+        <span class="c1"># all other lines should be ignored (they will be empty)</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data:&#39;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="stopping-servers">
+<span id="stopping"></span><h2>Stopping servers<a class="headerlink" href="#stopping-servers" title="Permalink to this heading">#</a></h2>
+<p>Servers can be stopped with a DELETE request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DELETE</span> <span class="o">/</span><span class="n">hub</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="p">:</span><span class="n">user</span><span class="o">/</span><span class="n">servers</span><span class="o">/</span><span class="p">[:</span><span class="n">servername</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Required scope: <code class="docutils literal notranslate"><span class="pre">servers</span></code></strong></p>
+<p>Like start, delete may not complete immediately.
+The DELETE request has two possible response codes:</p>
+<dl class="simple myst">
+<dt>204 Deleted</dt><dd><p>This status code means the delete completed and the server is fully stopped.
+It will now be absent from the user <code class="docutils literal notranslate"><span class="pre">servers</span></code> model.</p>
+</dd>
+<dt>202 Accepted</dt><dd><p>Like start, <code class="docutils literal notranslate"><span class="pre">202</span></code> means your request was accepted,
+but is not yet complete.
+The server has <code class="docutils literal notranslate"><span class="pre">pending:</span> <span class="pre">'stop'</span></code> at this point.</p>
+</dd>
+</dl>
+<p>Unlike start, there is no progress API for stop.
+To wait for stop to finish, you must poll the user model
+and wait for the server to disappear from the user <code class="docutils literal notranslate"><span class="pre">servers</span></code> model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">stop_server</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">hub_url</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stop a server via the JupyterHub API</span>
+
+<span class="sd">    Returns when the server has finished stopping</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># step 1: get user status</span>
+    <span class="n">user_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hub_url</span><span class="si">}</span><span class="s2">/hub/api/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">server_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user_url</span><span class="si">}</span><span class="s2">/servers/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stopping server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">server_url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> already stopped&quot;</span><span class="p">)</span>
+
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> stopped&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># else: 202, stop requested, but not complete</span>
+    <span class="c1"># wait for stop to finish</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> stopping...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># wait for server to be done stopping</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_url</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">user_model</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">server_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user_model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;servers&quot;</span><span class="p">,</span> <span class="p">{}):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> stopped&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">user_model</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server_name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waiting for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">, but no longer pending.&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> pending: </span><span class="si">{</span><span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># wait to poll again</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="communicating-with-servers">
+<span id="communicating"></span><h2>Communicating with servers<a class="headerlink" href="#communicating-with-servers" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub tokens with the the <code class="docutils literal notranslate"><span class="pre">access:servers</span></code> scope
+can be used to communicate with servers themselves.
+This can be the same token you used to launch your service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Access scopes are new in JupyterHub 2.0.
+To access servers in JupyterHub 1.x,
+a token must be owned by the same user as the server,
+<em>or</em> be an admin token if admin_access is enabled.</p>
+</div>
+<p>The URL returned from a server model is the url path suffix,
+e.g. <code class="docutils literal notranslate"><span class="pre">/user/:name/</span></code> to append to the jupyterhub base URL.</p>
+<p>For instance, <code class="docutils literal notranslate"><span class="pre">{hub_url}{server_url}</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">hub_url</span></code> would be e.g. <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:8000</span></code> by default,
+and <code class="docutils literal notranslate"><span class="pre">server_url</span></code> <code class="docutils literal notranslate"><span class="pre">/user/myname</span></code>,
+for a full url of <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:8000/user/myname</span></code>.</p>
+</section>
+<section id="python-example">
+<h2>Python example<a class="headerlink" href="#python-example" title="Permalink to this heading">#</a></h2>
+<p>The JupyterHub repo includes a complete example in <code class="file docutils literal notranslate"><span class="pre">examples/server-api</span></code>
+tying all this together.</p>
+<p>To summarize the steps:</p>
+<ol class="arabic simple">
+<li><p>get user info from <code class="docutils literal notranslate"><span class="pre">/user/:name</span></code></p></li>
+<li><p>the server model includes a <code class="docutils literal notranslate"><span class="pre">ready</span></code> state to tell you if it’s ready</p></li>
+<li><p>if it’s not ready, you can follow up with <code class="docutils literal notranslate"><span class="pre">progress_url</span></code> to wait for it</p></li>
+<li><p>if it is ready, you can use the <code class="docutils literal notranslate"><span class="pre">url</span></code> field to link directly to the running server</p></li>
+</ol>
+<p>The example demonstrates starting and stopping servers via the JupyterHub API,
+including waiting for them to start via the progress API,
+as well as waiting for them to stop via polling the user model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">event_stream</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generator yielding events from a JSON event stream</span>
+
+<span class="sd">    For use with the server progress API</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">():</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+        <span class="c1"># event lines all start with `data:`</span>
+        <span class="c1"># all other lines should be ignored (they will be empty)</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data:&#39;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">start_server</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">hub_url</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Start a server for a jupyterhub user</span>
+
+<span class="sd">    Returns the full URL for accessing the server</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hub_url</span><span class="si">}</span><span class="s2">/hub/api/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+    <span class="c1"># step 1: get user status</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_url</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="n">user_model</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="c1"># if server is not &#39;active&#39;, request launch</span>
+    <span class="k">if</span> <span class="n">server_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user_model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;servers&#39;</span><span class="p">,</span> <span class="p">{}):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user_url</span><span class="si">}</span><span class="s2">/servers/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> is launched and ready&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">202</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> is launching...&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected status: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_url</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">user_model</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="c1"># report server status</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">user_model</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][</span><span class="n">server_name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;pending </span><span class="si">{</span><span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="n">server</span><span class="p">[</span><span class="s1">&#39;ready&#39;</span><span class="p">]:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;ready&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># shouldn&#39;t be possible!</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected server state: </span><span class="si">{</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># wait for server to be ready using progress API</span>
+    <span class="n">progress_url</span> <span class="o">=</span> <span class="n">user_model</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">][</span><span class="n">server_name</span><span class="p">][</span><span class="s1">&#39;progress_url&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">event_stream</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hub_url</span><span class="si">}{</span><span class="n">progress_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Progress </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">%: </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ready&quot;</span><span class="p">):</span>
+            <span class="n">server_url</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># server never ready</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> never started!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># at this point, we know the server is ready and waiting to receive requests</span>
+    <span class="c1"># return the full URL where the server can be accessed</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hub_url</span><span class="si">}{</span><span class="n">server_url</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">stop_server</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">hub_url</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stop a server via the JupyterHub API</span>
+
+<span class="sd">    Returns when the server has finished stopping</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># step 1: get user status</span>
+    <span class="n">user_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hub_url</span><span class="si">}</span><span class="s2">/hub/api/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">server_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user_url</span><span class="si">}</span><span class="s2">/servers/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stopping server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">server_url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> already stopped&quot;</span><span class="p">)</span>
+
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> stopped&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># else: 202, stop requested, but not complete</span>
+    <span class="c1"># wait for stop to finish</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> stopping...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># wait for server to be done stopping</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_url</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">user_model</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">server_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user_model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;servers&quot;</span><span class="p">,</span> <span class="p">{}):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> stopped&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">user_model</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server_name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waiting for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">, but no longer pending.&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2"> pending: </span><span class="si">{</span><span class="n">server</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># wait to poll again</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="rest-api.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">JupyterHub REST API</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="monitoring.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Monitoring</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#checking-server-status">
+   Checking server status
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#starting-servers">
+   Starting servers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#waiting-for-a-server">
+   Waiting for a server
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#polling-the-server-model">
+     Polling the server model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#progress-api">
+     Progress API
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stopping-servers">
+   Stopping servers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#communicating-with-servers">
+   Communicating with servers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-example">
+   Python example
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/server-api.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/server-api.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

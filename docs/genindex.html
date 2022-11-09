@@ -1,0 +1,1605 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.access_scopes">access_scopes (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.access_scopes">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.active_server_limit">active_server_limit (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.active_user_window">active_user_window (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.activity_resolution">activity_resolution (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/user.html#jupyterhub.user.UserDict.add">add() (jupyterhub.user.UserDict method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.add_all_services">add_all_services() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.add_all_users">add_all_users() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.add_hub_route">add_hub_route() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.add_route">add_route() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.add_service">add_service() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.add_system_user">add_system_user() (jupyterhub.auth.LocalAuthenticator method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.add_user">add_user() (jupyterhub.auth.Authenticator method)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.add_user">(jupyterhub.auth.LocalAuthenticator method)</a>
+</li>
+        <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.add_user">(jupyterhub.proxy.Proxy method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.add_user_cmd">add_user_cmd (jupyterhub.auth.LocalAuthenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.add_user_cmd">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.admin_access">admin_access (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.admin_groups">admin_groups (jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.admin_users">admin_users (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.Authenticator.admin_users">(jupyterhub.auth.Authenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.admin_users">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.admin_users">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.admin_users">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.allow_all">allow_all (jupyterhub.services.auth.HubAuthenticated property)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.allow_named_servers">allow_named_servers (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.allowed_groups">allowed_groups (jupyterhub.auth.LocalAuthenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.allowed_groups">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.allowed_users">allowed_users (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.allowed_users">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.allowed_users">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.allowed_users">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.answer_yes">answer_yes (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.api_page_default_limit">api_page_default_limit (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.api_page_max_limit">api_page_max_limit (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.api_token">api_token (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.api_token">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.api_tokens">api_tokens (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.api_url">api_url (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.api_url">(jupyterhub.services.auth.HubAuth attribute)</a>
+</li>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.api_url">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.args">args (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.args">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.auth_refresh_age">auth_refresh_age (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.auth_refresh_age">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.auth_refresh_age">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.auth_refresh_age">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.auth_state_hook">auth_state_hook (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.auth_state_hook">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.auth_token">auth_token (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.authenticate">authenticate() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.authenticate_prometheus">authenticate_prometheus (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator">Authenticator (class in jupyterhub.auth)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.authenticator_class">authenticator_class (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.auto_login">auto_login (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.auto_login">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.auto_login">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.auto_login">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.auto_login_oauth2_authorize">auto_login_oauth2_authorize (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.auto_login_oauth2_authorize">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.auto_login_oauth2_authorize">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.auto_login_oauth2_authorize">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.base_url">base_url (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.base_url">(jupyterhub.services.auth.HubAuth attribute)</a>
+</li>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.base_url">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.bind_url">bind_url (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.blocked_users">blocked_users (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.blocked_users">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.blocked_users">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.blocked_users">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.cache_max_age">cache_max_age (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.cache_max_age">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.certfile">certfile (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.certfile">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.check_account">check_account (jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.check_allowed">check_allowed() (jupyterhub.auth.Authenticator method)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.check_allowed">(jupyterhub.auth.LocalAuthenticator method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.check_allowed_groups">check_allowed_groups() (jupyterhub.auth.LocalAuthenticator method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.check_blocked_users">check_blocked_users() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.check_hub_user">check_hub_user() (jupyterhub.services.auth.HubAuthenticated method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.check_routes">check_routes() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.check_running_interval">check_running_interval (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.check_scopes">check_scopes() (jupyterhub.services.auth.HubAuth method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.cleanup_proxy">cleanup_proxy (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.cleanup_servers">cleanup_servers (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.clear_cookie">clear_cookie() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.client_ca">client_ca (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.client_ca">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.cmd">cmd (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.cmd">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.command">command (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.concurrency">concurrency (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.concurrent_spawn_limit">concurrent_spawn_limit (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.config_file">config_file (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy">ConfigurableHTTPProxy (class in jupyterhub.proxy)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.confirm_no_ssl">confirm_no_ssl (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.consecutive_failure_limit">consecutive_failure_limit (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.consecutive_failure_limit">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.cookie_max_age_days">cookie_max_age_days (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.cookie_name">cookie_name (jupyterhub.services.auth.HubOAuth property)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.cookie_options">cookie_options (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.cookie_options">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.cookie_secret">cookie_secret (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.cookie_secret_file">cookie_secret_file (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/user.html#jupyterhub.user.UserDict.count_active_users">count_active_users() (jupyterhub.user.UserDict method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.cpu_guarantee">cpu_guarantee (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.cpu_guarantee">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.cpu_limit">cpu_limit (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.cpu_limit">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.create_certs">create_certs() (jupyterhub.spawner.Spawner method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.create_system_users">create_system_users (jupyterhub.auth.LocalAuthenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.create_system_users">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.custom_scopes">custom_scopes (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.data_files_path">data_files_path (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.db_kwargs">db_kwargs (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.db_url">db_url (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.debug">debug (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.debug">(jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.debug">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.debug_db">debug_db (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.debug_proxy">debug_proxy (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.default_server_name">default_server_name (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.default_url">default_url (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.default_url">(jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.default_url">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/user.html#jupyterhub.user.UserDict.delete">delete() (jupyterhub.user.UserDict method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.delete_invalid_users">delete_invalid_users (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.delete_invalid_users">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.delete_invalid_users">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.delete_invalid_users">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.delete_route">delete_route() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.delete_service">delete_service() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.delete_user">delete_user() (jupyterhub.auth.Authenticator method)</a>
+
+      <ul>
+        <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.delete_user">(jupyterhub.proxy.Proxy method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.disable_user_config">disable_user_config (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.disable_user_config">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator">DummyAuthenticator (class in jupyterhub.auth)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.enable_auth_state">enable_auth_state (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.enable_auth_state">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.enable_auth_state">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.enable_auth_state">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.encoding">encoding (jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.env_keep">env_keep (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.env_keep">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.environment">environment (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.environment">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/user.html#jupyterhub.user.User.escaped_name">escaped_name (jupyterhub.user.User property)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.external_ssl_authorities">external_ssl_authorities (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.extra_handlers">extra_handlers (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.extra_log_file">extra_log_file (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.extra_log_handlers">extra_log_handlers (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.extra_routes">extra_routes (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+
+      <ul>
+        <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.extra_routes">(jupyterhub.proxy.Proxy attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.format_string">format_string() (jupyterhub.spawner.Spawner method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.forwarded_host_header">forwarded_host_header (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.generate_certs">generate_certs (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.generate_config">generate_config (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.generate_state">generate_state() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/user.html#jupyterhub.user.UserDict.get">get() (jupyterhub.user.UserDict method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.get_all_routes">get_all_routes() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.get_args">get_args() (jupyterhub.spawner.Spawner method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.get_authenticated_user">get_authenticated_user() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.get_current_user">get_current_user() (jupyterhub.services.auth.HubAuthenticated method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.get_custom_html">get_custom_html() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.get_env">get_env() (jupyterhub.spawner.Spawner method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.get_handlers">get_handlers() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.get_login_url">get_login_url() (jupyterhub.services.auth.HubAuthenticated method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.get_next_url">get_next_url() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.get_route">get_route() (jupyterhub.proxy.Proxy method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.get_session_id">get_session_id() (jupyterhub.services.auth.HubAuth method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.get_state">get_state() (jupyterhub.spawner.Spawner method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.get_state_cookie_name">get_state_cookie_name() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.get_token">get_token() (jupyterhub.services.auth.HubAuth method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.get_user">get_user() (jupyterhub.services.auth.HubAuth method)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.group_whitelist">group_whitelist (jupyterhub.auth.LocalAuthenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.group_whitelist">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.http_timeout">http_timeout (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.http_timeout">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.hub_auth_class">hub_auth_class (jupyterhub.services.auth.HubAuthenticated attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_bind_url">hub_bind_url (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_connect_ip">hub_connect_ip (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_connect_port">hub_connect_port (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_connect_url">hub_connect_url (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.hub_connect_url">(jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.hub_connect_url">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.hub_host">hub_host (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.hub_host">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_ip">hub_ip (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_port">hub_port (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.hub_prefix">hub_prefix (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.hub_prefix">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.hub_routespec">hub_routespec (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated.hub_scopes">hub_scopes (jupyterhub.services.auth.HubAuthenticated property)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth">HubAuth (class in jupyterhub.services.auth)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuthenticated">HubAuthenticated (class in jupyterhub.services.auth)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth">HubOAuth (class in jupyterhub.services.auth)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuthCallbackHandler">HubOAuthCallbackHandler (class in jupyterhub.services.auth)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuthenticated">HubOAuthenticated (class in jupyterhub.services.auth)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.implicit_spawn_seconds">implicit_spawn_seconds (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.init_spawners_timeout">init_spawners_timeout (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.internal_certs_location">internal_certs_location (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.internal_ssl">internal_ssl (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.interrupt_timeout">interrupt_timeout (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.ip">ip (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.ip">(jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.ip">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.is_admin">is_admin() (jupyterhub.auth.Authenticator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.jinja_environment_options">jinja_environment_options (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub">JupyterHub (class in jupyterhub.app)</a>
+</li>
+      <li>
+    jupyterhub.app
+
+      <ul>
+        <li><a href="api/app.html#module-jupyterhub.app">module</a>
+</li>
+      </ul></li>
+      <li>
+    jupyterhub.auth
+
+      <ul>
+        <li><a href="api/auth.html#module-jupyterhub.auth">module</a>
+</li>
+      </ul></li>
+      <li>
+    jupyterhub.proxy
+
+      <ul>
+        <li><a href="api/proxy.html#module-jupyterhub.proxy">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    jupyterhub.services.auth
+
+      <ul>
+        <li><a href="api/services.auth.html#module-jupyterhub.services.auth">module</a>
+</li>
+      </ul></li>
+      <li>
+    jupyterhub.services.service
+
+      <ul>
+        <li><a href="api/service.html#module-jupyterhub.services.service">module</a>
+</li>
+      </ul></li>
+      <li>
+    jupyterhub.spawner
+
+      <ul>
+        <li><a href="api/spawner.html#module-jupyterhub.spawner">module</a>
+</li>
+      </ul></li>
+      <li>
+    jupyterhub.user
+
+      <ul>
+        <li><a href="api/user.html#module-jupyterhub.user">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.keyfile">keyfile (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.keyfile">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.kill_timeout">kill_timeout (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+      <li><a href="api/service.html#jupyterhub.services.service.Service.kind">kind (jupyterhub.services.service.Service property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.last_activity_interval">last_activity_interval (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.load_groups">load_groups (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.load_roles">load_roles (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator">LocalAuthenticator (class in jupyterhub.auth)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner">LocalProcessSpawner (class in jupyterhub.spawner)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.log_datefmt">log_datefmt (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.log_format">log_format (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.log_level">log_level (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.log_level">(jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.logging_config">logging_config (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.login_url">login_url (jupyterhub.services.auth.HubAuth attribute)</a>
+
+      <ul>
+        <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.login_url">(jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.login_url">login_url() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.logo_file">logo_file (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.logout_url">logout_url() (jupyterhub.auth.Authenticator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.manage_groups">manage_groups (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.manage_groups">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.manage_groups">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.manage_groups">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/service.html#jupyterhub.services.service.Service.managed">managed (jupyterhub.services.service.Service property)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.mem_guarantee">mem_guarantee (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.mem_guarantee">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.mem_limit">mem_limit (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.mem_limit">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api/app.html#module-jupyterhub.app">jupyterhub.app</a>
+</li>
+        <li><a href="api/auth.html#module-jupyterhub.auth">jupyterhub.auth</a>
+</li>
+        <li><a href="api/proxy.html#module-jupyterhub.proxy">jupyterhub.proxy</a>
+</li>
+        <li><a href="api/services.auth.html#module-jupyterhub.services.auth">jupyterhub.services.auth</a>
+</li>
+        <li><a href="api/service.html#module-jupyterhub.services.service">jupyterhub.services.service</a>
+</li>
+        <li><a href="api/spawner.html#module-jupyterhub.spawner">jupyterhub.spawner</a>
+</li>
+        <li><a href="api/user.html#module-jupyterhub.user">jupyterhub.user</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.move_certs">move_certs() (jupyterhub.spawner.Spawner method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/user.html#jupyterhub.user.User.name">name (jupyterhub.user.User attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.named_server_limit_per_user">named_server_limit_per_user (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.normalize_username">normalize_username() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.notebook_dir">notebook_dir (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.notebook_dir">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_authorization_url">oauth_authorization_url (jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.oauth_client_allowed_scopes">oauth_client_allowed_scopes (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.oauth_client_allowed_scopes">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_client_id">oauth_client_id (jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_redirect_uri">oauth_redirect_uri (jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.oauth_roles">oauth_roles (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.oauth_roles">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.oauth_token_expires_in">oauth_token_expires_in (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.oauth_token_url">oauth_token_url (jupyterhub.services.auth.HubOAuth attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.open_sessions">open_sessions (jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.options_form">options_form (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.options_form">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.options_from_form">options_from_form (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.options_from_form">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.pam_normalize_username">pam_normalize_username (jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator">PAMAuthenticator (class in jupyterhub.auth)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.password">password (jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.pid_file">pid_file (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.pid_file">(jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.poll">poll() (jupyterhub.spawner.Spawner method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.poll_interval">poll_interval (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.poll_interval">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.popen_kwargs">popen_kwargs (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.port">port (jupyterhub.app.JupyterHub attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.port">(jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.port">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.post_auth_hook">post_auth_hook (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.post_auth_hook">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.post_auth_hook">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.post_auth_hook">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.post_spawn_stop">post_spawn_stop() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.post_stop_hook">post_stop_hook (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.post_stop_hook">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.pre_spawn_hook">pre_spawn_hook (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.pre_spawn_hook">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.pre_spawn_start">pre_spawn_start() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy">Proxy (class in jupyterhub.proxy)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.proxy_api_ip">proxy_api_ip (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.proxy_api_port">proxy_api_port (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.proxy_auth_token">proxy_auth_token (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.proxy_check_interval">proxy_check_interval (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.proxy_class">proxy_class (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.proxy_cmd">proxy_cmd (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.recreate_internal_certs">recreate_internal_certs (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.redirect_to_server">redirect_to_server (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.refresh_pre_spawn">refresh_pre_spawn (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.refresh_pre_spawn">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.refresh_pre_spawn">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.refresh_pre_spawn">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.refresh_user">refresh_user() (jupyterhub.auth.Authenticator method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.reset_db">reset_db (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.run_post_auth_hook">run_post_auth_hook() (jupyterhub.auth.Authenticator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/user.html#jupyterhub.user.User.server">server (jupyterhub.user.User attribute)</a>
+</li>
+      <li><a href="api/service.html#jupyterhub.services.service.Service">Service (class in jupyterhub.services.service)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.service">service (jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.service_check_interval">service_check_interval (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.service_tokens">service_tokens (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.services">services (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.set_cookie">set_cookie() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.set_state_cookie">set_state_cookie() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.shell_cmd">shell_cmd (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.ConfigurableHTTPProxy.should_start">should_start (jupyterhub.proxy.ConfigurableHTTPProxy attribute)</a>
+
+      <ul>
+        <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.should_start">(jupyterhub.proxy.Proxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.show_config">show_config (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.show_config_json">show_config_json (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.shutdown_on_logout">shutdown_on_logout (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner">Spawner (class in jupyterhub.spawner)</a>
+</li>
+      <li><a href="api/user.html#jupyterhub.user.User.spawner">spawner (jupyterhub.user.User attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.spawner_class">spawner_class (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.ssl_alt_names">ssl_alt_names (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.ssl_alt_names">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.ssl_alt_names_include_local">ssl_alt_names_include_local (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.ssl_alt_names_include_local">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.ssl_cert">ssl_cert (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.ssl_key">ssl_key (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.start">start() (jupyterhub.proxy.Proxy method)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.start">(jupyterhub.spawner.Spawner method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.start_timeout">start_timeout (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.start_timeout">(jupyterhub.spawner.Spawner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.state_cookie_name">state_cookie_name (jupyterhub.services.auth.HubOAuth property)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.statsd_host">statsd_host (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.statsd_port">statsd_port (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.statsd_prefix">statsd_prefix (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.stop">stop() (jupyterhub.proxy.Proxy method)</a>
+
+      <ul>
+        <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.stop">(jupyterhub.spawner.Spawner method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.subdomain_host">subdomain_host (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.system_user_exists">system_user_exists() (jupyterhub.auth.LocalAuthenticator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/spawner.html#jupyterhub.spawner.Spawner.template_namespace">template_namespace() (jupyterhub.spawner.Spawner method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.template_paths">template_paths (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.template_vars">template_vars (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.term_timeout">term_timeout (jupyterhub.spawner.LocalProcessSpawner attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubOAuth.token_for_code">token_for_code() (jupyterhub.services.auth.HubOAuth method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.tornado_settings">tornado_settings (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.trust_user_provided_tokens">trust_user_provided_tokens (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.trusted_alt_names">trusted_alt_names (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.trusted_downstream_ips">trusted_downstream_ips (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.uids">uids (jupyterhub.auth.LocalAuthenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.uids">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.upgrade_db">upgrade_db (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.use_legacy_stopped_server_status_code">use_legacy_stopped_server_status_code (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+      <li><a href="api/user.html#jupyterhub.user.User">User (class in jupyterhub.user)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.user_for_cookie">user_for_cookie() (jupyterhub.services.auth.HubAuth method)</a>
+</li>
+      <li><a href="api/services.auth.html#jupyterhub.services.auth.HubAuth.user_for_token">user_for_token() (jupyterhub.services.auth.HubAuth method)</a>
+</li>
+      <li><a href="api/app.html#jupyterhub.app.JupyterHub.user_redirect_hook">user_redirect_hook (jupyterhub.app.JupyterHub attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/user.html#jupyterhub.user.UserDict">UserDict (class in jupyterhub.user)</a>
+</li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.username_map">username_map (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.username_map">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.username_map">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.username_map">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.username_pattern">username_pattern (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.username_pattern">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.username_pattern">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.username_pattern">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/proxy.html#jupyterhub.proxy.Proxy.validate_routespec">validate_routespec() (jupyterhub.proxy.Proxy method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.validate_username">validate_username() (jupyterhub.auth.Authenticator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/auth.html#jupyterhub.auth.Authenticator.whitelist">whitelist (jupyterhub.auth.Authenticator attribute)</a>
+
+      <ul>
+        <li><a href="api/auth.html#jupyterhub.auth.DummyAuthenticator.whitelist">(jupyterhub.auth.DummyAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.LocalAuthenticator.whitelist">(jupyterhub.auth.LocalAuthenticator attribute)</a>
+</li>
+        <li><a href="api/auth.html#jupyterhub.auth.PAMAuthenticator.whitelist">(jupyterhub.auth.PAMAuthenticator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,2807 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Authenticators &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/auth';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spawners" href="spawner.html" />
+    <link rel="prev" title="Application configuration" href="app.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reference/index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Application configuration</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawner.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.auth.html">Services Authentication</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="authenticators">
+<h1>Authenticators<a class="headerlink" href="#authenticators" title="Permalink to this heading">#</a></h1>
+<section id="module-jupyterhub.auth">
+<span id="module-jupyterhub-auth"></span><h2>Module: <a class="reference internal" href="#module-jupyterhub.auth" title="jupyterhub.auth"><code class="xref py py-mod docutils literal notranslate"><span class="pre">jupyterhub.auth</span></code></a><a class="headerlink" href="#module-jupyterhub.auth" title="Permalink to this heading">#</a></h2>
+<p>Base Authenticator class and the default PAM Authenticator</p>
+<section id="authenticator">
+<h3><a class="reference internal" href="#jupyterhub.auth.Authenticator" title="jupyterhub.auth.Authenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Authenticator</span></code></a><a class="headerlink" href="#authenticator" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.auth.</span></span><span class="sig-name descname"><span class="pre">Authenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator" title="Permalink to this definition">#</a></dt>
+<dd><p>Base class for implementing an authentication provider for JupyterHub</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.add_user">
+<span class="sig-name descname"><span class="pre">add_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.add_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Hook called when a user is added to JupyterHub</p>
+<dl class="simple">
+<dt>This is called:</dt><dd><ul class="simple">
+<li><p>When a user first authenticates</p></li>
+<li><p>When the hub restarts, for all users.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This method may be a coroutine.</p>
+<p>By default, this just adds the user to the allowed_users set.</p>
+<p>Subclasses may do more extensive things, such as adding actual unix users,
+but they should call super to ensure the allowed_users set is updated.</p>
+<p>Note that this should be idempotent, since it is called whenever the hub restarts
+for all users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<a class="reference internal" href="user.html#jupyterhub.user.User" title="jupyterhub.user.User"><em>User</em></a>) – The User wrapper object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.admin_users">
+<span class="sig-name descname"><span class="pre">admin_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.admin_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.admin_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of users that will have admin rights on this JupyterHub.</p>
+<p>Note: As of JupyterHub 2.0,
+full admin rights should not be required,
+and more precise permissions can be managed via roles.</p>
+<dl class="simple">
+<dt>Admin users have extra privileges:</dt><dd><ul class="simple">
+<li><p>Use the admin panel to see list of users logged in</p></li>
+<li><p>Add / remove users in some authenticators</p></li>
+<li><p>Restart / halt the hub</p></li>
+<li><p>Start / stop users’ single-user servers</p></li>
+<li><p>Can access each individual users’ single-user server (if configured)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Admin access should be treated the same way root access is.</p>
+<p>Defaults to an empty set, in which case no user has admin access.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.allowed_users">
+<span class="sig-name descname"><span class="pre">allowed_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.allowed_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.allowed_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can log in. This is an
+additional list that further restricts users, beyond whatever restrictions the
+authenticator has in place. Any user in this list is granted the ‘user’ role on hub startup.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.whitelist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">allowed_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.auth_refresh_age">
+<span class="sig-name descname"><span class="pre">auth_refresh_age</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.auth_refresh_age</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.auth_refresh_age" title="Permalink to this definition">#</a></dt>
+<dd><p>The max age (in seconds) of authentication info
+before forcing a refresh of user auth info.</p>
+<p>Refreshing auth info allows, e.g. requesting/re-validating auth tokens.</p>
+<p>See <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> for what happens when user auth info is refreshed
+(nothing by default).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.authenticate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.authenticate" title="Permalink to this definition">#</a></dt>
+<dd><p>Authenticate a user with login form data</p>
+<p>This must be a coroutine.</p>
+<p>It must return the username on successful authentication,
+and return None on failed authentication.</p>
+<p>Checking allowed_users/blocked_users is handled separately by the caller.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.8: </span>Allow <code class="docutils literal notranslate"><span class="pre">authenticate</span></code> to return a dict containing auth_state.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler" title="(in Tornado v6.2)"><em>tornado.web.RequestHandler</em></a>) – the current request handler</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The formdata of the login form.
+The default form has ‘username’ and ‘password’ fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>The username of the authenticated user,
+or None if Authentication failed.</p>
+<p>The Authenticator may return a dict instead, which MUST have a
+key <code class="docutils literal notranslate"><span class="pre">name</span></code> holding the username, and MAY have additional keys:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">auth_state</span></code>, a dictionary of of auth state that will be
+persisted;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin</span></code>, the admin setting value for the user</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">groups</span></code>, the list of group names the user should be a member of,
+if Authenticator.manage_groups is True.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>user (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a> or None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.auto_login">
+<span class="sig-name descname"><span class="pre">auto_login</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.auto_login</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.auto_login" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin the login process</p>
+<p>rather than starting with a “Login with…” link at <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code></p>
+<p>To work, <code class="docutils literal notranslate"><span class="pre">.login_url()</span></code> must give a URL other than the default <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code>,
+such as an oauth handler or another automatic login handler,
+registered with <code class="docutils literal notranslate"><span class="pre">.get_handlers()</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.auto_login_oauth2_authorize">
+<span class="sig-name descname"><span class="pre">auto_login_oauth2_authorize</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.auto_login_oauth2_authorize</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.auto_login_oauth2_authorize" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin login process for OAuth2 authorization requests</p>
+<p>When another application is using JupyterHub as OAuth2 provider, it
+sends users to <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>. If the user isn’t logged
+in already, and auto_login is not set, the user will be dumped on the
+hub’s home page, without any context on what to do next.</p>
+<p>Setting this to true will automatically redirect users to login if
+they aren’t logged in <em>only</em> on the <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>
+endpoint.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.blocked_users">
+<span class="sig-name descname"><span class="pre">blocked_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.blocked_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.blocked_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are not allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can not log in. This is an
+additional block list that further restricts users, beyond whatever restrictions the
+authenticator has in place.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.blacklist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">blocked_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.check_allowed">
+<span class="sig-name descname"><span class="pre">check_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authentication</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.check_allowed" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a username is allowed to authenticate based on configuration</p>
+<p>Return True if username is allowed, False otherwise.
+No allowed_users set means any username is allowed.</p>
+<p>Names are normalized <em>before</em> being checked against the allowed set.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0: </span>Signature updated to accept authentication data and any future changes</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span>Renamed check_whitelist to check_allowed</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.check_blocked_users">
+<span class="sig-name descname"><span class="pre">check_blocked_users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authentication</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.check_blocked_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a username is blocked to authenticate based on Authenticator.blocked configuration</p>
+<p>Return True if username is allowed, False otherwise.
+No block list means any username is allowed.</p>
+<p>Names are normalized <em>before</em> being checked against the block list.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0: </span>Signature updated to accept authentication data as second argument</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span>Renamed check_blacklist to check_blocked_users</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.delete_invalid_users">
+<span class="sig-name descname"><span class="pre">delete_invalid_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.delete_invalid_users</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.delete_invalid_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Delete any users from the database that do not pass validation</p>
+<p>When JupyterHub starts, <code class="docutils literal notranslate"><span class="pre">.add_user</span></code> will be called
+on each user in the database to verify that all users are still valid.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">delete_invalid_users</span></code> is True,
+any users that do not pass validation will be deleted from the database.
+Use this if users might be deleted from an external system,
+such as local user accounts.</p>
+<p>If False (default), invalid users remain in the Hub’s database
+and a warning will be issued.
+This is the default to avoid data loss due to config changes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.delete_user">
+<span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.delete_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Hook called when a user is deleted</p>
+<p>Removes the user from the allowed_users set.
+Subclasses should call super to ensure the allowed_users set is updated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<a class="reference internal" href="user.html#jupyterhub.user.User" title="jupyterhub.user.User"><em>User</em></a>) – The User wrapper object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.enable_auth_state">
+<span class="sig-name descname"><span class="pre">enable_auth_state</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.enable_auth_state</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.enable_auth_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Enable persisting auth_state (if available).</p>
+<p>auth_state will be encrypted and stored in the Hub’s database.
+This can include things like authentication tokens, etc.
+to be passed to Spawners as environment variables.</p>
+<p>Encrypting auth_state requires the cryptography package.</p>
+<p>Additionally, the JUPYTERHUB_CRYPT_KEY environment variable must
+contain one (or more, separated by ;) 32B encryption keys.
+These can be either base64 or hex-encoded.</p>
+<p>If encryption is unavailable, auth_state cannot be persisted.</p>
+<p>New in JupyterHub 0.8</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.get_authenticated_user">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_authenticated_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.get_authenticated_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Authenticate the user who is attempting to log in</p>
+<p>Returns user dict if successful, None otherwise.</p>
+<p>This calls <code class="docutils literal notranslate"><span class="pre">authenticate</span></code>, which should be overridden in subclasses,
+normalizes the username if any normalization should be done,
+and then validates the name in the allowed set.</p>
+<p>This is the outer API for authenticating a user.
+Subclasses should not override this method.</p>
+<dl class="simple">
+<dt>The various stages can be overridden separately:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">authenticate</span></code> turns formdata into a username</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">normalize_username</span></code> normalizes the username</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">check_allowed</span></code> checks against the allowed usernames</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.8: </span>return dict instead of username</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.get_custom_html">
+<span class="sig-name descname"><span class="pre">get_custom_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.get_custom_html" title="Permalink to this definition">#</a></dt>
+<dd><p>Get custom HTML for the authenticator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.get_handlers">
+<span class="sig-name descname"><span class="pre">get_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.get_handlers" title="Permalink to this definition">#</a></dt>
+<dd><p>Return any custom handlers the authenticator needs to register</p>
+<p>Used in conjugation with <code class="docutils literal notranslate"><span class="pre">login_url</span></code> and <code class="docutils literal notranslate"><span class="pre">logout_url</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<em>JupyterHub Application</em>) – the application object, in case it needs to be accessed for info.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of <code class="docutils literal notranslate"><span class="pre">('/url',</span> <span class="pre">Handler)</span></code> tuples passed to tornado.
+The Hub prefix is added to any URLs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>handlers (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.is_admin">
+<span class="sig-name descname"><span class="pre">is_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authentication</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.is_admin" title="Permalink to this definition">#</a></dt>
+<dd><p>Authentication helper to determine a user’s admin status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler" title="(in Tornado v6.2)"><em>tornado.web.RequestHandler</em></a>) – the current request handler</p></li>
+<li><p><strong>authentication</strong> – The authetication dict generated by <code class="docutils literal notranslate"><span class="pre">authenticate</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The admin status of the user, or None if it could not be
+determined or should not change.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>admin_status (Bool or None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.login_url">
+<span class="sig-name descname"><span class="pre">login_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.login_url" title="Permalink to this definition">#</a></dt>
+<dd><p>Override this when registering a custom login handler</p>
+<p>Generally used by authenticators that do not use simple form-based authentication.</p>
+<p>The subclass overriding this is responsible for making sure there is a handler
+available to handle the URL returned from this method, using the <code class="docutils literal notranslate"><span class="pre">get_handlers</span></code>
+method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>base_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – the base URL of the Hub (e.g. /hub/)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The login URL, e.g. ‘/hub/login’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.logout_url">
+<span class="sig-name descname"><span class="pre">logout_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.logout_url" title="Permalink to this definition">#</a></dt>
+<dd><p>Override when registering a custom logout handler</p>
+<p>The subclass overriding this is responsible for making sure there is a handler
+available to handle the URL returned from this method, using the <code class="docutils literal notranslate"><span class="pre">get_handlers</span></code>
+method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>base_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – the base URL of the Hub (e.g. /hub/)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The logout URL, e.g. ‘/hub/logout’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.manage_groups">
+<span class="sig-name descname"><span class="pre">manage_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.manage_groups</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.manage_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Let authenticator manage user groups</p>
+<p>If True, Authenticator.authenticate and/or .refresh_user
+may return a list of group names in the ‘groups’ field,
+which will be assigned to the user.</p>
+<p>All group-assignment APIs are disabled if this is True.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.normalize_username">
+<span class="sig-name descname"><span class="pre">normalize_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.normalize_username" title="Permalink to this definition">#</a></dt>
+<dd><p>Normalize the given username and return it</p>
+<p>Override in subclasses if usernames need different normalization rules.</p>
+<p>The default attempts to lowercase the username and apply <code class="docutils literal notranslate"><span class="pre">username_map</span></code> if it is
+set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.post_auth_hook">
+<span class="sig-name descname"><span class="pre">post_auth_hook</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.post_auth_hook</span> <span class="pre">=</span> <span class="pre">Any(None)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.post_auth_hook" title="Permalink to this definition">#</a></dt>
+<dd><p>An optional hook function that you can implement to do some
+bootstrapping work during authentication. For example, loading user account
+details from an external system.</p>
+<p>This function is called after the user has passed all authentication checks
+and is ready to successfully authenticate. This function must return the
+authentication dict reguardless of changes to it.</p>
+<p>This maybe a coroutine.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pwd</span>
+<span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">authenticator</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">authentication</span><span class="p">):</span>
+    <span class="n">user_data</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="n">spawn_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;pw_data&#39;</span><span class="p">:</span> <span class="n">user_data</span>
+        <span class="s1">&#39;gid_list&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getgrouplist</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">user_data</span><span class="o">.</span><span class="n">pw_gid</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">][</span><span class="s1">&#39;spawn_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spawn_data</span>
+
+    <span class="k">return</span> <span class="n">authentication</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">post_auth_hook</span> <span class="o">=</span> <span class="n">my_hook</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.post_spawn_stop">
+<span class="sig-name descname"><span class="pre">post_spawn_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spawner</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.post_spawn_stop" title="Permalink to this definition">#</a></dt>
+<dd><p>Hook called after stopping a user container</p>
+<p>Can be used to do auth-related cleanup, e.g. closing PAM sessions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.pre_spawn_start">
+<span class="sig-name descname"><span class="pre">pre_spawn_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spawner</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.pre_spawn_start" title="Permalink to this definition">#</a></dt>
+<dd><p>Hook called before spawning a user’s server</p>
+<p>Can be used to do auth-related startup, e.g. opening PAM sessions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.refresh_pre_spawn">
+<span class="sig-name descname"><span class="pre">refresh_pre_spawn</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.refresh_pre_spawn</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.refresh_pre_spawn" title="Permalink to this definition">#</a></dt>
+<dd><p>Force refresh of auth prior to spawn.</p>
+<p>This forces <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> to be called prior to launching
+a server, to ensure that auth state is up-to-date.</p>
+<p>This can be important when e.g. auth tokens that may have expired
+are passed to the spawner via environment variables from auth_state.</p>
+<p>If refresh_user cannot refresh the user auth data,
+launch will fail until the user logs in again.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.refresh_user">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.refresh_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Refresh auth data for a given user</p>
+<p>Allows refreshing or invalidating auth data.</p>
+<p>Only override if your authenticator needs
+to refresh its data about users once in a while.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<a class="reference internal" href="user.html#jupyterhub.user.User" title="jupyterhub.user.User"><em>User</em></a>) – the user to refresh</p></li>
+<li><p><strong>handler</strong> (<a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler" title="(in Tornado v6.2)"><em>tornado.web.RequestHandler</em></a><em> or </em><em>None</em>) – the current request handler</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>Return <strong>True</strong> if auth data for the user is up-to-date
+and no updates are required.</p>
+<p>Return <strong>False</strong> if the user’s auth data has expired,
+and they should be required to login again.</p>
+<p>Return a <strong>dict</strong> of auth data if some values should be updated.
+This dict should have the same structure as that returned
+by <a class="reference internal" href="#jupyterhub.auth.Authenticator.authenticate" title="jupyterhub.auth.Authenticator.authenticate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">authenticate()</span></code></a> when it returns a dict.
+Any fields present will refresh the value for the user.
+Any fields not present will be left unchanged.
+This can include updating <code class="docutils literal notranslate"><span class="pre">.admin</span></code> or <code class="docutils literal notranslate"><span class="pre">.auth_state</span></code> fields.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>auth_data (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.run_post_auth_hook">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run_post_auth_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authentication</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.run_post_auth_hook" title="Permalink to this definition">#</a></dt>
+<dd><p>Run the post_auth_hook if defined</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<a class="reference external" href="https://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler" title="(in Tornado v6.2)"><em>tornado.web.RequestHandler</em></a>) – the current request handler</p></li>
+<li><p><strong>authentication</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – User authentication data dictionary. Contains the
+username (‘name’), admin status (‘admin’), and auth state dictionary (‘auth_state’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The hook must always return the authentication dict</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Authentication (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.username_map">
+<span class="sig-name descname"><span class="pre">username_map</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.username_map</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.username_map" title="Permalink to this definition">#</a></dt>
+<dd><p>Dictionary mapping authenticator usernames to JupyterHub users.</p>
+<p>Primarily used to normalize OAuth user names to local users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.username_pattern">
+<span class="sig-name descname"><span class="pre">username_pattern</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.username_pattern</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.username_pattern" title="Permalink to this definition">#</a></dt>
+<dd><p>Regular expression pattern that all valid usernames must match.</p>
+<p>If a username does not match the pattern specified here, authentication will not be attempted.</p>
+<p>If not set, allow any username.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.validate_username">
+<span class="sig-name descname"><span class="pre">validate_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.Authenticator.validate_username" title="Permalink to this definition">#</a></dt>
+<dd><p>Validate a normalized username</p>
+<p>Return True if username is valid, False otherwise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.Authenticator.whitelist">
+<span class="sig-name descname"><span class="pre">whitelist</span></span><em class="property"><span class="w"> </span><span class="pre">c.Authenticator.whitelist</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.Authenticator.whitelist" title="Permalink to this definition">#</a></dt>
+<dd><p>Deprecated, use <code class="docutils literal notranslate"><span class="pre">Authenticator.allowed_users</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="localauthenticator">
+<h3><a class="reference internal" href="#jupyterhub.auth.LocalAuthenticator" title="jupyterhub.auth.LocalAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalAuthenticator</span></code></a><a class="headerlink" href="#localauthenticator" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.auth.</span></span><span class="sig-name descname"><span class="pre">LocalAuthenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator" title="Permalink to this definition">#</a></dt>
+<dd><p>Base class for Authenticators that work with local Linux/UNIX users</p>
+<p>Checks for local users, and can attempt to create them if they exist.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.add_system_user">
+<span class="sig-name descname"><span class="pre">add_system_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.add_system_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a new local UNIX user on the system.</p>
+<p>Tested to work on FreeBSD and Linux, at least.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.add_user">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.add_user" title="Permalink to this definition">#</a></dt>
+<dd><p>Hook called whenever a new user is added</p>
+<p>If self.create_system_users, the user will attempt to be created if it doesn’t exist.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.add_user_cmd">
+<span class="sig-name descname"><span class="pre">add_user_cmd</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.add_user_cmd</span> <span class="pre">=</span> <span class="pre">Command()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.add_user_cmd" title="Permalink to this definition">#</a></dt>
+<dd><p>The command to use for creating users as a list of strings</p>
+<p>For each element in the list, the string USERNAME will be replaced with
+the user’s username. The username will also be appended as the final argument.</p>
+<p>For Linux, the default value is:</p>
+<blockquote>
+<div><p>[‘adduser’, ‘-q’, ‘–gecos’, ‘””’, ‘–disabled-password’]</p>
+</div></blockquote>
+<p>To specify a custom home directory, set this to:</p>
+<blockquote>
+<div><p>[‘adduser’, ‘-q’, ‘–gecos’, ‘””’, ‘–home’, ‘/customhome/USERNAME’, ‘–disabled-password’]</p>
+</div></blockquote>
+<p>This will run the command:</p>
+<blockquote>
+<div><p>adduser -q –gecos “” –home /customhome/river –disabled-password river</p>
+</div></blockquote>
+<p>when the user ‘river’ is created.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.admin_users">
+<span class="sig-name descname"><span class="pre">admin_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.admin_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.admin_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of users that will have admin rights on this JupyterHub.</p>
+<p>Note: As of JupyterHub 2.0,
+full admin rights should not be required,
+and more precise permissions can be managed via roles.</p>
+<dl class="simple">
+<dt>Admin users have extra privileges:</dt><dd><ul class="simple">
+<li><p>Use the admin panel to see list of users logged in</p></li>
+<li><p>Add / remove users in some authenticators</p></li>
+<li><p>Restart / halt the hub</p></li>
+<li><p>Start / stop users’ single-user servers</p></li>
+<li><p>Can access each individual users’ single-user server (if configured)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Admin access should be treated the same way root access is.</p>
+<p>Defaults to an empty set, in which case no user has admin access.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.allowed_groups">
+<span class="sig-name descname"><span class="pre">allowed_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.allowed_groups</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.allowed_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Allow login from all users in these UNIX groups.</p>
+<p>If set, allowed username set is ignored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.allowed_users">
+<span class="sig-name descname"><span class="pre">allowed_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.allowed_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.allowed_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can log in. This is an
+additional list that further restricts users, beyond whatever restrictions the
+authenticator has in place. Any user in this list is granted the ‘user’ role on hub startup.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.whitelist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">allowed_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.auth_refresh_age">
+<span class="sig-name descname"><span class="pre">auth_refresh_age</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.auth_refresh_age</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.auth_refresh_age" title="Permalink to this definition">#</a></dt>
+<dd><p>The max age (in seconds) of authentication info
+before forcing a refresh of user auth info.</p>
+<p>Refreshing auth info allows, e.g. requesting/re-validating auth tokens.</p>
+<p>See <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> for what happens when user auth info is refreshed
+(nothing by default).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.auto_login">
+<span class="sig-name descname"><span class="pre">auto_login</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.auto_login</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.auto_login" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin the login process</p>
+<p>rather than starting with a “Login with…” link at <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code></p>
+<p>To work, <code class="docutils literal notranslate"><span class="pre">.login_url()</span></code> must give a URL other than the default <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code>,
+such as an oauth handler or another automatic login handler,
+registered with <code class="docutils literal notranslate"><span class="pre">.get_handlers()</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.auto_login_oauth2_authorize">
+<span class="sig-name descname"><span class="pre">auto_login_oauth2_authorize</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.auto_login_oauth2_authorize</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.auto_login_oauth2_authorize" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin login process for OAuth2 authorization requests</p>
+<p>When another application is using JupyterHub as OAuth2 provider, it
+sends users to <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>. If the user isn’t logged
+in already, and auto_login is not set, the user will be dumped on the
+hub’s home page, without any context on what to do next.</p>
+<p>Setting this to true will automatically redirect users to login if
+they aren’t logged in <em>only</em> on the <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>
+endpoint.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.blocked_users">
+<span class="sig-name descname"><span class="pre">blocked_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.blocked_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.blocked_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are not allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can not log in. This is an
+additional block list that further restricts users, beyond whatever restrictions the
+authenticator has in place.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.blacklist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">blocked_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.check_allowed">
+<span class="sig-name descname"><span class="pre">check_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authentication</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.check_allowed" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a username is allowed to authenticate based on configuration</p>
+<p>Return True if username is allowed, False otherwise.
+No allowed_users set means any username is allowed.</p>
+<p>Names are normalized <em>before</em> being checked against the allowed set.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0: </span>Signature updated to accept authentication data and any future changes</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span>Renamed check_whitelist to check_allowed</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.check_allowed_groups">
+<span class="sig-name descname"><span class="pre">check_allowed_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authentication</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.check_allowed_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>If allowed_groups is configured, check if authenticating user is part of group.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.create_system_users">
+<span class="sig-name descname"><span class="pre">create_system_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.create_system_users</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.create_system_users" title="Permalink to this definition">#</a></dt>
+<dd><p>If set to True, will attempt to create local system users if they do not exist already.</p>
+<p>Supports Linux and BSD variants only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.delete_invalid_users">
+<span class="sig-name descname"><span class="pre">delete_invalid_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.delete_invalid_users</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.delete_invalid_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Delete any users from the database that do not pass validation</p>
+<p>When JupyterHub starts, <code class="docutils literal notranslate"><span class="pre">.add_user</span></code> will be called
+on each user in the database to verify that all users are still valid.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">delete_invalid_users</span></code> is True,
+any users that do not pass validation will be deleted from the database.
+Use this if users might be deleted from an external system,
+such as local user accounts.</p>
+<p>If False (default), invalid users remain in the Hub’s database
+and a warning will be issued.
+This is the default to avoid data loss due to config changes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.enable_auth_state">
+<span class="sig-name descname"><span class="pre">enable_auth_state</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.enable_auth_state</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.enable_auth_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Enable persisting auth_state (if available).</p>
+<p>auth_state will be encrypted and stored in the Hub’s database.
+This can include things like authentication tokens, etc.
+to be passed to Spawners as environment variables.</p>
+<p>Encrypting auth_state requires the cryptography package.</p>
+<p>Additionally, the JUPYTERHUB_CRYPT_KEY environment variable must
+contain one (or more, separated by ;) 32B encryption keys.
+These can be either base64 or hex-encoded.</p>
+<p>If encryption is unavailable, auth_state cannot be persisted.</p>
+<p>New in JupyterHub 0.8</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.group_whitelist">
+<span class="sig-name descname"><span class="pre">group_whitelist</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.group_whitelist</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.group_whitelist" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED: use allowed_groups</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.manage_groups">
+<span class="sig-name descname"><span class="pre">manage_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.manage_groups</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.manage_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Let authenticator manage user groups</p>
+<p>If True, Authenticator.authenticate and/or .refresh_user
+may return a list of group names in the ‘groups’ field,
+which will be assigned to the user.</p>
+<p>All group-assignment APIs are disabled if this is True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.post_auth_hook">
+<span class="sig-name descname"><span class="pre">post_auth_hook</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.post_auth_hook</span> <span class="pre">=</span> <span class="pre">Any(None)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.post_auth_hook" title="Permalink to this definition">#</a></dt>
+<dd><p>An optional hook function that you can implement to do some
+bootstrapping work during authentication. For example, loading user account
+details from an external system.</p>
+<p>This function is called after the user has passed all authentication checks
+and is ready to successfully authenticate. This function must return the
+authentication dict reguardless of changes to it.</p>
+<p>This maybe a coroutine.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pwd</span>
+<span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">authenticator</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">authentication</span><span class="p">):</span>
+    <span class="n">user_data</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="n">spawn_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;pw_data&#39;</span><span class="p">:</span> <span class="n">user_data</span>
+        <span class="s1">&#39;gid_list&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getgrouplist</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">user_data</span><span class="o">.</span><span class="n">pw_gid</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">][</span><span class="s1">&#39;spawn_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spawn_data</span>
+
+    <span class="k">return</span> <span class="n">authentication</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">post_auth_hook</span> <span class="o">=</span> <span class="n">my_hook</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.refresh_pre_spawn">
+<span class="sig-name descname"><span class="pre">refresh_pre_spawn</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.refresh_pre_spawn</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.refresh_pre_spawn" title="Permalink to this definition">#</a></dt>
+<dd><p>Force refresh of auth prior to spawn.</p>
+<p>This forces <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> to be called prior to launching
+a server, to ensure that auth state is up-to-date.</p>
+<p>This can be important when e.g. auth tokens that may have expired
+are passed to the spawner via environment variables from auth_state.</p>
+<p>If refresh_user cannot refresh the user auth data,
+launch will fail until the user logs in again.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.system_user_exists">
+<span class="sig-name descname"><span class="pre">system_user_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.system_user_exists" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if the user exists on the system</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.uids">
+<span class="sig-name descname"><span class="pre">uids</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.uids</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.uids" title="Permalink to this definition">#</a></dt>
+<dd><p>Dictionary of uids to use at user creation time.
+This helps ensure that users created from the database
+get the same uid each time they are created
+in temporary deployments or containers.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.username_map">
+<span class="sig-name descname"><span class="pre">username_map</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.username_map</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.username_map" title="Permalink to this definition">#</a></dt>
+<dd><p>Dictionary mapping authenticator usernames to JupyterHub users.</p>
+<p>Primarily used to normalize OAuth user names to local users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.username_pattern">
+<span class="sig-name descname"><span class="pre">username_pattern</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.username_pattern</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.username_pattern" title="Permalink to this definition">#</a></dt>
+<dd><p>Regular expression pattern that all valid usernames must match.</p>
+<p>If a username does not match the pattern specified here, authentication will not be attempted.</p>
+<p>If not set, allow any username.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.LocalAuthenticator.whitelist">
+<span class="sig-name descname"><span class="pre">whitelist</span></span><em class="property"><span class="w"> </span><span class="pre">c.LocalAuthenticator.whitelist</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.LocalAuthenticator.whitelist" title="Permalink to this definition">#</a></dt>
+<dd><p>Deprecated, use <code class="docutils literal notranslate"><span class="pre">Authenticator.allowed_users</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pamauthenticator">
+<h3><a class="reference internal" href="#jupyterhub.auth.PAMAuthenticator" title="jupyterhub.auth.PAMAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PAMAuthenticator</span></code></a><a class="headerlink" href="#pamauthenticator" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.auth.</span></span><span class="sig-name descname"><span class="pre">PAMAuthenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator" title="Permalink to this definition">#</a></dt>
+<dd><p>Authenticate local UNIX users with PAM</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.add_user_cmd">
+<span class="sig-name descname"><span class="pre">add_user_cmd</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.add_user_cmd</span> <span class="pre">=</span> <span class="pre">Command()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.add_user_cmd" title="Permalink to this definition">#</a></dt>
+<dd><p>The command to use for creating users as a list of strings</p>
+<p>For each element in the list, the string USERNAME will be replaced with
+the user’s username. The username will also be appended as the final argument.</p>
+<p>For Linux, the default value is:</p>
+<blockquote>
+<div><p>[‘adduser’, ‘-q’, ‘–gecos’, ‘””’, ‘–disabled-password’]</p>
+</div></blockquote>
+<p>To specify a custom home directory, set this to:</p>
+<blockquote>
+<div><p>[‘adduser’, ‘-q’, ‘–gecos’, ‘””’, ‘–home’, ‘/customhome/USERNAME’, ‘–disabled-password’]</p>
+</div></blockquote>
+<p>This will run the command:</p>
+<blockquote>
+<div><p>adduser -q –gecos “” –home /customhome/river –disabled-password river</p>
+</div></blockquote>
+<p>when the user ‘river’ is created.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.admin_groups">
+<span class="sig-name descname"><span class="pre">admin_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.admin_groups</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.admin_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Authoritative list of user groups that determine admin access.
+Users not in these groups can still be granted admin status through admin_users.</p>
+<p>allowed/blocked rules still apply.</p>
+<p>Note: As of JupyterHub 2.0,
+full admin rights should not be required,
+and more precise permissions can be managed via roles.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.admin_users">
+<span class="sig-name descname"><span class="pre">admin_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.admin_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.admin_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of users that will have admin rights on this JupyterHub.</p>
+<p>Note: As of JupyterHub 2.0,
+full admin rights should not be required,
+and more precise permissions can be managed via roles.</p>
+<dl class="simple">
+<dt>Admin users have extra privileges:</dt><dd><ul class="simple">
+<li><p>Use the admin panel to see list of users logged in</p></li>
+<li><p>Add / remove users in some authenticators</p></li>
+<li><p>Restart / halt the hub</p></li>
+<li><p>Start / stop users’ single-user servers</p></li>
+<li><p>Can access each individual users’ single-user server (if configured)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Admin access should be treated the same way root access is.</p>
+<p>Defaults to an empty set, in which case no user has admin access.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.allowed_groups">
+<span class="sig-name descname"><span class="pre">allowed_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.allowed_groups</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.allowed_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Allow login from all users in these UNIX groups.</p>
+<p>If set, allowed username set is ignored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.allowed_users">
+<span class="sig-name descname"><span class="pre">allowed_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.allowed_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.allowed_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can log in. This is an
+additional list that further restricts users, beyond whatever restrictions the
+authenticator has in place. Any user in this list is granted the ‘user’ role on hub startup.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.whitelist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">allowed_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.auth_refresh_age">
+<span class="sig-name descname"><span class="pre">auth_refresh_age</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.auth_refresh_age</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.auth_refresh_age" title="Permalink to this definition">#</a></dt>
+<dd><p>The max age (in seconds) of authentication info
+before forcing a refresh of user auth info.</p>
+<p>Refreshing auth info allows, e.g. requesting/re-validating auth tokens.</p>
+<p>See <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> for what happens when user auth info is refreshed
+(nothing by default).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.auto_login">
+<span class="sig-name descname"><span class="pre">auto_login</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.auto_login</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.auto_login" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin the login process</p>
+<p>rather than starting with a “Login with…” link at <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code></p>
+<p>To work, <code class="docutils literal notranslate"><span class="pre">.login_url()</span></code> must give a URL other than the default <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code>,
+such as an oauth handler or another automatic login handler,
+registered with <code class="docutils literal notranslate"><span class="pre">.get_handlers()</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.auto_login_oauth2_authorize">
+<span class="sig-name descname"><span class="pre">auto_login_oauth2_authorize</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.auto_login_oauth2_authorize</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.auto_login_oauth2_authorize" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin login process for OAuth2 authorization requests</p>
+<p>When another application is using JupyterHub as OAuth2 provider, it
+sends users to <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>. If the user isn’t logged
+in already, and auto_login is not set, the user will be dumped on the
+hub’s home page, without any context on what to do next.</p>
+<p>Setting this to true will automatically redirect users to login if
+they aren’t logged in <em>only</em> on the <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>
+endpoint.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.blocked_users">
+<span class="sig-name descname"><span class="pre">blocked_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.blocked_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.blocked_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are not allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can not log in. This is an
+additional block list that further restricts users, beyond whatever restrictions the
+authenticator has in place.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.blacklist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">blocked_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.check_account">
+<span class="sig-name descname"><span class="pre">check_account</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.check_account</span> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.check_account" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether to check the user’s account status via PAM during authentication.</p>
+<p>The PAM account stack performs non-authentication based account
+management. It is typically used to restrict/permit access to a
+service and this step is needed to access the host’s user access control.</p>
+<p>Disabling this can be dangerous as authenticated but unauthorized users may
+be granted access and, therefore, arbitrary execution on the system.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.create_system_users">
+<span class="sig-name descname"><span class="pre">create_system_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.create_system_users</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.create_system_users" title="Permalink to this definition">#</a></dt>
+<dd><p>If set to True, will attempt to create local system users if they do not exist already.</p>
+<p>Supports Linux and BSD variants only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.delete_invalid_users">
+<span class="sig-name descname"><span class="pre">delete_invalid_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.delete_invalid_users</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.delete_invalid_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Delete any users from the database that do not pass validation</p>
+<p>When JupyterHub starts, <code class="docutils literal notranslate"><span class="pre">.add_user</span></code> will be called
+on each user in the database to verify that all users are still valid.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">delete_invalid_users</span></code> is True,
+any users that do not pass validation will be deleted from the database.
+Use this if users might be deleted from an external system,
+such as local user accounts.</p>
+<p>If False (default), invalid users remain in the Hub’s database
+and a warning will be issued.
+This is the default to avoid data loss due to config changes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.enable_auth_state">
+<span class="sig-name descname"><span class="pre">enable_auth_state</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.enable_auth_state</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.enable_auth_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Enable persisting auth_state (if available).</p>
+<p>auth_state will be encrypted and stored in the Hub’s database.
+This can include things like authentication tokens, etc.
+to be passed to Spawners as environment variables.</p>
+<p>Encrypting auth_state requires the cryptography package.</p>
+<p>Additionally, the JUPYTERHUB_CRYPT_KEY environment variable must
+contain one (or more, separated by ;) 32B encryption keys.
+These can be either base64 or hex-encoded.</p>
+<p>If encryption is unavailable, auth_state cannot be persisted.</p>
+<p>New in JupyterHub 0.8</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.encoding">
+<span class="sig-name descname"><span class="pre">encoding</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.encoding</span> <span class="pre">=</span> <span class="pre">Unicode('utf8')</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.encoding" title="Permalink to this definition">#</a></dt>
+<dd><p>The text encoding to use when communicating with PAM</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.group_whitelist">
+<span class="sig-name descname"><span class="pre">group_whitelist</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.group_whitelist</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.group_whitelist" title="Permalink to this definition">#</a></dt>
+<dd><p>DEPRECATED: use allowed_groups</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.manage_groups">
+<span class="sig-name descname"><span class="pre">manage_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.manage_groups</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.manage_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Let authenticator manage user groups</p>
+<p>If True, Authenticator.authenticate and/or .refresh_user
+may return a list of group names in the ‘groups’ field,
+which will be assigned to the user.</p>
+<p>All group-assignment APIs are disabled if this is True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.open_sessions">
+<span class="sig-name descname"><span class="pre">open_sessions</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.open_sessions</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.open_sessions" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether to open a new PAM session when spawners are started.</p>
+<p>This may trigger things like mounting shared filesystems,
+loading credentials, etc. depending on system configuration.</p>
+<p>The lifecycle of PAM sessions is not correct,
+so many PAM session configurations will not work.</p>
+<p>If any errors are encountered when opening/closing PAM sessions,
+this is automatically set to False.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2: </span>Due to longstanding problems in the session lifecycle,
+this is now disabled by default.
+You may opt-in to opening sessions by setting this to True.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.pam_normalize_username">
+<span class="sig-name descname"><span class="pre">pam_normalize_username</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.pam_normalize_username</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.pam_normalize_username" title="Permalink to this definition">#</a></dt>
+<dd><p>Round-trip the username via PAM lookups to make sure it is unique</p>
+<p>PAM can accept multiple usernames that map to the same user,
+for example DOMAINusername in some cases.  To prevent this,
+convert username into uid, then back to uid to normalize.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.post_auth_hook">
+<span class="sig-name descname"><span class="pre">post_auth_hook</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.post_auth_hook</span> <span class="pre">=</span> <span class="pre">Any(None)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.post_auth_hook" title="Permalink to this definition">#</a></dt>
+<dd><p>An optional hook function that you can implement to do some
+bootstrapping work during authentication. For example, loading user account
+details from an external system.</p>
+<p>This function is called after the user has passed all authentication checks
+and is ready to successfully authenticate. This function must return the
+authentication dict reguardless of changes to it.</p>
+<p>This maybe a coroutine.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pwd</span>
+<span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">authenticator</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">authentication</span><span class="p">):</span>
+    <span class="n">user_data</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="n">spawn_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;pw_data&#39;</span><span class="p">:</span> <span class="n">user_data</span>
+        <span class="s1">&#39;gid_list&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getgrouplist</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">user_data</span><span class="o">.</span><span class="n">pw_gid</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">][</span><span class="s1">&#39;spawn_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spawn_data</span>
+
+    <span class="k">return</span> <span class="n">authentication</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">post_auth_hook</span> <span class="o">=</span> <span class="n">my_hook</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.refresh_pre_spawn">
+<span class="sig-name descname"><span class="pre">refresh_pre_spawn</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.refresh_pre_spawn</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.refresh_pre_spawn" title="Permalink to this definition">#</a></dt>
+<dd><p>Force refresh of auth prior to spawn.</p>
+<p>This forces <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> to be called prior to launching
+a server, to ensure that auth state is up-to-date.</p>
+<p>This can be important when e.g. auth tokens that may have expired
+are passed to the spawner via environment variables from auth_state.</p>
+<p>If refresh_user cannot refresh the user auth data,
+launch will fail until the user logs in again.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.service">
+<span class="sig-name descname"><span class="pre">service</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.service</span> <span class="pre">=</span> <span class="pre">Unicode('login')</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.service" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the PAM service to use for authentication</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.uids">
+<span class="sig-name descname"><span class="pre">uids</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.uids</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.uids" title="Permalink to this definition">#</a></dt>
+<dd><p>Dictionary of uids to use at user creation time.
+This helps ensure that users created from the database
+get the same uid each time they are created
+in temporary deployments or containers.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.username_map">
+<span class="sig-name descname"><span class="pre">username_map</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.username_map</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.username_map" title="Permalink to this definition">#</a></dt>
+<dd><p>Dictionary mapping authenticator usernames to JupyterHub users.</p>
+<p>Primarily used to normalize OAuth user names to local users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.username_pattern">
+<span class="sig-name descname"><span class="pre">username_pattern</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.username_pattern</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.username_pattern" title="Permalink to this definition">#</a></dt>
+<dd><p>Regular expression pattern that all valid usernames must match.</p>
+<p>If a username does not match the pattern specified here, authentication will not be attempted.</p>
+<p>If not set, allow any username.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.PAMAuthenticator.whitelist">
+<span class="sig-name descname"><span class="pre">whitelist</span></span><em class="property"><span class="w"> </span><span class="pre">c.PAMAuthenticator.whitelist</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.PAMAuthenticator.whitelist" title="Permalink to this definition">#</a></dt>
+<dd><p>Deprecated, use <code class="docutils literal notranslate"><span class="pre">Authenticator.allowed_users</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="dummyauthenticator">
+<h3><a class="reference internal" href="#jupyterhub.auth.DummyAuthenticator" title="jupyterhub.auth.DummyAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DummyAuthenticator</span></code></a><a class="headerlink" href="#dummyauthenticator" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jupyterhub.auth.</span></span><span class="sig-name descname"><span class="pre">DummyAuthenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator" title="Permalink to this definition">#</a></dt>
+<dd><p>Dummy Authenticator for testing</p>
+<p>By default, any username + password is allowed
+If a non-empty password is set, any username will be allowed
+if it logs in with that password.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.0.</span></p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.admin_users">
+<span class="sig-name descname"><span class="pre">admin_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.admin_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.admin_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of users that will have admin rights on this JupyterHub.</p>
+<p>Note: As of JupyterHub 2.0,
+full admin rights should not be required,
+and more precise permissions can be managed via roles.</p>
+<dl class="simple">
+<dt>Admin users have extra privileges:</dt><dd><ul class="simple">
+<li><p>Use the admin panel to see list of users logged in</p></li>
+<li><p>Add / remove users in some authenticators</p></li>
+<li><p>Restart / halt the hub</p></li>
+<li><p>Start / stop users’ single-user servers</p></li>
+<li><p>Can access each individual users’ single-user server (if configured)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Admin access should be treated the same way root access is.</p>
+<p>Defaults to an empty set, in which case no user has admin access.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.allowed_users">
+<span class="sig-name descname"><span class="pre">allowed_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.allowed_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.allowed_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can log in. This is an
+additional list that further restricts users, beyond whatever restrictions the
+authenticator has in place. Any user in this list is granted the ‘user’ role on hub startup.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.whitelist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">allowed_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.auth_refresh_age">
+<span class="sig-name descname"><span class="pre">auth_refresh_age</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.auth_refresh_age</span> <span class="pre">=</span> <span class="pre">Int(300)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.auth_refresh_age" title="Permalink to this definition">#</a></dt>
+<dd><p>The max age (in seconds) of authentication info
+before forcing a refresh of user auth info.</p>
+<p>Refreshing auth info allows, e.g. requesting/re-validating auth tokens.</p>
+<p>See <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> for what happens when user auth info is refreshed
+(nothing by default).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.auto_login">
+<span class="sig-name descname"><span class="pre">auto_login</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.auto_login</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.auto_login" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin the login process</p>
+<p>rather than starting with a “Login with…” link at <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code></p>
+<p>To work, <code class="docutils literal notranslate"><span class="pre">.login_url()</span></code> must give a URL other than the default <code class="docutils literal notranslate"><span class="pre">/hub/login</span></code>,
+such as an oauth handler or another automatic login handler,
+registered with <code class="docutils literal notranslate"><span class="pre">.get_handlers()</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.auto_login_oauth2_authorize">
+<span class="sig-name descname"><span class="pre">auto_login_oauth2_authorize</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.auto_login_oauth2_authorize</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.auto_login_oauth2_authorize" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically begin login process for OAuth2 authorization requests</p>
+<p>When another application is using JupyterHub as OAuth2 provider, it
+sends users to <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>. If the user isn’t logged
+in already, and auto_login is not set, the user will be dumped on the
+hub’s home page, without any context on what to do next.</p>
+<p>Setting this to true will automatically redirect users to login if
+they aren’t logged in <em>only</em> on the <code class="docutils literal notranslate"><span class="pre">/hub/api/oauth2/authorize</span></code>
+endpoint.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.blocked_users">
+<span class="sig-name descname"><span class="pre">blocked_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.blocked_users</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.blocked_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Set of usernames that are not allowed to log in.</p>
+<p>Use this with supported authenticators to restrict which users can not log in. This is an
+additional block list that further restricts users, beyond whatever restrictions the
+authenticator has in place.</p>
+<p>If empty, does not perform any additional restriction.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">Authenticator.blacklist</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">blocked_users</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.delete_invalid_users">
+<span class="sig-name descname"><span class="pre">delete_invalid_users</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.delete_invalid_users</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.delete_invalid_users" title="Permalink to this definition">#</a></dt>
+<dd><p>Delete any users from the database that do not pass validation</p>
+<p>When JupyterHub starts, <code class="docutils literal notranslate"><span class="pre">.add_user</span></code> will be called
+on each user in the database to verify that all users are still valid.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">delete_invalid_users</span></code> is True,
+any users that do not pass validation will be deleted from the database.
+Use this if users might be deleted from an external system,
+such as local user accounts.</p>
+<p>If False (default), invalid users remain in the Hub’s database
+and a warning will be issued.
+This is the default to avoid data loss due to config changes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.enable_auth_state">
+<span class="sig-name descname"><span class="pre">enable_auth_state</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.enable_auth_state</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.enable_auth_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Enable persisting auth_state (if available).</p>
+<p>auth_state will be encrypted and stored in the Hub’s database.
+This can include things like authentication tokens, etc.
+to be passed to Spawners as environment variables.</p>
+<p>Encrypting auth_state requires the cryptography package.</p>
+<p>Additionally, the JUPYTERHUB_CRYPT_KEY environment variable must
+contain one (or more, separated by ;) 32B encryption keys.
+These can be either base64 or hex-encoded.</p>
+<p>If encryption is unavailable, auth_state cannot be persisted.</p>
+<p>New in JupyterHub 0.8</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.manage_groups">
+<span class="sig-name descname"><span class="pre">manage_groups</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.manage_groups</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.manage_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>Let authenticator manage user groups</p>
+<p>If True, Authenticator.authenticate and/or .refresh_user
+may return a list of group names in the ‘groups’ field,
+which will be assigned to the user.</p>
+<p>All group-assignment APIs are disabled if this is True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.password">
+<span class="sig-name descname"><span class="pre">password</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.password</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.password" title="Permalink to this definition">#</a></dt>
+<dd><p>Set a global password for all users wanting to log in.</p>
+<p>This allows users with any username to log in with the same static password.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.post_auth_hook">
+<span class="sig-name descname"><span class="pre">post_auth_hook</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.post_auth_hook</span> <span class="pre">=</span> <span class="pre">Any(None)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.post_auth_hook" title="Permalink to this definition">#</a></dt>
+<dd><p>An optional hook function that you can implement to do some
+bootstrapping work during authentication. For example, loading user account
+details from an external system.</p>
+<p>This function is called after the user has passed all authentication checks
+and is ready to successfully authenticate. This function must return the
+authentication dict reguardless of changes to it.</p>
+<p>This maybe a coroutine.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pwd</span>
+<span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">authenticator</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">authentication</span><span class="p">):</span>
+    <span class="n">user_data</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="n">spawn_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;pw_data&#39;</span><span class="p">:</span> <span class="n">user_data</span>
+        <span class="s1">&#39;gid_list&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getgrouplist</span><span class="p">(</span><span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">user_data</span><span class="o">.</span><span class="n">pw_gid</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">authentication</span><span class="p">[</span><span class="s1">&#39;auth_state&#39;</span><span class="p">][</span><span class="s1">&#39;spawn_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spawn_data</span>
+
+    <span class="k">return</span> <span class="n">authentication</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">post_auth_hook</span> <span class="o">=</span> <span class="n">my_hook</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.refresh_pre_spawn">
+<span class="sig-name descname"><span class="pre">refresh_pre_spawn</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.refresh_pre_spawn</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.refresh_pre_spawn" title="Permalink to this definition">#</a></dt>
+<dd><p>Force refresh of auth prior to spawn.</p>
+<p>This forces <a class="reference internal" href="#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_user()</span></code></a> to be called prior to launching
+a server, to ensure that auth state is up-to-date.</p>
+<p>This can be important when e.g. auth tokens that may have expired
+are passed to the spawner via environment variables from auth_state.</p>
+<p>If refresh_user cannot refresh the user auth data,
+launch will fail until the user logs in again.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.username_map">
+<span class="sig-name descname"><span class="pre">username_map</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.username_map</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.username_map" title="Permalink to this definition">#</a></dt>
+<dd><p>Dictionary mapping authenticator usernames to JupyterHub users.</p>
+<p>Primarily used to normalize OAuth user names to local users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.username_pattern">
+<span class="sig-name descname"><span class="pre">username_pattern</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.username_pattern</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.username_pattern" title="Permalink to this definition">#</a></dt>
+<dd><p>Regular expression pattern that all valid usernames must match.</p>
+<p>If a username does not match the pattern specified here, authentication will not be attempted.</p>
+<p>If not set, allow any username.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jupyterhub.auth.DummyAuthenticator.whitelist">
+<span class="sig-name descname"><span class="pre">whitelist</span></span><em class="property"><span class="w"> </span><span class="pre">c.DummyAuthenticator.whitelist</span> <span class="pre">=</span> <span class="pre">Set()</span></em><a class="headerlink" href="#jupyterhub.auth.DummyAuthenticator.whitelist" title="Permalink to this definition">#</a></dt>
+<dd><p>Deprecated, use <code class="docutils literal notranslate"><span class="pre">Authenticator.allowed_users</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="app.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Application configuration</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="spawner.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Spawners</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-jupyterhub.auth">
+   Module:
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     jupyterhub.auth
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#authenticator">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       Authenticator
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Authenticator
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.add_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.add_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.admin_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.admin_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.allowed_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.allowed_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.auth_refresh_age">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.auth_refresh_age
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.authenticate">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.authenticate()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.auto_login">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.auto_login
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.auto_login_oauth2_authorize">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.auto_login_oauth2_authorize
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.blocked_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.blocked_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.check_allowed">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.check_allowed()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.check_blocked_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.check_blocked_users()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.delete_invalid_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.delete_invalid_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.delete_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.delete_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.enable_auth_state">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.enable_auth_state
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.get_authenticated_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.get_authenticated_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.get_custom_html">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.get_custom_html()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.get_handlers">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.get_handlers()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.is_admin">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.is_admin()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.login_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.login_url()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.logout_url">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.logout_url()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.manage_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.manage_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.normalize_username">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.normalize_username()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.post_auth_hook">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.post_auth_hook
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.post_spawn_stop">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.post_spawn_stop()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.pre_spawn_start">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.pre_spawn_start()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.refresh_pre_spawn">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.refresh_pre_spawn
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.refresh_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.refresh_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.run_post_auth_hook">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.run_post_auth_hook()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.username_map">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.username_map
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.username_pattern">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.username_pattern
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.validate_username">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.validate_username()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.Authenticator.whitelist">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Authenticator.whitelist
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#localauthenticator">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       LocalAuthenticator
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalAuthenticator
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.add_system_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.add_system_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.add_user">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.add_user()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.add_user_cmd">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.add_user_cmd
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.admin_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.admin_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.allowed_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.allowed_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.allowed_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.allowed_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.auth_refresh_age">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.auth_refresh_age
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.auto_login">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.auto_login
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.auto_login_oauth2_authorize">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.auto_login_oauth2_authorize
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.blocked_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.blocked_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.check_allowed">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.check_allowed()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.check_allowed_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.check_allowed_groups()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.create_system_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.create_system_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.delete_invalid_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.delete_invalid_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.enable_auth_state">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.enable_auth_state
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.group_whitelist">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.group_whitelist
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.manage_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.manage_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.post_auth_hook">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.post_auth_hook
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.refresh_pre_spawn">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.refresh_pre_spawn
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.system_user_exists">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.system_user_exists()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.uids">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.uids
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.username_map">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.username_map
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.username_pattern">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.username_pattern
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.LocalAuthenticator.whitelist">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LocalAuthenticator.whitelist
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pamauthenticator">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       PAMAuthenticator
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         PAMAuthenticator
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.add_user_cmd">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.add_user_cmd
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.admin_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.admin_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.admin_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.admin_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.allowed_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.allowed_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.allowed_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.allowed_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.auth_refresh_age">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.auth_refresh_age
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.auto_login">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.auto_login
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.auto_login_oauth2_authorize">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.auto_login_oauth2_authorize
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.blocked_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.blocked_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.check_account">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.check_account
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.create_system_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.create_system_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.delete_invalid_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.delete_invalid_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.enable_auth_state">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.enable_auth_state
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.encoding">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.encoding
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.group_whitelist">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.group_whitelist
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.manage_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.manage_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.open_sessions">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.open_sessions
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.pam_normalize_username">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.pam_normalize_username
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.post_auth_hook">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.post_auth_hook
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.refresh_pre_spawn">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.refresh_pre_spawn
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.service">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.service
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.uids">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.uids
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.username_map">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.username_map
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.username_pattern">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.username_pattern
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.PAMAuthenticator.whitelist">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           PAMAuthenticator.whitelist
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dummyauthenticator">
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       DummyAuthenticator
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         DummyAuthenticator
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.admin_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.admin_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.allowed_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.allowed_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.auth_refresh_age">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.auth_refresh_age
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.auto_login">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.auto_login
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.auto_login_oauth2_authorize">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.auto_login_oauth2_authorize
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.blocked_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.blocked_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.delete_invalid_users">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.delete_invalid_users
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.enable_auth_state">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.enable_auth_state
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.manage_groups">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.manage_groups
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.password">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.password
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.post_auth_hook">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.post_auth_hook
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.refresh_pre_spawn">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.refresh_pre_spawn
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.username_map">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.username_map
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.username_pattern">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.username_pattern
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#jupyterhub.auth.DummyAuthenticator.whitelist">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           DummyAuthenticator.whitelist
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/api/auth.rst">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/api/auth.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

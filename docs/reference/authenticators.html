@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Authenticators &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/authenticators';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spawners" href="spawners.html" />
+    <link rel="prev" title="Security Overview" href="websecurity.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-sudo.html">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="authenticators">
+<h1>Authenticators<a class="headerlink" href="#authenticators" title="Permalink to this heading">#</a></h1>
+<p>The <a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator" title="jupyterhub.auth.Authenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Authenticator</span></code></a> is the mechanism for authorizing users to use the
+Hub and single user notebook servers.</p>
+<section id="the-default-pam-authenticator">
+<h2>The default PAM Authenticator<a class="headerlink" href="#the-default-pam-authenticator" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub ships with the default <a class="reference external" href="https://en.wikipedia.org/wiki/Pluggable_authentication_module">PAM</a>-based Authenticator, for
+logging in with local user accounts via a username and password.</p>
+</section>
+<section id="the-oauthenticator">
+<h2>The OAuthenticator<a class="headerlink" href="#the-oauthenticator" title="Permalink to this heading">#</a></h2>
+<p>Some login mechanisms, such as <a class="reference external" href="https://en.wikipedia.org/wiki/OAuth">OAuth</a>, don’t map onto username and
+password authentication, and instead use tokens. When using these
+mechanisms, you can override the login handlers.</p>
+<p>You can see an example implementation of an Authenticator that uses
+<a class="reference external" href="https://developer.github.com/v3/oauth/">GitHub OAuth</a> at <a class="reference external" href="https://github.com/jupyterhub/oauthenticator">OAuthenticator</a>.</p>
+<p>JupyterHub’s <a class="reference external" href="https://github.com/jupyterhub/oauthenticator">OAuthenticator</a> currently supports the following
+popular services:</p>
+<ul class="simple">
+<li><p>Auth0</p></li>
+<li><p>Bitbucket</p></li>
+<li><p>CILogon</p></li>
+<li><p>GitHub</p></li>
+<li><p>GitLab</p></li>
+<li><p>Globus</p></li>
+<li><p>Google</p></li>
+<li><p>MediaWiki</p></li>
+<li><p>Okpy</p></li>
+<li><p>OpenShift</p></li>
+</ul>
+<p>A generic implementation, which you can use for OAuth authentication
+with any provider, is also available.</p>
+</section>
+<section id="the-dummy-authenticator">
+<h2>The Dummy Authenticator<a class="headerlink" href="#the-dummy-authenticator" title="Permalink to this heading">#</a></h2>
+<p>When testing, it may be helpful to use the
+<a class="reference internal" href="../api/auth.html#jupyterhub.auth.DummyAuthenticator" title="jupyterhub.auth.DummyAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">jupyterhub.auth.DummyAuthenticator</span></code></a>. This allows for any username and
+password unless if a global password has been set. Once set, any username will
+still be accepted but the correct password will need to be provided.</p>
+</section>
+<section id="additional-authenticators">
+<h2>Additional Authenticators<a class="headerlink" href="#additional-authenticators" title="Permalink to this heading">#</a></h2>
+<p>A partial list of other authenticators is available on the
+<a class="reference external" href="https://github.com/jupyterhub/jupyterhub/wiki/Authenticators">JupyterHub wiki</a>.</p>
+</section>
+<section id="technical-overview-of-authentication">
+<h2>Technical Overview of Authentication<a class="headerlink" href="#technical-overview-of-authentication" title="Permalink to this heading">#</a></h2>
+<section id="how-the-base-authenticator-works">
+<h3>How the Base Authenticator works<a class="headerlink" href="#how-the-base-authenticator-works" title="Permalink to this heading">#</a></h3>
+<p>The base authenticator uses simple username and password authentication.</p>
+<p>The base Authenticator has one central method:</p>
+<section id="authenticator-authenticate-method">
+<h4>Authenticator.authenticate method<a class="headerlink" href="#authenticator-authenticate-method" title="Permalink to this heading">#</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Authenticator.authenticate(handler, data)
+</pre></div>
+</div>
+<p>This method is passed the Tornado <code class="docutils literal notranslate"><span class="pre">RequestHandler</span></code> and the <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">data</span></code>
+from JupyterHub’s login form. Unless the login form has been customized,
+<code class="docutils literal notranslate"><span class="pre">data</span></code> will have two keys:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password</span></code></p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">authenticate</span></code> method’s job is simple:</p>
+<ul class="simple">
+<li><p>return the username (non-empty str) of the authenticated user if
+authentication is successful</p></li>
+<li><p>return <code class="docutils literal notranslate"><span class="pre">None</span></code> otherwise</p></li>
+</ul>
+<p>Writing an Authenticator that looks up passwords in a dictionary
+requires only overriding this one method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.utils.traitlets</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">jupyterhub.auth</span> <span class="kn">import</span> <span class="n">Authenticator</span>
+
+<span class="k">class</span> <span class="nc">DictionaryAuthenticator</span><span class="p">(</span><span class="n">Authenticator</span><span class="p">):</span>
+
+    <span class="n">passwords</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;dict of username:password for authentication&quot;&quot;&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">passwords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="normalize-usernames">
+<h4>Normalize usernames<a class="headerlink" href="#normalize-usernames" title="Permalink to this heading">#</a></h4>
+<p>Since the Authenticator and Spawner both use the same username,
+sometimes you want to transform the name coming from the authentication service
+(e.g. turning email addresses into local system usernames) before adding them to the Hub service.
+Authenticators can define <code class="docutils literal notranslate"><span class="pre">normalize_username</span></code>, which takes a username.
+The default normalization is to cast names to lowercase</p>
+<p>For simple mappings, a configurable dict <code class="docutils literal notranslate"><span class="pre">Authenticator.username_map</span></code> is used to turn one name into another:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">username_map</span>  <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;service-name&#39;</span><span class="p">:</span> <span class="s1">&#39;localname&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When using <code class="docutils literal notranslate"><span class="pre">PAMAuthenticator</span></code>, you can set
+<code class="docutils literal notranslate"><span class="pre">c.PAMAuthenticator.pam_normalize_username</span> <span class="pre">=</span> <span class="pre">True</span></code>, which will
+normalize usernames using PAM (basically round-tripping them: username
+to uid to username), which is useful in case you use some external
+service that allows multiple usernames mapping to the same user (such
+as ActiveDirectory, yes, this really happens). When
+<code class="docutils literal notranslate"><span class="pre">pam_normalize_username</span></code> is on, usernames are <em>not</em> normalized to
+lowercase.</p>
+</section>
+<section id="validate-usernames">
+<h4>Validate usernames<a class="headerlink" href="#validate-usernames" title="Permalink to this heading">#</a></h4>
+<p>In most cases, there is a very limited set of acceptable usernames.
+Authenticators can define <code class="docutils literal notranslate"><span class="pre">validate_username(username)</span></code>,
+which should return True for a valid username and False for an invalid one.
+The primary effect this has is improving error messages during user creation.</p>
+<p>The default behavior is to use configurable <code class="docutils literal notranslate"><span class="pre">Authenticator.username_pattern</span></code>,
+which is a regular expression string for validation.</p>
+<p>To only allow usernames that start with ‘w’:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">username_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;w.*&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="how-to-write-a-custom-authenticator">
+<h3>How to write a custom authenticator<a class="headerlink" href="#how-to-write-a-custom-authenticator" title="Permalink to this heading">#</a></h3>
+<p>You can use custom Authenticator subclasses to enable authentication
+via other mechanisms. One such example is using <a class="reference external" href="https://developer.github.com/v3/oauth/">GitHub OAuth</a>.</p>
+<p>Because the username is passed from the Authenticator to the Spawner,
+a custom Authenticator and Spawner are often used together.
+For example, the Authenticator methods, <a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.pre_spawn_start" title="jupyterhub.auth.Authenticator.pre_spawn_start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.pre_spawn_start()</span></code></a>
+and <a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.post_spawn_stop" title="jupyterhub.auth.Authenticator.post_spawn_stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.post_spawn_stop()</span></code></a>, are hooks that can be used to do
+auth-related startup (e.g. opening PAM sessions) and cleanup
+(e.g. closing PAM sessions).</p>
+<p>See a list of custom Authenticators <a class="reference external" href="https://github.com/jupyterhub/jupyterhub/wiki/Authenticators">on the wiki</a>.</p>
+<p>If you are interested in writing a custom authenticator, you can read
+<a class="reference external" href="http://jupyterhub-tutorial.readthedocs.io/en/latest/authenticators.html">this tutorial</a>.</p>
+</section>
+<section id="registering-custom-authenticators-via-entry-points">
+<h3>Registering custom Authenticators via entry points<a class="headerlink" href="#registering-custom-authenticators-via-entry-points" title="Permalink to this heading">#</a></h3>
+<p>As of JupyterHub 1.0, custom authenticators can register themselves via
+the <code class="docutils literal notranslate"><span class="pre">jupyterhub.authenticators</span></code> entry point metadata.
+To do this, in your <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
+  <span class="o">...</span>
+  <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;jupyterhub.authenticators&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;myservice = mypackage:MyAuthenticator&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+  <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have added this metadata to your package,
+users can select your authenticator with the configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">authenticator_class</span> <span class="o">=</span> <span class="s1">&#39;myservice&#39;</span>
+</pre></div>
+</div>
+<p>instead of the full</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">JupyterHub</span><span class="o">.</span><span class="n">authenticator_class</span> <span class="o">=</span> <span class="s1">&#39;mypackage:MyAuthenticator&#39;</span>
+</pre></div>
+</div>
+<p>previously required.
+Additionally, configurable attributes for your authenticator will
+appear in jupyterhub help output and auto-generated configuration files
+via <code class="docutils literal notranslate"><span class="pre">jupyterhub</span> <span class="pre">--generate-config</span></code>.</p>
+</section>
+<section id="authentication-state">
+<h3>Authentication state<a class="headerlink" href="#authentication-state" title="Permalink to this heading">#</a></h3>
+<p>JupyterHub 0.8 adds the ability to persist state related to authentication,
+such as auth-related tokens.
+If such state should be persisted, <code class="docutils literal notranslate"><span class="pre">.authenticate()</span></code> should return a dictionary of the form:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+  <span class="s1">&#39;auth_state&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">username</span></code> is the username that has been authenticated,
+and <code class="docutils literal notranslate"><span class="pre">auth_state</span></code> is any JSON-serializable dictionary.</p>
+<p>Because <code class="docutils literal notranslate"><span class="pre">auth_state</span></code> may contain sensitive information,
+it is encrypted before being stored in the database.
+To store auth_state, two conditions must be met:</p>
+<ol class="arabic">
+<li><p>persisting auth state must be enabled explicitly via configuration</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">enable_auth_state</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</li>
+<li><p>encryption must be enabled by the presence of <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_CRYPT_KEY</span></code> environment variable,
+which should be a hex-encoded 32-byte key.
+For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">JUPYTERHUB_CRYPT_KEY</span><span class="o">=</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>JupyterHub uses <a class="reference external" href="https://cryptography.io/en/latest/fernet/">Fernet</a> to encrypt auth_state.
+To facilitate key-rotation, <code class="docutils literal notranslate"><span class="pre">JUPYTERHUB_CRYPT_KEY</span></code> may be a semicolon-separated list of encryption keys.
+If there are multiple keys present, the <strong>first</strong> key is always used to persist any new auth_state.</p>
+<section id="using-auth-state">
+<h4>Using auth_state<a class="headerlink" href="#using-auth-state" title="Permalink to this heading">#</a></h4>
+<p>Typically, if <code class="docutils literal notranslate"><span class="pre">auth_state</span></code> is persisted it is desirable to affect the Spawner environment in some way.
+This may mean defining environment variables, placing certificate in the user’s home directory, etc.
+The <code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.pre_spawn_start()</span></code> method can be used to pass information from authenticator state
+to Spawner environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAuthenticator</span><span class="p">(</span><span class="n">Authenticator</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="k">await</span> <span class="n">identify_user</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">upstream_token</span> <span class="o">=</span> <span class="k">await</span> <span class="n">token_for_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+            <span class="s1">&#39;auth_state&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;upstream_token&#39;</span><span class="p">:</span> <span class="n">upstream_token</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">pre_spawn_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">spawner</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Pass upstream_token to spawner via environment variable&quot;&quot;&quot;</span>
+        <span class="n">auth_state</span> <span class="o">=</span> <span class="k">await</span> <span class="n">user</span><span class="o">.</span><span class="n">get_auth_state</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">auth_state</span><span class="p">:</span>
+            <span class="c1"># auth_state not enabled</span>
+            <span class="k">return</span>
+        <span class="n">spawner</span><span class="o">.</span><span class="n">environment</span><span class="p">[</span><span class="s1">&#39;UPSTREAM_TOKEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth_state</span><span class="p">[</span><span class="s1">&#39;upstream_token&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that environment variable names and values are always strings, so passing multiple values means setting multiple environment variables or serializing more complex data into a single variable, e.g. as a JSON string.</p>
+<p>auth state can also be used to configure the spawner via <em>config</em> without subclassing
+by setting <code class="docutils literal notranslate"><span class="pre">c.Spawner.auth_state_hook</span></code>. This function will be called with <code class="docutils literal notranslate"><span class="pre">(spawner,</span> <span class="pre">auth_state)</span></code>,
+only when auth_state is defined.</p>
+<p>For example:
+(for KubeSpawner)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">auth_state_hook</span><span class="p">(</span><span class="n">spawner</span><span class="p">,</span> <span class="n">auth_state</span><span class="p">):</span>
+    <span class="n">spawner</span><span class="o">.</span><span class="n">volumes</span> <span class="o">=</span> <span class="n">auth_state</span><span class="p">[</span><span class="s1">&#39;user_volumes&#39;</span><span class="p">]</span>
+    <span class="n">spawner</span><span class="o">.</span><span class="n">mounts</span> <span class="o">=</span> <span class="n">auth_state</span><span class="p">[</span><span class="s1">&#39;user_mounts&#39;</span><span class="p">]</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">Spawner</span><span class="o">.</span><span class="n">auth_state_hook</span> <span class="o">=</span> <span class="n">auth_state_hook</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="authenticator-managed-group-membership">
+<span id="authenticator-groups"></span><h2>Authenticator-managed group membership<a class="headerlink" href="#authenticator-managed-group-membership" title="Permalink to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.</span></p>
+</div>
+<p>Some identity providers may have their own concept of group membership that you would like to preserve in JupyterHub.
+This is now possible with <code class="docutils literal notranslate"><span class="pre">Authenticator.managed_groups</span></code>.</p>
+<p>You can set the config:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">Authenticator</span><span class="o">.</span><span class="n">manage_groups</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>to enable this behavior.
+The default is False for Authenticators that ship with JupyterHub,
+but may be True for custom Authenticators.
+Check your Authenticator’s documentation for manage_groups support.</p>
+<p>If True, <a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.authenticate" title="jupyterhub.auth.Authenticator.authenticate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.authenticate()</span></code></a> and <a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.refresh_user" title="jupyterhub.auth.Authenticator.refresh_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.refresh_user()</span></code></a> may include a field <code class="docutils literal notranslate"><span class="pre">groups</span></code>
+which is a list of group names the user should be a member of:</p>
+<ul class="simple">
+<li><p>Membership will be added for any group in the list</p></li>
+<li><p>Membership in any groups not in the list will be revoked</p></li>
+<li><p>Any groups not already present in the database will be created</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> is returned, no changes are made to the user’s group membership</p></li>
+</ul>
+<p>If authenticator-managed groups are enabled,
+all group-management via the API is disabled.</p>
+</section>
+<section id="pre-spawn-start-and-post-spawn-stop-hooks">
+<h2>pre_spawn_start and post_spawn_stop hooks<a class="headerlink" href="#pre-spawn-start-and-post-spawn-stop-hooks" title="Permalink to this heading">#</a></h2>
+<p>Authenticators uses two hooks, <a class="reference internal" href="../api/auth.html#jupyterhub.auth.Authenticator.pre_spawn_start" title="jupyterhub.auth.Authenticator.pre_spawn_start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.pre_spawn_start()</span></code></a> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Authenticator.post_spawn_stop(user,</span> <span class="pre">spawner)()</span></code> to add pass additional state information
+between the authenticator and a spawner. These hooks are typically used auth-related
+startup, i.e. opening a PAM session, and auth-related cleanup, i.e. closing a
+PAM session.</p>
+</section>
+<section id="jupyterhub-as-an-oauth-provider">
+<h2>JupyterHub as an OAuth provider<a class="headerlink" href="#jupyterhub-as-an-oauth-provider" title="Permalink to this heading">#</a></h2>
+<p>Beginning with version 0.8, JupyterHub is an OAuth provider.</p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="websecurity.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Security Overview</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="spawners.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Spawners</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-default-pam-authenticator">
+   The default PAM Authenticator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-oauthenticator">
+   The OAuthenticator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-dummy-authenticator">
+   The Dummy Authenticator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additional-authenticators">
+   Additional Authenticators
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#technical-overview-of-authentication">
+   Technical Overview of Authentication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-the-base-authenticator-works">
+     How the Base Authenticator works
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#authenticator-authenticate-method">
+       Authenticator.authenticate method
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#normalize-usernames">
+       Normalize usernames
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#validate-usernames">
+       Validate usernames
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-to-write-a-custom-authenticator">
+     How to write a custom authenticator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#registering-custom-authenticators-via-entry-points">
+     Registering custom Authenticators via entry points
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#authentication-state">
+     Authentication state
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#using-auth-state">
+       Using auth_state
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authenticator-managed-group-membership">
+   Authenticator-managed group membership
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pre-spawn-start-and-post-spawn-stop-hooks">
+   pre_spawn_start and post_spawn_stop hooks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jupyterhub-as-an-oauth-provider">
+   JupyterHub as an OAuth provider
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/authenticators.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/authenticators.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

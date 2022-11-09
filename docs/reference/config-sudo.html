@@ -1,0 +1,858 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Run JupyterHub without root privileges using sudo &#8212; JupyterHub 3.1.0.dev documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/config-sudo';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuration Reference" href="config-reference.html" />
+    <link rel="prev" title="Using a reverse proxy" href="config-proxy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class=" navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../installation-guide.html">
+                        Installation
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../getting-started/index.html">
+                        Get Started
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="index.html">
+                        Technical Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-admin.html">
+                        Administrator’s Guide
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../api/index.html">
+                        JupyterHub API
+                    </a>
+                </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                <li class="nav-item">
+                    <a class="nav-link" href="../rbac/index.html">
+                        JupyterHub RBAC
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/index.html">
+                        Contributing
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index-about.html">
+                        About
+                    </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/jupyterhub/jupyterhub" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://discourse.jupyter.org/c/jupyterhub/10" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="technical-overview.html">Technical Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">JupyterHub URL scheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websecurity.html">Security Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authenticators.html">Authenticators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawners.html">Spawners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Writing a custom Proxy implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="separate-proxy.html">Running proxy separately from the hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest.html">Using JupyterHub’s REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">JupyterHub REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Starting servers with the JupyterHub API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="monitoring.html">Monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">List of Prometheus Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">The Hub’s Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with templates and UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-only.html">Deploying JupyterHub in “API only mode”</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../events/index.html">Eventlogging and Telemetry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../events/server-actions.html">JupyterHub server events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-user-env.html">Configuring user environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-examples.html">Configuration examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-ghoauth.html">Configure GitHub OAuth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-proxy.html">Using a reverse proxy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-reference.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oauth.html">JupyterHub and OAuth</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="run-jupyterhub-without-root-privileges-using-sudo">
+<h1>Run JupyterHub without root privileges using <code class="docutils literal notranslate"><span class="pre">sudo</span></code><a class="headerlink" href="#run-jupyterhub-without-root-privileges-using-sudo" title="Permalink to this heading">#</a></h1>
+<p><strong>Note:</strong> Setting up <code class="docutils literal notranslate"><span class="pre">sudo</span></code> permissions involves many pieces of system
+configuration. It is quite easy to get wrong and very difficult to debug.
+Only do this if you are very sure you must.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>There are many Authenticators and Spawners available for JupyterHub. Some, such
+as DockerSpawner or OAuthenticator, do not need any elevated permissions. This
+document describes how to get the full default behavior of JupyterHub while
+running notebook servers as real system users on a shared system without
+running the Hub itself as root.</p>
+<p>Since JupyterHub needs to spawn processes as other users, the simplest way
+is to run it as root, spawning user servers with <a class="reference external" href="http://linux.die.net/man/2/setuid">setuid</a>.
+But this isn’t especially safe, because you have a process running on the
+public web as root.</p>
+<p>A <strong>more prudent way</strong> to run the server while preserving functionality is to
+create a dedicated user with <code class="docutils literal notranslate"><span class="pre">sudo</span></code> access restricted to launching and
+monitoring single-user servers.</p>
+</section>
+<section id="create-a-user">
+<h2>Create a user<a class="headerlink" href="#create-a-user" title="Permalink to this heading">#</a></h2>
+<p>To do this, first create a user that will run the Hub:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo useradd rhea
+</pre></div>
+</div>
+<p>This user shouldn’t have a login shell or password (possible with -r).</p>
+</section>
+<section id="set-up-sudospawner">
+<h2>Set up sudospawner<a class="headerlink" href="#set-up-sudospawner" title="Permalink to this heading">#</a></h2>
+<p>Next, you will need <a class="reference external" href="https://github.com/jupyter/sudospawner">sudospawner</a>
+to enable monitoring the single-user servers with sudo:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo python3 -m pip install sudospawner
+</pre></div>
+</div>
+<p>Now we have to configure sudo to allow the Hub user (<code class="docutils literal notranslate"><span class="pre">rhea</span></code>) to launch
+the sudospawner script on behalf of our hub users (here <code class="docutils literal notranslate"><span class="pre">zoe</span></code> and <code class="docutils literal notranslate"><span class="pre">wash</span></code>).
+We want to confine these permissions to only what we really need.</p>
+</section>
+<section id="edit-etc-sudoers">
+<h2>Edit <code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code><a class="headerlink" href="#edit-etc-sudoers" title="Permalink to this heading">#</a></h2>
+<p>To do this we add to <code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> (use <code class="docutils literal notranslate"><span class="pre">visudo</span></code> for safe editing of sudoers):</p>
+<ul class="simple">
+<li><p>specify the list of users <code class="docutils literal notranslate"><span class="pre">JUPYTER_USERS</span></code> for whom <code class="docutils literal notranslate"><span class="pre">rhea</span></code> can spawn servers</p></li>
+<li><p>set the command <code class="docutils literal notranslate"><span class="pre">JUPYTER_CMD</span></code> that <code class="docutils literal notranslate"><span class="pre">rhea</span></code> can execute on behalf of users</p></li>
+<li><p>give <code class="docutils literal notranslate"><span class="pre">rhea</span></code> permission to run <code class="docutils literal notranslate"><span class="pre">JUPYTER_CMD</span></code> on behalf of <code class="docutils literal notranslate"><span class="pre">JUPYTER_USERS</span></code>
+without entering a password</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># comma-separated list of users that can spawn single-user servers</span>
+<span class="c1"># this should include all of your Hub users</span>
+Runas_Alias <span class="nv">JUPYTER_USERS</span> <span class="o">=</span> rhea, zoe, wash
+
+<span class="c1"># the command(s) the Hub can run on behalf of the above users without needing a password</span>
+<span class="c1"># the exact path may differ, depending on how sudospawner was installed</span>
+Cmnd_Alias <span class="nv">JUPYTER_CMD</span> <span class="o">=</span> /usr/local/bin/sudospawner
+
+<span class="c1"># actually give the Hub user permission to run the above command on behalf</span>
+<span class="c1"># of the above users without prompting for a password</span>
+rhea <span class="nv">ALL</span><span class="o">=(</span>JUPYTER_USERS<span class="o">)</span> NOPASSWD:JUPYTER_CMD
+</pre></div>
+</div>
+<p>It might be useful to modify <code class="docutils literal notranslate"><span class="pre">secure_path</span></code> to add commands in path.</p>
+<p>As an alternative to adding every user to the <code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> file, you can
+use a group in the last line above, instead of <code class="docutils literal notranslate"><span class="pre">JUPYTER_USERS</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rhea <span class="nv">ALL</span><span class="o">=(</span>%jupyterhub<span class="o">)</span> NOPASSWD:JUPYTER_CMD
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">jupyterhub</span></code> group exists, there will be no need to edit <code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code>
+again. A new user will gain access to the application when added to the group:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ adduser -G jupyterhub newuser
+</pre></div>
+</div>
+</section>
+<section id="test-sudo-setup">
+<h2>Test <code class="docutils literal notranslate"><span class="pre">sudo</span></code> setup<a class="headerlink" href="#test-sudo-setup" title="Permalink to this heading">#</a></h2>
+<p>Test that the new user doesn’t need to enter a password to run the sudospawner
+command.</p>
+<p>This should prompt for your password to switch to rhea, but <em>not</em> prompt for
+any password for the second switch. It should show some help output about
+logging options:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -u rhea sudo -n -u <span class="nv">$USER</span> /usr/local/bin/sudospawner --help
+Usage: /usr/local/bin/sudospawner <span class="o">[</span>OPTIONS<span class="o">]</span>
+
+Options:
+
+--help          show this <span class="nb">help</span> information
+...
+</pre></div>
+</div>
+<p>And this should fail:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -u rhea sudo -n -u <span class="nv">$USER</span> <span class="nb">echo</span> <span class="s1">&#39;fail&#39;</span>
+sudo: a password is required
+</pre></div>
+</div>
+</section>
+<section id="enable-pam-for-non-root">
+<h2>Enable PAM for non-root<a class="headerlink" href="#enable-pam-for-non-root" title="Permalink to this heading">#</a></h2>
+<p>By default, <a class="reference external" href="http://en.wikipedia.org/wiki/Pluggable_authentication_module">PAM authentication</a>
+is used by JupyterHub. To use PAM, the process may need to be able to read
+the shadow password database.</p>
+<section id="shadow-group-linux">
+<h3>Shadow group (Linux)<a class="headerlink" href="#shadow-group-linux" title="Permalink to this heading">#</a></h3>
+<p><strong>Note:</strong> On Fedora based distributions there is no clear way to configure
+the PAM database to allow sufficient access for authenticating with the target user’s password
+from JupyterHub. As a workaround we recommend use an
+<a class="reference external" href="https://github.com/jupyterhub/jupyterhub/wiki/Authenticators">alternative authentication method</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls -l /etc/shadow
+-rw-r-----  <span class="m">1</span> root shadow   <span class="m">2197</span> Jul <span class="m">21</span> <span class="m">13</span>:41 shadow
+</pre></div>
+</div>
+<p>If there’s already a shadow group, you are set. If its permissions are more like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    $ ls -l /etc/shadow
+    -rw-------  <span class="m">1</span> root wheel   <span class="m">2197</span> Jul <span class="m">21</span> <span class="m">13</span>:41 shadow
+</pre></div>
+</div>
+<p>Then you may want to add a shadow group, and make the shadow file group-readable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo groupadd shadow
+$ sudo chgrp shadow /etc/shadow
+$ sudo chmod g+r /etc/shadow
+</pre></div>
+</div>
+<p>We want our new user to be able to read the shadow passwords, so add it to the shadow group:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    $ sudo usermod -a -G shadow rhea
+</pre></div>
+</div>
+<p>If you want jupyterhub to serve pages on a restricted port (such as port 80 for http),
+then you will need to give <code class="docutils literal notranslate"><span class="pre">node</span></code> permission to do so:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo setcap <span class="s1">&#39;cap_net_bind_service=+ep&#39;</span> /usr/bin/node
+</pre></div>
+</div>
+<p>However, you may want to further understand the consequences of this.</p>
+<p>You may also be interested in limiting the amount of CPU any process can use
+on your server. <code class="docutils literal notranslate"><span class="pre">cpulimit</span></code> is a useful tool that is available for many Linux
+distributions’ packaging system. This can be used to keep any user’s process
+from using too much CPU cycles. You can configure it accoring to <a class="reference external" href="http://ubuntuforums.org/showthread.php?t=992706">these
+instructions</a>.</p>
+</section>
+<section id="shadow-group-freebsd">
+<h3>Shadow group (FreeBSD)<a class="headerlink" href="#shadow-group-freebsd" title="Permalink to this heading">#</a></h3>
+<p><strong>NOTE:</strong> This has not been tested and may not work as expected.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls -l /etc/spwd.db /etc/master.passwd
+-rw-------  <span class="m">1</span> root  wheel   <span class="m">2516</span> Aug <span class="m">22</span> <span class="m">13</span>:35 /etc/master.passwd
+-rw-------  <span class="m">1</span> root  wheel  <span class="m">40960</span> Aug <span class="m">22</span> <span class="m">13</span>:35 /etc/spwd.db
+</pre></div>
+</div>
+<p>Add a shadow group if there isn’t one, and make the shadow file group-readable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo pw group add shadow
+$ sudo chgrp shadow /etc/spwd.db
+$ sudo chmod g+r /etc/spwd.db
+$ sudo chgrp shadow /etc/master.passwd
+$ sudo chmod g+r /etc/master.passwd
+</pre></div>
+</div>
+<p>We want our new user to be able to read the shadow passwords, so add it to the
+shadow group:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo pw user mod rhea -G shadow
+</pre></div>
+</div>
+</section>
+</section>
+<section id="test-that-pam-works">
+<h2>Test that PAM works<a class="headerlink" href="#test-that-pam-works" title="Permalink to this heading">#</a></h2>
+<p>We can verify that PAM is working, with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -u rhea python3 -c <span class="s2">&quot;import pamela, getpass; print(pamela.authenticate(&#39;</span><span class="nv">$USER</span><span class="s2">&#39;, getpass.getpass()))&quot;</span>
+Password: <span class="o">[</span>enter your unix password<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="make-a-directory-for-jupyterhub">
+<h2>Make a directory for JupyterHub<a class="headerlink" href="#make-a-directory-for-jupyterhub" title="Permalink to this heading">#</a></h2>
+<p>JupyterHub stores its state in a database, so it needs write access to a directory.
+The simplest way to deal with this is to make a directory owned by your Hub user,
+and use that as the CWD when launching the server.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo mkdir /etc/jupyterhub
+$ sudo chown rhea /etc/jupyterhub
+</pre></div>
+</div>
+</section>
+<section id="start-jupyterhub">
+<h2>Start jupyterhub<a class="headerlink" href="#start-jupyterhub" title="Permalink to this heading">#</a></h2>
+<p>Finally, start the server as our newly configured user, <code class="docutils literal notranslate"><span class="pre">rhea</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /etc/jupyterhub
+$ sudo -u rhea jupyterhub --JupyterHub.spawner_class<span class="o">=</span>sudospawner.SudoSpawner
+</pre></div>
+</div>
+<p>And try logging in.</p>
+</section>
+<section id="troubleshooting-selinux">
+<h2>Troubleshooting: SELinux<a class="headerlink" href="#troubleshooting-selinux" title="Permalink to this heading">#</a></h2>
+<p>If you still get a generic <code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span></code> <code class="docutils literal notranslate"><span class="pre">PermissionError</span></code>, it’s possible SELinux is blocking you.<br />
+Here’s how you can make a module to allow this.
+First, put this in a file named <code class="docutils literal notranslate"><span class="pre">sudo_exec_selinux.te</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module sudo_exec_selinux <span class="m">1</span>.1<span class="p">;</span>
+
+require <span class="o">{</span>
+        <span class="nb">type</span> unconfined_t<span class="p">;</span>
+        <span class="nb">type</span> sudo_exec_t<span class="p">;</span>
+        class file <span class="o">{</span> <span class="nb">read</span> entrypoint <span class="o">}</span><span class="p">;</span>
+<span class="o">}</span>
+
+<span class="c1">#============= unconfined_t ==============</span>
+allow unconfined_t sudo_exec_t:file entrypoint<span class="p">;</span>
+</pre></div>
+</div>
+<p>Then run all of these commands as root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ checkmodule -M -m -o sudo_exec_selinux.mod sudo_exec_selinux.te
+$ semodule_package -o sudo_exec_selinux.pp -m sudo_exec_selinux.mod
+$ semodule -i sudo_exec_selinux.pp
+</pre></div>
+</div>
+</section>
+<section id="troubleshooting-pam-session-errors">
+<h2>Troubleshooting: PAM session errors<a class="headerlink" href="#troubleshooting-pam-session-errors" title="Permalink to this heading">#</a></h2>
+<p>If the PAM authentication doesn’t work and you see errors for
+<code class="docutils literal notranslate"><span class="pre">login:session-auth</span></code>, or similar, considering updating to a more recent version
+of jupyterhub and disabling the opening of PAM sessions with
+<code class="docutils literal notranslate"><span class="pre">c.PAMAuthenticator.open_sessions=False</span></code>.</p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="config-proxy.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Using a reverse proxy</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="config-reference.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Configuration Reference</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-a-user">
+   Create a user
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-sudospawner">
+   Set up sudospawner
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#edit-etc-sudoers">
+   Edit
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     /etc/sudoers
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-sudo-setup">
+   Test
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sudo
+    </span>
+   </code>
+   setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#enable-pam-for-non-root">
+   Enable PAM for non-root
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shadow-group-linux">
+     Shadow group (Linux)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shadow-group-freebsd">
+     Shadow group (FreeBSD)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-that-pam-works">
+   Test that PAM works
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make-a-directory-for-jupyterhub">
+   Make a directory for JupyterHub
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#start-jupyterhub">
+   Start jupyterhub
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#troubleshooting-selinux">
+   Troubleshooting: SELinux
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#troubleshooting-pam-session-errors">
+   Troubleshooting: PAM session errors
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/jupyterhub/jupyterhub/edit/main/docs/reference/config-sudo.md">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/reference/config-sudo.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2016, Project Jupyter team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
